@@ -1,5 +1,6 @@
 import { BookingStorageInit } from "@/components/providers/BookingStorageInit";
 import { colors, logo, siteConfig } from "@/data/site";
+import { assetPath } from "@/lib/asset-path";
 import type { Metadata, Viewport } from "next";
 import { Alice, Montserrat } from "next/font/google";
 import "./globals.css";
@@ -20,7 +21,7 @@ export const metadata: Metadata = {
   title: `${siteConfig.name} | Bienestar Emocional y Salud Mental`,
   description:
     "Empresa psicosocial orientada al bienestar emocional y fortalecimiento personal. Enfoque en mujeres y NNA en situación de vulnerabilidad. Promoción y prevención en salud mental.",
-  icons: { icon: logo.favicon },
+  icons: { icon: assetPath(logo.favicon) },
 };
 
 export const viewport: Viewport = {

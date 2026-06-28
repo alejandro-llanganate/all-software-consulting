@@ -1,3 +1,5 @@
+import { assetPath as a } from "@/lib/asset-path";
+
 export const siteConfig = {
   name: "HABITADAS S.A.S",
   brandName: "HABITADAS",
@@ -20,9 +22,9 @@ export const colors = {
 };
 
 export const logo = {
-  default: "/logo.png",
-  white: "/logo.png",
-  favicon: "/logo.png",
+  default: a("/logo.png"),
+  white: a("/logo.png"),
+  favicon: a("/logo.png"),
 };
 
 export const hero = {
@@ -30,7 +32,7 @@ export const hero = {
   title: "Un espacio habitado para tu bienestar emocional",
   description:
     "Red de psicólogos y especialistas listos para acompañarte. Agenda tu cita en línea con el profesional que mejor se adapte a ti.",
-  image: "/hero/portada.jpg",
+  image: a("/hero/portada.jpg"),
   video: "",
 };
 
@@ -41,7 +43,7 @@ export const welcome = {
     "Articulamos una red de psicólogos clínicos, neuropsicólogos y especialistas para facilitar el acceso a salud mental accesible y de calidad.",
     "Enfoque en promoción y prevención, con especial atención a mujeres y NNA en situación de vulnerabilidad.",
   ],
-  image: "/hero/comunidad.jpg",
+  image: a("/hero/comunidad.jpg"),
   enfoque: {
     title: "Nuestro enfoque",
     items: [
@@ -60,7 +62,7 @@ export const office = {
     "Disponemos de consultorios para profesionales que deseen brindar atención psicológica de manera independiente, en un entorno cálido, seguro y pensado para el bienestar de quienes nos visitan.",
     "Además, creamos espacios de comunidad: grupos de apoyo, encuentros psicoeducativos, actividades de bienestar y nuestro club de psicología, donde el aprendizaje y el cuidado mutuo se encuentran.",
   ],
-  image: "/hero/espacios.jpg",
+  image: a("/hero/espacios.jpg"),
   video: "",
 };
 
@@ -69,43 +71,43 @@ export const services = [
     title: "Talleres Psicoeducativos",
     description:
       "Espacios formativos sobre temas relevantes de salud mental: regulación emocional, autocuidado, vínculos saludables, resiliencia y más. Diseñados para comunidades, familias y grupos específicos.",
-    image: "/hero/taller.jpg",
+    image: a("/hero/taller.jpg"),
   },
   {
     title: "Capacitaciones Empresariales",
     description:
       "Formación para empresas, instituciones y organizaciones en riesgos psicosociales, bienestar laboral, burnout, manejo de ansiedad, comunicación efectiva y cultura organizacional saludable.",
-    image: "/hero/capacitacion.jpg",
+    image: a("/hero/capacitacion.jpg"),
   },
   {
     title: "Proyectos Psicosociales",
     description:
       "Diseño y ejecución de proyectos orientados a comunidades vulnerables, mujeres y adultos mayores. Incluye intervención grupal, acompañamiento psicosocial y trabajo comunitario.",
-    image: "/hero/proyecto.jpg",
+    image: a("/hero/proyecto.jpg"),
   },
   {
     title: "Red de Profesionales",
     description:
       "Articulación de psicólogos clínicos, neuropsicólogos y especialistas independientes. Los servicios clínicos son brindados directamente por cada profesional, bajo su propia responsabilidad.",
-    image: "/hero/red-profesionales.jpg",
+    image: a("/hero/red-profesionales.jpg"),
   },
   {
     title: "Espacios de Atención",
     description:
       "Consultorios disponibles para profesionales que deseen brindar atención psicológica de manera independiente, en instalaciones acogedoras y equipadas.",
-    image: "/hero/consultorio.jpg",
+    image: a("/hero/consultorio.jpg"),
   },
   {
     title: "Comunidad y Apoyo",
     description:
       "Grupos de apoyo, encuentros psicoeducativos, actividades de bienestar y club de psicología. Espacios donde compartir, aprender y sanar en comunidad.",
-    image: "/hero/club.jpg",
+    image: a("/hero/club.jpg"),
   },
   {
     title: "Campamento Vacacional",
     description:
       "Experiencias vacacionales para niños y niñas con actividades lúdicas, psicoeducativas y de fortalecimiento emocional en un entorno seguro y supervisado por profesionales.",
-    image: "/hero/campamento.jpg",
+    image: a("/hero/campamento.jpg"),
   },
 ];
 

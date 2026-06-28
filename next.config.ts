@@ -7,6 +7,7 @@ const repoName =
 const basePath = isGithubPages ? `/${repoName}` : "";
 
 const nextConfig: NextConfig = {
+  env: isGithubPages ? { NEXT_PUBLIC_BASE_PATH: basePath } : undefined,
   ...(isGithubPages
     ? {
         output: "export" as const,

@@ -1,6 +1,7 @@
 "use client";
 
 import { professionals } from "@/data/professionals";
+import { logo } from "@/data/site";
 import { formatCurrency, getAdminStats } from "@/lib/admin-stats";
 import {
   addSlot,
@@ -128,7 +129,7 @@ export default function AdminPage() {
         >
           <div className="border-b border-primary/10 bg-gradient-to-r from-violet-light/80 to-white px-8 py-6">
             <div className="flex items-center gap-3">
-              <Image src="/logo.png" alt="HABITADAS" width={40} height={40} className="h-10 w-10" />
+              <Image src={logo.default} alt="HABITADAS" width={40} height={40} className="h-10 w-10" />
               <div>
                 <p className="font-serif text-xl text-primary-dark">HABITADAS</p>
                 <p className="text-xs text-foreground/50">Panel profesional</p>
@@ -215,7 +216,7 @@ export default function AdminPage() {
       <aside className="fixed inset-y-0 left-0 z-40 hidden w-64 flex-col border-r border-primary/10 bg-white shadow-sm lg:flex">
         <div className="border-b border-primary/10 px-5 py-5">
           <div className="flex items-center gap-3">
-            <Image src="/logo.png" alt="" width={36} height={36} className="h-9 w-9" />
+            <Image src={logo.default} alt="" width={36} height={36} className="h-9 w-9" />
             <div>
               <p className="font-serif text-lg text-primary-dark">HABITADAS</p>
               <p className="text-[10px] tracking-widest text-primary/60 uppercase">Panel Pro</p>
@@ -280,7 +281,7 @@ export default function AdminPage() {
       <div className="flex flex-1 flex-col lg:ml-64">
         <header className="sticky top-0 z-30 flex items-center justify-between border-b border-primary/10 bg-white/95 px-4 py-3 backdrop-blur-lg lg:hidden">
           <div className="flex min-w-0 items-center gap-2">
-            <Image src="/logo.png" alt="" width={28} height={28} />
+            <Image src={logo.default} alt="" width={28} height={28} />
             <span className="truncate font-serif text-primary-dark">Panel Pro</span>
           </div>
           <div className="flex shrink-0 items-center gap-1">

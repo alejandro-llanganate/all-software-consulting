@@ -3,6 +3,7 @@
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { office } from "@/data/site";
 import { fadeInLeft, fadeInRight } from "@/lib/animations";
+import { assetPath } from "@/lib/asset-path";
 import { motion } from "framer-motion";
 import { Award } from "lucide-react";
 import Image from "next/image";
@@ -46,9 +47,9 @@ export function Office() {
                 muted
                 playsInline
                 loop
-                poster={office.image}
+                poster={assetPath(office.image)}
               >
-                <source src={office.video} type="video/mp4" />
+                <source src={assetPath(office.video)} type="video/mp4" />
               </video>
             ) : (
               <Image
