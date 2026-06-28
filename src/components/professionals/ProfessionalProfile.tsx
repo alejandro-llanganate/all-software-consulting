@@ -14,8 +14,8 @@ type Props = {
 
 export function ProfessionalProfile({ professional, profAreas }: Props) {
   return (
-    <div className="min-h-screen bg-light pt-24 pb-20">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+    <div className="min-h-screen bg-light pt-20 pb-16 sm:pt-24 sm:pb-20">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Link
           href="/profesionales"
           className="mb-8 inline-flex items-center gap-2 text-sm text-primary transition-colors hover:text-primary-dark"
@@ -30,7 +30,7 @@ export function ProfessionalProfile({ professional, profAreas }: Props) {
             animate={{ opacity: 1, x: 0 }}
             className="space-y-4"
           >
-            <div className="relative aspect-[4/5] overflow-hidden rounded-2xl shadow-2xl shadow-primary/20">
+            <div className="relative aspect-[3/4] max-h-[65vh] overflow-hidden rounded-2xl shadow-2xl shadow-primary/20 sm:aspect-[4/5] sm:max-h-none">
               <Image
                 src={professional.image}
                 alt={professional.name}
@@ -57,7 +57,7 @@ export function ProfessionalProfile({ professional, profAreas }: Props) {
             <p className="text-sm font-medium tracking-widest text-primary uppercase">
               {professional.title}
             </p>
-            <h1 className="mt-2 font-serif text-4xl text-headline md:text-5xl">
+            <h1 className="mt-2 font-serif text-3xl text-headline sm:text-4xl md:text-5xl">
               {professional.name}
             </h1>
 
@@ -112,7 +112,7 @@ export function ProfessionalProfile({ professional, profAreas }: Props) {
         </div>
 
         {/* Formación académica y certificaciones */}
-        <div className="mt-16 grid gap-8 lg:grid-cols-2">
+        <div className="mt-12 grid gap-6 sm:mt-16 lg:grid-cols-2 lg:gap-8">
           <motion.section
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}

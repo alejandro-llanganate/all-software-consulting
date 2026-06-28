@@ -36,7 +36,7 @@ function formatDate(d: Date) {
   return d.toISOString().split("T")[0];
 }
 
-function generateDefaultAvailability(professionalId: string): DayAvailability[] {
+function generateDefaultAvailability(): DayAvailability[] {
   const days: DayAvailability[] = [];
   const today = new Date();
   for (let i = 1; i <= 21; i++) {
@@ -55,7 +55,7 @@ export function initStorage() {
   if (existing.length === 0) {
     const initial = professionals.map((p) => ({
       professionalId: p.id,
-      days: generateDefaultAvailability(p.id),
+      days: generateDefaultAvailability(),
     }));
     writeJSON(AVAILABILITY_KEY, initial);
   }

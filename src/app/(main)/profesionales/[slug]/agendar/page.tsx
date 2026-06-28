@@ -13,8 +13,8 @@ export default function AgendarPage() {
   if (!professional) notFound();
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-violet-light/30 to-light pt-24 pb-20">
-      <div className="mx-auto max-w-3xl px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-b from-violet-light/30 to-light pt-20 pb-16 sm:pt-24 sm:pb-20">
+      <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
         <Link
           href={`/profesionales/${slug}`}
           className="mb-8 inline-flex items-center gap-2 text-sm text-primary transition-colors hover:text-primary-dark"

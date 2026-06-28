@@ -1,5 +1,5 @@
-import { createWriteStream, existsSync, mkdirSync, readFileSync, statSync, unlinkSync, writeFileSync, copyFileSync } from "fs";
-import { basename, join, extname } from "path";
+import { createWriteStream, existsSync, mkdirSync, readFileSync, statSync, unlinkSync, writeFileSync } from "fs";
+import { basename, join } from "path";
 import { pipeline } from "stream/promises";
 import { execSync } from "child_process";
 

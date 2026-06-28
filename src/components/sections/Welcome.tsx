@@ -9,9 +9,9 @@ import Link from "next/link";
 
 export function Welcome() {
   return (
-    <section id="sobre-nosotros" className="bg-cream py-24 lg:py-32">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="grid items-center gap-16 lg:grid-cols-2">
+    <section id="sobre-nosotros" className="bg-cream py-16 sm:py-24 lg:py-32">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -25,7 +25,7 @@ export function Welcome() {
               </p>
             </ScrollReveal>
             <ScrollReveal animation="fadeInUpBlur" delay="sm">
-              <h2 className="font-serif text-4xl leading-tight text-headline md:text-5xl">
+              <h2 className="font-serif text-3xl leading-tight text-headline sm:text-4xl md:text-5xl">
                 {welcome.title}
               </h2>
             </ScrollReveal>
@@ -35,10 +35,10 @@ export function Welcome() {
               </ScrollReveal>
             ))}
             <ScrollReveal animation="fadeInUp" delay="xl">
-              <div className="mt-8 flex flex-wrap gap-3">
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                 <Link
                   href="/profesionales"
-                  className="group inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-primary-dark hover:shadow-md hover:shadow-primary/25"
+                  className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-primary-dark hover:shadow-md hover:shadow-primary/25 sm:w-auto"
                 >
                   Agendar con un profesional
                   <span className="transition-transform duration-300 group-hover:translate-x-1">
@@ -47,7 +47,7 @@ export function Welcome() {
                 </Link>
                 <Link
                   href="#servicios"
-                  className="inline-flex items-center gap-2 rounded-full border-2 border-primary px-6 py-3 text-sm font-medium text-primary transition-all duration-300 hover:bg-primary/5"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-full border-2 border-primary px-6 py-3 text-sm font-medium text-primary transition-all duration-300 hover:bg-primary/5 sm:w-auto"
                 >
                   Ver servicios
                 </Link>
@@ -77,7 +77,7 @@ export function Welcome() {
         {/* Enfoque — promoción y prevención */}
         <div className="mt-20">
           <ScrollReveal animation="fadeInUpBlur" className="mb-10 text-center">
-            <h3 className="font-serif text-3xl text-headline md:text-4xl">
+            <h3 className="font-serif text-2xl text-headline sm:text-3xl md:text-4xl">
               {welcome.enfoque.title}
             </h3>
             <p className="mx-auto mt-3 max-w-2xl text-foreground/65">

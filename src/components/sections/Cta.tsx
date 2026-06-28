@@ -14,12 +14,12 @@ export function Cta() {
       imageSrc={office.image}
       imageAlt="Espacios HABITADAS — consultorios y comunidad"
       revealRadius={340}
-      className="py-24 lg:py-32"
+      className="py-16 sm:py-24 lg:py-32"
     >
-      <section id="contacto" className="mx-auto max-w-7xl px-6 lg:px-8">
+      <section id="contacto" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
           <motion.h2
-            className="font-serif text-4xl text-white md:text-5xl"
+            className="font-serif text-3xl text-white sm:text-4xl md:text-5xl"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
@@ -37,7 +37,7 @@ export function Cta() {
           <ScrollReveal animation="fadeInUp" delay="lg">
             <Link
               href={siteConfig.bookingUrl}
-              className="group relative mt-10 inline-flex items-center justify-center overflow-hidden rounded-full bg-white px-10 py-4 text-sm font-semibold text-primary-dark transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/30"
+              className="group relative mt-8 inline-flex w-full max-w-xs items-center justify-center overflow-hidden rounded-full bg-white px-8 py-3.5 text-sm font-semibold text-primary-dark transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/30 sm:mt-10 sm:w-auto sm:px-10 sm:py-4"
             >
               <span className="relative z-10">{sections.cta.button}</span>
               <span className="absolute inset-0 origin-left scale-x-0 bg-violet-light transition-transform duration-500 group-hover:scale-x-100" />
@@ -45,22 +45,22 @@ export function Cta() {
           </ScrollReveal>
 
           <ScrollReveal animation="fadeIn" delay="xl">
-            <div className="mt-12 flex flex-col items-center justify-center gap-6 sm:flex-row sm:gap-10">
+            <div className="mt-10 flex flex-col flex-wrap items-center justify-center gap-4 sm:mt-12 sm:flex-row sm:gap-8">
               <a
                 href={`tel:${siteConfig.phone.replace(/\D/g, "")}`}
-                className="flex items-center gap-2 text-white/90 transition-colors hover:text-accent"
+                className="flex items-center gap-2 text-sm text-white/90 transition-colors hover:text-accent sm:text-base"
               >
-                <Phone className="h-5 w-5" />
+                <Phone className="h-5 w-5 shrink-0" />
                 {siteConfig.phone}
               </a>
               <a
                 href={`mailto:${siteConfig.email}`}
-                className="flex items-center gap-2 text-white/90 transition-colors hover:text-accent"
+                className="flex items-center gap-2 break-all text-sm text-white/90 transition-colors hover:text-accent sm:text-base"
               >
-                <Mail className="h-5 w-5" />
+                <Mail className="h-5 w-5 shrink-0" />
                 {siteConfig.email}
               </a>
-              <span className="flex items-center gap-2 text-white/90">
+              <span className="flex items-center gap-2 text-sm text-white/90 sm:text-base">
                 <MapPin className="h-5 w-5 shrink-0" />
                 <span className="text-sm">{siteConfig.address}</span>
               </span>

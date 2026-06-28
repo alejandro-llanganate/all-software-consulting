@@ -9,7 +9,17 @@ import {
   useSpring,
 } from "framer-motion";
 import Image from "next/image";
-import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
+import { useCallback, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
+
+function subscribeReducedMotion(onChange: () => void) {
+  const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+  mq.addEventListener("change", onChange);
+  return () => mq.removeEventListener("change", onChange);
+}
+
+function getReducedMotionSnapshot() {
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
 
 type ImageRevealOnHoverProps = {
   imageSrc: string;
@@ -28,7 +38,11 @@ export function ImageRevealOnHover({
 }: ImageRevealOnHoverProps) {
   const containerRef = useRef<HTMLElement>(null);
   const [isHovering, setIsHovering] = useState(false);
-  const [reducedMotion, setReducedMotion] = useState(false);
+  const reducedMotion = useSyncExternalStore(
+    subscribeReducedMotion,
+    getReducedMotionSnapshot,
+    () => false,
+  );
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -38,14 +52,6 @@ export function ImageRevealOnHover({
   const x = useSpring(mouseX, spring);
   const y = useSpring(mouseY, spring);
   const clipPath = useMotionTemplate`circle(${radius}px at ${x}px ${y}px)`;
-
-  useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setReducedMotion(mq.matches);
-    const handler = () => setReducedMotion(mq.matches);
-    mq.addEventListener("change", handler);
-    return () => mq.removeEventListener("change", handler);
-  }, []);
 
   const handleMouseMove = useCallback(
     (e: React.MouseEvent) => {
@@ -110,25 +116,23 @@ export function ImageRevealOnHover({
         <div className="absolute inset-0 bg-gradient-to-t from-primary-dark/60 via-transparent to-primary-dark/30" />
       </motion.div>
 
-      {/* Imagen estática suave en móvil / reduced motion */}
-      {(reducedMotion || !isHovering) && (
-        <div
-          className={cn(
-            "absolute inset-0 z-[1] transition-opacity duration-500 md:hidden",
-            reducedMotion ? "opacity-30" : "opacity-0",
-          )}
-          aria-hidden
-        >
-          <Image
-            src={imageSrc}
-            alt=""
-            fill
-            className="object-cover"
-            sizes="100vw"
-          />
-          <div className="absolute inset-0 bg-primary-dark/70" />
-        </div>
-      )}
+      {/* Imagen estática en móvil / touch (sin hover) */}
+      <div
+        className={cn(
+          "absolute inset-0 z-[1] md:hidden",
+          reducedMotion ? "opacity-40" : "opacity-35",
+        )}
+        aria-hidden
+      >
+        <Image
+          src={imageSrc}
+          alt=""
+          fill
+          className="object-cover"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-primary-dark/60" />
+      </div>
 
       {/* Anillo luminoso en el cursor */}
       {!reducedMotion && isHovering && (

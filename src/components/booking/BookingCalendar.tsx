@@ -68,9 +68,9 @@ export function BookingCalendar({ slots, selectedDate, selectedTime, onSelect }:
   }
 
   return (
-    <div className="grid gap-6 lg:grid-cols-2">
+    <div className="grid gap-4 md:grid-cols-2 lg:gap-6">
       {/* Calendario */}
-      <div className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-primary/8">
+      <div className="rounded-2xl bg-white p-3 shadow-sm ring-1 ring-primary/8 sm:p-5">
         <div className="mb-4 flex items-center justify-between">
           <button
             type="button"
@@ -93,7 +93,7 @@ export function BookingCalendar({ slots, selectedDate, selectedTime, onSelect }:
           </button>
         </div>
 
-        <div className="mb-2 grid grid-cols-7 gap-1">
+        <div className="mb-2 grid grid-cols-7 gap-0.5 sm:mb-4 sm:gap-1">
           {WEEKDAYS.map((d) => (
             <div key={d} className="py-1 text-center text-[11px] font-semibold tracking-wide text-primary/50 uppercase">
               {d}
@@ -101,7 +101,7 @@ export function BookingCalendar({ slots, selectedDate, selectedTime, onSelect }:
           ))}
         </div>
 
-        <div className="grid grid-cols-7 gap-1">
+        <div className="grid grid-cols-7 gap-0.5 sm:gap-1">
           {calendarDays.map((cell, i) => {
             if (!cell.date || !cell.day) {
               return <div key={`empty-${i}`} className="aspect-square" />;
@@ -121,7 +121,7 @@ export function BookingCalendar({ slots, selectedDate, selectedTime, onSelect }:
                   isAvailable
                     ? "cursor-pointer hover:bg-violet-light/70 hover:text-primary-dark"
                     : "cursor-not-allowed text-foreground/20",
-                  isSelected && "bg-primary text-white shadow-md shadow-primary/30 scale-105",
+                  isSelected && "bg-primary text-white shadow-md shadow-primary/30 sm:scale-105",
                   isToday && !isSelected && "ring-2 ring-primary/30",
                   isAvailable && !isSelected && "text-headline",
                 )}
@@ -137,10 +137,10 @@ export function BookingCalendar({ slots, selectedDate, selectedTime, onSelect }:
       </div>
 
       {/* Horarios del día seleccionado */}
-      <div className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-primary/8">
+      <div className="rounded-2xl bg-white p-3 shadow-sm ring-1 ring-primary/8 sm:p-5">
         {selectedDate ? (
           <>
-            <p className="text-sm font-medium text-primary capitalize">
+            <p className="text-sm font-medium capitalize text-primary break-words">
               {new Date(selectedDate + "T12:00:00").toLocaleDateString("es-CO", {
                 weekday: "long",
                 day: "numeric",

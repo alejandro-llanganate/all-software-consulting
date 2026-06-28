@@ -13,10 +13,10 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 export function Challenges() {
   return (
-    <section className="bg-violet-light/40 py-24 lg:py-32">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+    <section className="bg-violet-light/40 py-16 sm:py-24 lg:py-32">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <ScrollReveal animation="fadeInUpBlur" className="mx-auto mb-12 max-w-2xl text-center">
-          <h2 className="font-serif text-4xl text-headline md:text-5xl">
+          <h2 className="font-serif text-3xl text-headline sm:text-4xl md:text-5xl">
             {sections.challenges.title}
           </h2>
           <p className="mt-3 text-foreground/70">{sections.challenges.description}</p>
@@ -75,7 +75,7 @@ export function Challenges() {
                       <p className="mt-2 line-clamp-2 text-sm text-foreground/65">
                         {challenge.description}
                       </p>
-                      <span className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-primary opacity-0 transition-opacity group-hover:opacity-100">
+                      <span className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-primary opacity-100 sm:opacity-0 sm:transition-opacity sm:group-hover:opacity-100">
                         Ver profesionales
                         <ArrowRight className="h-3 w-3" />
                       </span>

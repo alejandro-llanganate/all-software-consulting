@@ -24,8 +24,8 @@ export function Header() {
 
   return (
     <header className="fixed top-0 right-0 left-0 z-50 border-b border-primary/8 bg-white py-3 shadow-[0_2px_24px_rgba(112,48,160,0.08)]">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 lg:px-8">
-        <Link href="/" className="relative z-10 flex items-center gap-3">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+        <Link href="/" className="relative z-10 flex min-w-0 items-center gap-2 sm:gap-3">
           <Image
             src={logo.default}
             alt="HABITADAS"
@@ -34,7 +34,7 @@ export function Header() {
             className="h-10 w-10 object-contain"
             priority
           />
-          <span className="font-serif text-xl tracking-wide text-primary-dark">
+          <span className="truncate font-serif text-lg tracking-wide text-primary-dark sm:text-xl">
             {siteConfig.brandName}
           </span>
         </Link>
@@ -127,7 +127,7 @@ export function Header() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.35, ease: [0.24, 1, 0.3, 1] }}
-            className="overflow-hidden border-t border-primary/10 bg-white lg:hidden"
+            className="overflow-hidden border-t border-primary/10 bg-white lg:hidden max-h-[calc(100dvh-4rem)] overflow-y-auto"
           >
             <nav className="flex flex-col gap-1 px-6 py-4">
               {navLinks.map((link, i) => (

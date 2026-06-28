@@ -2,7 +2,7 @@
 
 import { BookingCalendar } from "@/components/booking/BookingCalendar";
 import { FormField } from "@/components/ui/FormField";
-import { bankInfo, createAppointment, getAvailableSlots, initStorage } from "@/lib/booking-storage";
+import { bankInfo, createAppointment, getAvailableSlots } from "@/lib/booking-storage";
 import { downloadAppointmentPdf } from "@/lib/download-appointment-pdf";
 import type { Appointment, Professional } from "@/types";
 import { AnimatePresence, motion } from "framer-motion";
@@ -16,7 +16,7 @@ import {
   Phone,
   User,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 type Step = 1 | 2 | 3 | 4 | 5;
 
@@ -38,15 +38,13 @@ export function BookingFlow({ professional }: { professional: Professional }) {
   const [clientPhone, setClientPhone] = useState("");
   const [clientId, setClientId] = useState("");
   const [paymentReference, setPaymentReference] = useState("");
-  const [slots, setSlots] = useState<{ date: string; slots: string[] }[]>([]);
+  const [slotVersion, setSlotVersion] = useState(0);
   const [confirmedAppointment, setConfirmedAppointment] = useState<Appointment | null>(null);
 
-  useEffect(() => {
-    initStorage();
-    setSlots(getAvailableSlots(professional.id));
-  }, [professional.id]);
+  void slotVersion;
+  const slots = getAvailableSlots(professional.id);
 
-  const refreshSlots = () => setSlots(getAvailableSlots(professional.id));
+  const refreshSlots = () => setSlotVersion((v) => v + 1);
 
   const handleSelectSlot = (date: string, time: string) => {
     setSelectedDate(date);
@@ -80,18 +78,18 @@ export function BookingFlow({ professional }: { professional: Professional }) {
     });
 
   return (
-    <div className="overflow-hidden rounded-3xl bg-white shadow-xl shadow-primary/8 ring-1 ring-primary/10">
+    <div className="overflow-hidden rounded-2xl bg-white shadow-xl shadow-primary/8 ring-1 ring-primary/10 sm:rounded-3xl">
       {/* Header */}
-      <div className="bg-gradient-to-r from-primary to-primary-dark px-6 py-6 text-white sm:px-8">
+      <div className="bg-gradient-to-r from-primary to-primary-dark px-4 py-5 text-white sm:px-8 sm:py-6">
         <p className="text-xs font-medium tracking-widest text-white/70 uppercase">Agendar cita</p>
-        <h1 className="mt-1 font-serif text-2xl sm:text-3xl">{professional.name}</h1>
-        <p className="mt-1 text-sm text-white/75">
+        <h1 className="mt-1 font-serif text-xl sm:text-2xl md:text-3xl">{professional.name}</h1>
+        <p className="mt-1 flex flex-wrap gap-x-2 text-xs text-white/75 sm:text-sm">
           {professional.title} · ${professional.sessionPrice.toLocaleString("es-CO")}/sesión
         </p>
       </div>
 
       {/* Step indicators */}
-      <div className="flex border-b border-primary/8 px-6 py-4 sm:px-8">
+      <div className="flex border-b border-primary/8 px-4 py-3 sm:px-8 sm:py-4">
         {STEPS.slice(0, 4).map((s) => {
           const Icon = s.icon;
           const active = step === s.n;
@@ -109,7 +107,7 @@ export function BookingFlow({ professional }: { professional: Professional }) {
               >
                 {done ? <CheckCircle2 className="h-4 w-4" /> : <Icon className="h-4 w-4" />}
               </div>
-              <span className={`hidden text-[10px] font-medium sm:block ${active ? "text-primary" : "text-foreground/40"}`}>
+              <span className={`text-[9px] font-medium sm:text-[10px] ${active ? "text-primary" : "text-foreground/40"}`}>
                 {s.label}
               </span>
             </div>
@@ -117,7 +115,7 @@ export function BookingFlow({ professional }: { professional: Professional }) {
         })}
       </div>
 
-      <div className="px-6 py-8 sm:px-8">
+      <div className="px-4 py-6 sm:px-8 sm:py-8">
         <AnimatePresence mode="wait">
           {step === 1 && (
             <motion.div
@@ -178,7 +176,7 @@ export function BookingFlow({ professional }: { professional: Professional }) {
                 onChange={(e) => setReason(e.target.value)}
                 placeholder="Describe brevemente el motivo de tu consulta..."
               />
-              <div className="flex gap-3">
+              <div className="flex flex-col gap-3 sm:flex-row">
                 <button onClick={() => setStep(1)} className="flex-1 rounded-full border border-primary/20 py-3 text-sm font-medium text-primary">
                   Atrás
                 </button>
@@ -206,7 +204,7 @@ export function BookingFlow({ professional }: { professional: Professional }) {
               <FormField label="Correo electrónico" type="email" value={clientEmail} onChange={(e) => setClientEmail(e.target.value)} placeholder="correo@ejemplo.com" icon={<Mail className="h-4 w-4" />} />
               <FormField label="Teléfono / WhatsApp" type="tel" value={clientPhone} onChange={(e) => setClientPhone(e.target.value)} placeholder="+593 98 438 4524" icon={<Phone className="h-4 w-4" />} />
               <FormField label="Documento de identidad" value={clientId} onChange={(e) => setClientId(e.target.value)} placeholder="CC / CE / Pasaporte" />
-              <div className="flex gap-3 pt-2">
+              <div className="flex flex-col gap-3 pt-2 sm:flex-row">
                 <button onClick={() => setStep(2)} className="flex-1 rounded-full border border-primary/20 py-3 text-sm font-medium text-primary">
                   Atrás
                 </button>
@@ -240,9 +238,9 @@ export function BookingFlow({ professional }: { professional: Professional }) {
                     ["Titular", bankInfo.holder],
                     ["NIT", bankInfo.nit],
                   ].map(([k, v]) => (
-                    <div key={k} className="flex justify-between gap-2 rounded-xl bg-white/70 px-3 py-2">
+                    <div key={k} className="flex flex-col gap-0.5 rounded-xl bg-white/70 px-3 py-2 sm:flex-row sm:justify-between sm:gap-2">
                       <dt className="text-foreground/50">{k}</dt>
-                      <dd className="font-medium text-headline">{v}</dd>
+                      <dd className="font-medium text-headline break-all sm:text-right">{v}</dd>
                     </div>
                   ))}
                 </dl>
@@ -260,7 +258,7 @@ export function BookingFlow({ professional }: { professional: Professional }) {
                 onChange={(e) => setPaymentReference(e.target.value)}
                 placeholder="Ej. Ref. 123456789"
               />
-              <div className="flex gap-3">
+              <div className="flex flex-col gap-3 sm:flex-row">
                 <button onClick={() => setStep(3)} className="flex-1 rounded-full border border-primary/20 py-3 text-sm font-medium text-primary">
                   Atrás
                 </button>
@@ -285,7 +283,7 @@ export function BookingFlow({ professional }: { professional: Professional }) {
               <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-primary/10">
                 <CheckCircle2 className="h-10 w-10 text-primary" />
               </div>
-              <h2 className="mt-5 font-serif text-3xl text-headline">¡Cita confirmada!</h2>
+              <h2 className="mt-5 font-serif text-2xl text-headline sm:text-3xl">¡Cita confirmada!</h2>
               <p className="mx-auto mt-3 max-w-md text-foreground/65">
                 Tu cita con <strong>{professional.name}</strong> quedó registrada para el{" "}
                 <strong className="capitalize">{formatDate(selectedDate)}</strong> a las{" "}

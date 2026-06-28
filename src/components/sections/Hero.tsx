@@ -2,7 +2,7 @@
 
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { hero, siteConfig } from "@/data/site";
-import { fadeIn, fadeInUp, fadeInUpBlur } from "@/lib/animations";
+import { fadeInUp, fadeInUpBlur } from "@/lib/animations";
 import { motion } from "framer-motion";
 import { Calendar, Phone } from "lucide-react";
 import Image from "next/image";
@@ -12,7 +12,7 @@ export function Hero() {
   return (
     <section
       id="inicio"
-      className="relative flex min-h-screen items-center overflow-hidden pt-20"
+      className="relative flex min-h-[85dvh] items-center overflow-hidden pt-20 sm:min-h-screen"
     >
       <div className="absolute inset-0">
         <Image
@@ -27,7 +27,7 @@ export function Hero() {
         <div className="absolute inset-0 bg-gradient-to-t from-dark/40 via-transparent to-transparent" />
       </div>
 
-      <div className="relative mx-auto max-w-7xl px-6 py-24 lg:px-8 lg:py-32">
+      <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8 lg:py-32">
         <div className="max-w-2xl">
           <ScrollReveal animation="fadeIn" delay="xs">
             <p className="mb-4 text-sm font-medium tracking-[0.2em] text-accent uppercase">
@@ -36,7 +36,7 @@ export function Hero() {
           </ScrollReveal>
 
           <motion.h1
-            className="font-serif text-5xl leading-[1.1] text-white md:text-6xl lg:text-7xl"
+            className="font-serif text-4xl leading-[1.1] text-white sm:text-5xl md:text-6xl lg:text-7xl"
             initial="hidden"
             animate="visible"
             variants={fadeInUpBlur}
@@ -60,14 +60,14 @@ export function Hero() {
           >
             <Link
               href={siteConfig.bookingUrl}
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-8 py-4 text-sm font-semibold text-primary-dark transition-all duration-300 hover:-translate-y-0.5 hover:bg-violet-light hover:shadow-lg hover:shadow-primary/20"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-white px-6 py-3.5 text-sm font-semibold text-primary-dark transition-all duration-300 hover:-translate-y-0.5 hover:bg-violet-light hover:shadow-lg hover:shadow-primary/20 sm:w-auto sm:px-8 sm:py-4"
             >
               <Calendar className="h-4 w-4" />
               Agendar cita
             </Link>
             <a
               href={`tel:${siteConfig.phone.replace(/\D/g, "")}`}
-              className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-accent/60 px-8 py-4 text-sm font-medium text-white transition-all duration-300 hover:border-accent hover:bg-accent/10"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-full border-2 border-accent/60 px-6 py-3.5 text-sm font-medium text-white transition-all duration-300 hover:border-accent hover:bg-accent/10 sm:w-auto sm:px-8 sm:py-4"
             >
               <Phone className="h-4 w-4" />
               {siteConfig.phone}

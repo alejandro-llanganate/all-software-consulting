@@ -13,13 +13,13 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 export function Team() {
   return (
-    <section id="equipo" className="bg-light py-24 lg:py-32">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+    <section id="equipo" className="bg-light py-16 sm:py-24 lg:py-32">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <ScrollReveal animation="fadeInUpBlur" className="mx-auto mb-12 max-w-2xl text-center">
           <p className="mb-3 text-sm font-medium tracking-[0.15em] text-primary uppercase">
             {sections.team.eyebrow}
           </p>
-          <h2 className="font-serif text-4xl text-headline md:text-5xl">
+          <h2 className="font-serif text-3xl text-headline sm:text-4xl md:text-5xl">
             {sections.team.title}
           </h2>
           <p className="mt-3 text-foreground/70">{sections.team.description}</p>
@@ -70,7 +70,7 @@ export function Team() {
                       sizes="240px"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-primary-dark/80 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                    <div className="absolute right-0 bottom-0 left-0 flex translate-y-2 items-center justify-center gap-1 p-4 text-sm font-medium text-white opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                    <div className="absolute right-0 bottom-0 left-0 flex translate-y-0 items-center justify-center gap-1 p-4 text-sm font-medium text-white opacity-100 sm:translate-y-2 sm:opacity-0 sm:transition-all sm:duration-300 sm:group-hover:translate-y-0 sm:group-hover:opacity-100">
                       Ver perfil
                       <ArrowRight className="h-4 w-4" />
                     </div>

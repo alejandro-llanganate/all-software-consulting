@@ -24,8 +24,8 @@ function ProfessionalsContent() {
       : professionals.filter((p) => p.areas.includes(activeArea));
 
   return (
-    <div className="min-h-screen bg-light pt-24 pb-20">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+    <div className="min-h-screen bg-light pt-20 pb-16 sm:pt-24 sm:pb-20">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -34,7 +34,7 @@ function ProfessionalsContent() {
           <p className="mb-2 text-sm font-medium tracking-widest text-primary uppercase">
             Red de profesionales
           </p>
-          <h1 className="font-serif text-4xl text-headline md:text-5xl">
+          <h1 className="font-serif text-3xl text-headline sm:text-4xl md:text-5xl">
             Encuentra tu especialista
           </h1>
           <p className="mx-auto mt-3 max-w-xl text-foreground/65">
@@ -42,18 +42,18 @@ function ProfessionalsContent() {
           </p>
           <Link
             href={filtered.length === 1 ? `/profesionales/${filtered[0].slug}/agendar` : "#profesionales-grid"}
-            className="mt-6 inline-flex items-center gap-2 rounded-full bg-primary px-8 py-4 text-sm font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-primary-dark hover:shadow-lg hover:shadow-primary/25"
+            className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-6 py-3.5 text-sm font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-primary-dark hover:shadow-lg hover:shadow-primary/25 sm:w-auto sm:px-8 sm:py-4"
           >
             <Calendar className="h-5 w-5" />
             Agendar una cita
           </Link>
         </motion.div>
 
-        <div className="mb-12 flex flex-wrap justify-center gap-2">
+        <div className="mb-8 flex gap-2 overflow-x-auto pb-2 [-webkit-overflow-scrolling:touch] sm:mb-12 sm:flex-wrap sm:justify-center sm:overflow-visible">
           <button
             onClick={() => setActiveArea("all")}
             className={cn(
-              "rounded-full px-4 py-2 text-sm font-medium transition-all duration-300",
+              "shrink-0 snap-start rounded-full px-4 py-2 text-sm font-medium transition-all duration-300",
               activeArea === "all"
                 ? "bg-primary text-white shadow-md shadow-primary/25"
                 : "bg-white text-foreground/70 ring-1 ring-primary/15 hover:ring-primary/40",
@@ -66,7 +66,7 @@ function ProfessionalsContent() {
               key={area.slug}
               onClick={() => setActiveArea(area.slug)}
               className={cn(
-                "rounded-full px-4 py-2 text-sm font-medium transition-all duration-300",
+                "shrink-0 snap-start rounded-full px-4 py-2 text-sm font-medium transition-all duration-300",
                 activeArea === area.slug
                   ? "bg-primary text-white shadow-md shadow-primary/25"
                   : "bg-white text-foreground/70 ring-1 ring-primary/15 hover:ring-primary/40",
@@ -112,7 +112,7 @@ function ProfessionalsContent() {
 
                 <div className="mt-3 flex items-start gap-2 text-xs text-foreground/50">
                   <GraduationCap className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary/50" />
-                  <span>{prof.education[0]?.degree} · {prof.education[0]?.institution}</span>
+                  <span className="line-clamp-2">{prof.education[0]?.degree} · {prof.education[0]?.institution}</span>
                 </div>
 
                 <div className="mt-3 flex flex-wrap gap-1.5">
@@ -141,16 +141,16 @@ function ProfessionalsContent() {
                   })}
                 </div>
 
-                <div className="mt-4 flex gap-2">
+                <div className="mt-4 flex flex-col gap-2 sm:flex-row">
                   <Link
                     href={`/profesionales/${prof.slug}`}
-                    className="flex-1 rounded-full border border-primary/20 py-2.5 text-center text-xs font-medium text-primary transition-colors hover:bg-violet-light/50"
+                    className="flex-1 rounded-full border border-primary/20 py-3 text-center text-sm font-medium text-primary transition-colors hover:bg-violet-light/50 sm:py-2.5 sm:text-xs"
                   >
                     Ver perfil
                   </Link>
                   <Link
                     href={`/profesionales/${prof.slug}/agendar`}
-                    className="flex-1 rounded-full bg-primary py-2.5 text-center text-xs font-semibold text-white transition-all hover:bg-primary-dark"
+                    className="flex-1 rounded-full bg-primary py-3 text-center text-sm font-semibold text-white transition-all hover:bg-primary-dark sm:py-2.5 sm:text-xs"
                   >
                     Agendar
                   </Link>

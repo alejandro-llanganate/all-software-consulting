@@ -38,7 +38,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useSyncExternalStore, useState } from "react";
 
 type View = "login" | "select-pro" | "dashboard";
 type Tab = "overview" | "appointments" | "availability";
@@ -51,67 +51,62 @@ const STATUS_STYLES: Record<AppointmentStatus, string> = {
   cancelada: "bg-red-50 text-red-600 ring-red-200",
 };
 
+function getClientSession(): string | null {
+  initStorage();
+  return getAdminSession();
+}
+
 export default function AdminPage() {
-  const [view, setView] = useState<View>("login");
+  const sessionProId = useSyncExternalStore(
+    () => () => {},
+    getClientSession,
+    () => null,
+  );
+
+  const [viewOverride, setViewOverride] = useState<View | null>(null);
+  const [pickedProId, setPickedProId] = useState<string | null>(null);
   const [tab, setTab] = useState<Tab>("overview");
   const [pin, setPin] = useState("");
   const [pinError, setPinError] = useState(false);
-  const [selectedProId, setSelectedProId] = useState<string | null>(null);
   const [filter, setFilter] = useState<AppointmentStatus | "all">("all");
   const [newDate, setNewDate] = useState("");
   const [newTime, setNewTime] = useState("09:00");
-  const [tick, setTick] = useState(0);
+  const [refreshKey, setRefreshKey] = useState(0);
 
-  const refresh = () => setTick((t) => t + 1);
+  const refresh = () => setRefreshKey((k) => k + 1);
 
-  useEffect(() => {
-    initStorage();
-    const session = getAdminSession();
-    if (session) {
-      setSelectedProId(session);
-      setView("dashboard");
-    }
-  }, []);
+  const selectedProId = pickedProId ?? sessionProId;
+  const view: View = viewOverride ?? (sessionProId ? "dashboard" : "login");
 
   const pro = professionals.find((p) => p.id === selectedProId);
-  const stats = useMemo(
-    () => (selectedProId ? getAdminStats(selectedProId) : null),
-    [selectedProId, tick],
-  );
-  const appointments = useMemo(
-    () => (selectedProId ? getAppointmentsByProfessional(selectedProId) : []),
-    [selectedProId, tick],
-  );
-  const availability = useMemo(
-    () => (selectedProId ? getAvailability(selectedProId) : []),
-    [selectedProId, tick],
-  );
 
-  const filteredAppointments = useMemo(
-    () => (filter === "all" ? appointments : appointments.filter((a) => a.status === filter)),
-    [appointments, filter],
-  );
+  void refreshKey;
+  const stats = selectedProId ? getAdminStats(selectedProId) : null;
+  const appointments = selectedProId ? getAppointmentsByProfessional(selectedProId) : [];
+  const availability = selectedProId ? getAvailability(selectedProId) : [];
+  const filteredAppointments =
+    filter === "all" ? appointments : appointments.filter((a) => a.status === filter);
 
   const maxBar = Math.max(...(stats?.byMonth.map((m) => m.count) ?? [1]), 1);
 
   const handlePinSubmit = () => {
     if (verifyPin(pin)) {
       setPinError(false);
-      setView("select-pro");
+      setViewOverride("select-pro");
     } else setPinError(true);
   };
 
   const handleSelectPro = (id: string) => {
-    setSelectedProId(id);
+    setPickedProId(id);
     setAdminSession(id);
-    setView("dashboard");
+    setViewOverride("dashboard");
     refresh();
   };
 
   const handleLogout = () => {
     clearAdminSession();
-    setSelectedProId(null);
-    setView("login");
+    setPickedProId(null);
+    setViewOverride("login");
     setPin("");
     setTab("overview");
   };
@@ -265,7 +260,7 @@ export default function AdminPage() {
 
         <div className="space-y-1 border-t border-primary/10 p-3">
           <button
-            onClick={() => { setView("select-pro"); setTab("overview"); }}
+            onClick={() => { setViewOverride("select-pro"); setTab("overview"); }}
             className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-foreground/50 hover:bg-violet-light/40 hover:text-primary-dark"
           >
             <Users className="h-4 w-4" /> Cambiar perfil
@@ -284,13 +279,22 @@ export default function AdminPage() {
 
       <div className="flex flex-1 flex-col lg:ml-64">
         <header className="sticky top-0 z-30 flex items-center justify-between border-b border-primary/10 bg-white/95 px-4 py-3 backdrop-blur-lg lg:hidden">
-          <div className="flex items-center gap-2">
+          <div className="flex min-w-0 items-center gap-2">
             <Image src="/logo.png" alt="" width={28} height={28} />
-            <span className="font-serif text-primary-dark">Panel Pro</span>
+            <span className="truncate font-serif text-primary-dark">Panel Pro</span>
           </div>
-          <button onClick={handleLogout} className="rounded-lg p-2 text-foreground/40 hover:text-primary">
-            <LogOut className="h-5 w-5" />
-          </button>
+          <div className="flex shrink-0 items-center gap-1">
+            <button
+              onClick={() => { setViewOverride("select-pro"); setTab("overview"); }}
+              className="rounded-lg p-2 text-foreground/40 hover:text-primary"
+              aria-label="Cambiar perfil"
+            >
+              <Users className="h-5 w-5" />
+            </button>
+            <button onClick={handleLogout} className="rounded-lg p-2 text-foreground/40 hover:text-primary">
+              <LogOut className="h-5 w-5" />
+            </button>
+          </div>
         </header>
 
         <div className="flex gap-1 overflow-x-auto border-b border-primary/10 bg-white px-4 py-2 lg:hidden">
@@ -299,11 +303,14 @@ export default function AdminPage() {
               key={id}
               onClick={() => setTab(id)}
               className={cn(
-                "shrink-0 rounded-full px-4 py-1.5 text-xs font-medium",
+                "relative shrink-0 rounded-full px-4 py-1.5 text-xs font-medium",
                 tab === id ? "bg-primary text-white" : "bg-violet-light/60 text-foreground/50",
               )}
             >
               {label}
+              {id === "appointments" && stats.pending > 0 && (
+                <span className="ml-1">({stats.pending})</span>
+              )}
             </button>
           ))}
         </div>
@@ -341,7 +348,7 @@ export default function AdminPage() {
                         <p className="text-xs font-medium text-foreground/50">{kpi.label}</p>
                         <kpi.icon className={cn("h-4 w-4", kpi.iconC)} />
                       </div>
-                      <p className="mt-3 text-2xl font-bold text-headline">{kpi.value}</p>
+                      <p className="mt-3 text-xl font-bold text-headline sm:text-2xl">{kpi.value}</p>
                       <p className="mt-1 text-xs text-foreground/40">{kpi.sub}</p>
                     </div>
                   ))}
@@ -390,7 +397,8 @@ export default function AdminPage() {
                       <h3 className="text-sm font-semibold text-headline">Actividad — últimos 6 meses</h3>
                       <span className="text-xs text-foreground/40">Citas · Ingresos</span>
                     </div>
-                    <div className="mt-6 flex h-40 items-end justify-between gap-2">
+                    <div className="mt-6 overflow-x-auto pb-2">
+                    <div className="flex h-40 min-w-[320px] items-end justify-between gap-2 sm:min-w-0">
                       {stats.byMonth.map((m) => (
                         <div key={m.label} className="flex flex-1 flex-col items-center gap-2">
                           <span className="text-[10px] font-medium text-emerald-600">
@@ -404,6 +412,7 @@ export default function AdminPage() {
                           <span className="text-xs font-semibold text-headline">{m.count}</span>
                         </div>
                       ))}
+                    </div>
                     </div>
                   </div>
                 </div>
@@ -473,7 +482,7 @@ export default function AdminPage() {
                                 {formatAptDate(apt.date)} · {apt.time}
                               </p>
                               <p className="mt-2 line-clamp-2 text-xs text-foreground/45">{apt.reason}</p>
-                              <div className="mt-2 flex flex-wrap gap-3 text-xs text-foreground/40">
+                              <div className="mt-2 flex flex-col gap-1 text-xs text-foreground/40 sm:flex-row sm:flex-wrap sm:gap-3">
                                 <span>{apt.clientPhone}</span>
                                 <span>{apt.clientEmail}</span>
                                 <span>Ref: {apt.paymentReference}</span>
@@ -482,7 +491,7 @@ export default function AdminPage() {
                             <p className="text-lg font-bold text-emerald-600">{formatCurrency(stats.sessionPrice)}</p>
                           </div>
                           {apt.status === "pendiente" && (
-                            <div className="mt-4 flex gap-2">
+                            <div className="mt-4 flex flex-col gap-2 sm:flex-row">
                               <button
                                 onClick={() => { updateAppointmentStatus(apt.id, "completada"); refresh(); }}
                                 className="flex items-center gap-1.5 rounded-xl bg-emerald-600 px-4 py-2 text-xs font-semibold text-white hover:bg-emerald-700"
@@ -511,17 +520,17 @@ export default function AdminPage() {
                   <h3 className="flex items-center gap-2 text-sm font-semibold text-headline">
                     <Plus className="h-4 w-4 text-primary" /> Agregar horario
                   </h3>
-                  <div className="mt-4 flex flex-wrap gap-3">
+                  <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                     <input
                       type="date"
                       value={newDate}
                       onChange={(e) => setNewDate(e.target.value)}
-                      className="rounded-xl border border-primary/15 bg-light px-4 py-2.5 text-sm text-headline outline-none focus:border-primary focus:ring-2 focus:ring-primary/10"
+                      className="w-full rounded-xl border border-primary/15 bg-light px-4 py-2.5 text-sm text-headline outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 sm:w-auto"
                     />
                     <select
                       value={newTime}
                       onChange={(e) => setNewTime(e.target.value)}
-                      className="rounded-xl border border-primary/15 bg-light px-4 py-2.5 text-sm text-headline outline-none focus:border-primary focus:ring-2 focus:ring-primary/10"
+                      className="w-full rounded-xl border border-primary/15 bg-light px-4 py-2.5 text-sm text-headline outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 sm:w-auto"
                     >
                       {TIME_SLOTS.map((t) => (
                         <option key={t} value={t}>{t}</option>
@@ -530,7 +539,7 @@ export default function AdminPage() {
                     <button
                       onClick={() => { if (newDate) { addSlot(pro.id, newDate, newTime); refresh(); } }}
                       disabled={!newDate}
-                      className="flex items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-white hover:bg-primary-dark disabled:opacity-40"
+                      className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-white hover:bg-primary-dark disabled:opacity-40 sm:w-auto"
                     >
                       <Plus className="h-4 w-4" /> Agregar
                     </button>

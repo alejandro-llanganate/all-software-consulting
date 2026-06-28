@@ -28,9 +28,9 @@ export function Office() {
   }, [hasVideo]);
 
   return (
-    <section className="bg-cream py-24 lg:py-32">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="grid items-center gap-16 lg:grid-cols-2">
+    <section className="bg-cream py-16 sm:py-24 lg:py-32">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -77,7 +77,7 @@ export function Office() {
               </div>
             </ScrollReveal>
             <ScrollReveal animation="fadeInUpBlur" delay="sm">
-              <h2 className="font-serif text-4xl leading-tight text-headline md:text-5xl">
+              <h2 className="font-serif text-3xl leading-tight text-headline sm:text-4xl md:text-5xl">
                 {office.title}
               </h2>
             </ScrollReveal>

@@ -10,13 +10,13 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 export function Testimonials() {
   return (
-    <section className="bg-light py-24 lg:py-32">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+    <section className="bg-light py-16 sm:py-24 lg:py-32">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <ScrollReveal animation="fadeInUpBlur" className="mx-auto mb-16 max-w-3xl text-center">
           <p className="mb-3 text-sm font-medium tracking-[0.15em] text-primary uppercase">
             {sections.testimonials.eyebrow}
           </p>
-          <h2 className="font-serif text-4xl text-headline md:text-5xl">
+          <h2 className="font-serif text-3xl text-headline sm:text-4xl md:text-5xl">
             {sections.testimonials.title}
           </h2>
           <p className="mt-4 leading-relaxed text-foreground/70">
@@ -32,7 +32,7 @@ export function Testimonials() {
         >
           <Swiper
             modules={[Navigation, Pagination, Autoplay]}
-            spaceBetween={32}
+            spaceBetween={20}
             slidesPerView={1}
             loop
             speed={600}
@@ -52,7 +52,7 @@ export function Testimonials() {
             {testimonials.map((testimonial, index) => (
               <SwiperSlide key={testimonial.author}>
                 <motion.div
-                  className="flex h-full flex-col rounded-2xl bg-white p-8 shadow-sm ring-1 ring-black/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
+                  className="flex h-full flex-col rounded-2xl bg-white p-5 shadow-sm ring-1 ring-black/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-md sm:p-8"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}

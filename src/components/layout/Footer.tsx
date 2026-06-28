@@ -24,8 +24,8 @@ export function Footer() {
 
   return (
     <footer className="bg-primary-dark text-white">
-      <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
-        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
+      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 md:py-16">
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4 md:gap-12">
           <div>
             <Link href="/" className="mb-4 flex items-center gap-3">
               <Image
@@ -89,7 +89,7 @@ export function Footer() {
                 </a>
               </li>
               <li>
-                <a href={`mailto:${siteConfig.email}`} className="flex items-center gap-2 text-sm text-white/70 transition-opacity hover:text-white">
+                <a href={`mailto:${siteConfig.email}`} className="flex items-center gap-2 break-all text-sm text-white/70 transition-opacity hover:text-white">
                   <Mail className="h-4 w-4 shrink-0" />
                   {siteConfig.email}
                 </a>
@@ -106,7 +106,7 @@ export function Footer() {
 
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 md:flex-row">
           <p className="text-sm text-white/50">© {siteConfig.name}. Todos los derechos reservados.</p>
-          <div className="flex gap-6 text-sm text-white/50">
+          <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-white/50 md:justify-end">
             <Link href="#" className="hover:text-white">Política de Privacidad</Link>
             <Link href="#" className="hover:text-white">Accesibilidad</Link>
             <Link href="#" className="hover:text-white">Mapa del Sitio</Link>
