@@ -1,16 +1,15 @@
 "use client";
 
+import { AdminAvailabilityCalendar } from "@/components/admin/AdminAvailabilityCalendar";
 import { professionals } from "@/data/professionals";
 import { logo } from "@/data/site";
 import { formatCurrency, getAdminStats } from "@/lib/admin-stats";
 import {
-  addSlot,
   clearAdminSession,
   getAdminSession,
   getAppointmentsByProfessional,
   getAvailability,
   initStorage,
-  removeSlot,
   setAdminSession,
   updateAppointmentStatus,
   verifyPin,
@@ -30,9 +29,7 @@ import {
   LayoutDashboard,
   Lock,
   LogOut,
-  Plus,
   Sparkles,
-  Trash2,
   TrendingUp,
   Users,
   X,
@@ -43,8 +40,6 @@ import { useSyncExternalStore, useState } from "react";
 
 type View = "login" | "select-pro" | "dashboard";
 type Tab = "overview" | "appointments" | "availability";
-
-const TIME_SLOTS = ["08:00", "09:00", "10:00", "11:00", "14:00", "15:00", "16:00", "17:00", "18:00"];
 
 const STATUS_STYLES: Record<AppointmentStatus, string> = {
   pendiente: "bg-amber-50 text-amber-700 ring-amber-200",
@@ -70,8 +65,6 @@ export default function AdminPage() {
   const [pin, setPin] = useState("");
   const [pinError, setPinError] = useState(false);
   const [filter, setFilter] = useState<AppointmentStatus | "all">("all");
-  const [newDate, setNewDate] = useState("");
-  const [newTime, setNewTime] = useState("09:00");
   const [refreshKey, setRefreshKey] = useState(0);
 
   const refresh = () => setRefreshKey((k) => k + 1);
@@ -516,70 +509,12 @@ export default function AdminPage() {
             )}
 
             {tab === "availability" && (
-              <motion.div key="availability" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="space-y-6">
-                <div className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-primary/10">
-                  <h3 className="flex items-center gap-2 text-sm font-semibold text-headline">
-                    <Plus className="h-4 w-4 text-primary" /> Agregar horario
-                  </h3>
-                  <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                    <input
-                      type="date"
-                      value={newDate}
-                      onChange={(e) => setNewDate(e.target.value)}
-                      className="w-full rounded-xl border border-primary/15 bg-light px-4 py-2.5 text-sm text-headline outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 sm:w-auto"
-                    />
-                    <select
-                      value={newTime}
-                      onChange={(e) => setNewTime(e.target.value)}
-                      className="w-full rounded-xl border border-primary/15 bg-light px-4 py-2.5 text-sm text-headline outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 sm:w-auto"
-                    >
-                      {TIME_SLOTS.map((t) => (
-                        <option key={t} value={t}>{t}</option>
-                      ))}
-                    </select>
-                    <button
-                      onClick={() => { if (newDate) { addSlot(pro.id, newDate, newTime); refresh(); } }}
-                      disabled={!newDate}
-                      className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-white hover:bg-primary-dark disabled:opacity-40 sm:w-auto"
-                    >
-                      <Plus className="h-4 w-4" /> Agregar
-                    </button>
-                  </div>
-                </div>
-
-                <div className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-primary/10">
-                  <h3 className="text-sm font-semibold text-headline">Horarios configurados</h3>
-                  {availability.length === 0 ? (
-                    <p className="mt-4 text-sm text-foreground/40">Sin disponibilidad configurada</p>
-                  ) : (
-                    <div className="mt-4 max-h-[480px] space-y-4 overflow-y-auto">
-                      {availability.map((day) => (
-                        <div key={day.date} className="rounded-xl bg-violet-light/30 p-4 ring-1 ring-primary/8">
-                          <p className="text-xs font-semibold capitalize text-primary-dark">
-                            {new Date(day.date + "T12:00:00").toLocaleDateString("es-CO", { weekday: "long", day: "numeric", month: "long" })}
-                          </p>
-                          <div className="mt-2 flex flex-wrap gap-2">
-                            {day.slots.map((time) => (
-                              <span
-                                key={time}
-                                className="inline-flex items-center gap-1.5 rounded-lg bg-white px-3 py-1.5 text-xs font-medium text-primary-dark ring-1 ring-primary/15"
-                              >
-                                <Clock className="h-3 w-3 text-primary" />
-                                {time}
-                                <button
-                                  onClick={() => { removeSlot(pro.id, day.date, time); refresh(); }}
-                                  className="ml-1 text-foreground/30 hover:text-red-500"
-                                >
-                                  <Trash2 className="h-3 w-3" />
-                                </button>
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
+              <motion.div key="availability" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
+                <AdminAvailabilityCalendar
+                  professionalId={pro.id}
+                  availability={availability}
+                  onRefresh={refresh}
+                />
               </motion.div>
             )}
           </AnimatePresence>
