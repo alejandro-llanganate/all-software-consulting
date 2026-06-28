@@ -4,10 +4,14 @@
   "private": true,
   "scripts": {
     "dev": "next dev --webpack",
-    "build": "next build",
+    "build": "npm run verify:assets && next build",
     "start": "next start",
     "lint": "eslint",
-    "scrape": "tsx scripts/scrape-site.ts"
+    "verify:assets": "tsx scripts/verify-assets.ts",
+    "scrape": "tsx scripts/scrape-site.ts",
+    "docker:build": "docker compose build",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down"
   },
   "dependencies": {
     "cheerio": "^1.1.0",

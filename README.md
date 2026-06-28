@@ -1,36 +1,116 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# HABITADAS — Sitio web psicosocial
 
-## Getting Started
+Sitio Next.js 16 para HABITADAS: profesionales, agendamiento de citas y panel admin.
 
-First, run the development server:
+## Requisitos
+
+- Node.js 20+
+- npm 10+
+
+## Desarrollo local
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abre [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Imágenes
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Todas las imágenes viven en `public/` y se incluyen en el despliegue:
 
-## Learn More
+| Carpeta | Uso |
+|---------|-----|
+| `public/logo.png` | Logo del sitio |
+| `public/hero/` | Portada, servicios, áreas |
+| `public/team/` | Fotos de profesionales |
+| `public/uploads/` | Imágenes adicionales (opcional) |
 
-To learn more about Next.js, take a look at the following resources:
+Para agregar una imagen:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Colócala en la carpeta correspondiente (ej. `public/hero/nueva.jpg`)
+2. Referencia la ruta en el código: `"/hero/nueva.jpg"`
+3. Verifica que exista: `npm run verify:assets`
+4. Haz commit — la imagen viaja con el repo y el Docker
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm run verify:assets   # falla si falta alguna imagen referenciada
+```
 
-## Deploy on Vercel
+## Build de producción
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+npm run build
+npm start
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Docker (local)
+
+```bash
+npm run docker:build
+npm run docker:up
+# → http://localhost:3000
+npm run docker:down
+```
+
+## Despliegue con GitHub Actions
+
+El repositorio incluye dos workflows:
+
+### `CI` (`.github/workflows/ci.yml`)
+
+Se ejecuta en cada push y PR a `main`:
+
+- Instala dependencias
+- Verifica que todas las imágenes referenciadas existan
+- Ejecuta lint
+- Compila el proyecto
+
+### `Deploy Docker` (`.github/workflows/deploy.yml`)
+
+Se ejecuta al hacer push a `main`:
+
+- Construye la imagen Docker (incluye `public/` con todas las imágenes)
+- Publica en **GitHub Container Registry**: `ghcr.io/<usuario>/<repo>:latest`
+
+### Ejecutar en un servidor
+
+```bash
+# Login en GHCR (necesitas un PAT con read:packages)
+echo $GITHUB_TOKEN | docker login ghcr.io -u TU_USUARIO --password-stdin
+
+# Descargar y ejecutar
+docker pull ghcr.io/alejandro-llanganate/all-software-consulting:latest
+docker run -d \
+  --name habitadas \
+  -p 3000:3000 \
+  --restart unless-stopped \
+  ghcr.io/alejandro-llanganate/all-software-consulting:latest
+```
+
+### Hacer pública la imagen en GHCR
+
+1. Ve a **GitHub → Packages → tu imagen**
+2. **Package settings → Change visibility → Public**
+
+## Variables de entorno
+
+Copia `.env.example` a `.env.local` para desarrollo:
+
+```bash
+cp .env.example .env.local
+```
+
+## Rutas principales
+
+| Ruta | Descripción |
+|------|-------------|
+| `/` | Portada |
+| `/profesionales` | Listado de especialistas |
+| `/profesionales/[slug]/agendar` | Agendar cita |
+| `/admin` | Panel profesional (PIN: `1234`) |
+
+## Stack
+
+Next.js 16 · React 19 · Tailwind 4 · Framer Motion · Swiper
