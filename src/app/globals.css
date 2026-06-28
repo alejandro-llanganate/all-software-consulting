@@ -1,0 +1,168 @@
+@import "tailwindcss";
+@import "swiper/css";
+@import "swiper/css/navigation";
+@import "swiper/css/pagination";
+@import "swiper/css/effect-fade";
+
+:root {
+  --background: #faf7fc;
+  --foreground: #1a1028;
+  --primary: #7030a0;
+  --primary-dark: #55247a;
+  --secondary: #9b59c7;
+  --accent: #c6a4e6;
+  --light: #faf7fc;
+  --cream: #f3edfa;
+  --dark: #2d1b4e;
+  --headline: #2d1b4e;
+  --violet-light: #e8d5f5;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-dark: var(--primary-dark);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-light: var(--light);
+  --color-cream: var(--cream);
+  --color-dark: var(--dark);
+  --color-headline: var(--headline);
+  --color-violet-light: var(--violet-light);
+  --font-sans: var(--font-montserrat);
+  --font-serif: var(--font-alice);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-montserrat), system-ui, sans-serif;
+}
+
+.font-serif {
+  font-family: var(--font-alice), Georgia, serif;
+}
+
+.swiper-pagination-bullet {
+  background: var(--primary) !important;
+  opacity: 0.35;
+  width: 8px;
+  height: 8px;
+  transition: all 0.3s cubic-bezier(0.24, 1, 0.3, 1);
+}
+
+.swiper-pagination-bullet-active {
+  opacity: 1 !important;
+  width: 24px;
+  border-radius: 4px;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: var(--primary-dark) !important;
+  background: white;
+  width: 44px !important;
+  height: 44px !important;
+  border-radius: 50%;
+  box-shadow: 0 2px 12px rgba(112, 48, 160, 0.12);
+  transition: all 0.3s cubic-bezier(0.24, 1, 0.3, 1);
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  background: var(--violet-light);
+  transform: translateY(-2px);
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 16px !important;
+  font-weight: bold;
+}
+
+.carousel-fade-edges {
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 5%,
+    black 95%,
+    transparent
+  );
+}
+
+.therapy-card {
+  transition: transform 0.3s cubic-bezier(0.24, 1, 0.3, 1),
+    box-shadow 0.3s cubic-bezier(0.24, 1, 0.3, 1);
+}
+
+.therapy-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(112, 48, 160, 0.15);
+}
+
+.therapy-card:hover .therapy-card-image {
+  transform: scale(1.08);
+}
+
+.therapy-card-image {
+  transition: transform 0.5s cubic-bezier(0.24, 1, 0.3, 1);
+}
+
+.challenge-card {
+  transition: transform 0.3s cubic-bezier(0.24, 1, 0.3, 1),
+    box-shadow 0.3s cubic-bezier(0.24, 1, 0.3, 1);
+}
+
+.challenge-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(112, 48, 160, 0.1);
+}
+
+.swiper-slide-active .slide-blur-content {
+  filter: blur(0);
+  opacity: 1;
+  transform: scale(1);
+}
+
+.swiper-slide:not(.swiper-slide-active) .slide-blur-content {
+  filter: blur(4px);
+  opacity: 0.6;
+  transform: scale(0.98);
+  transition: all 0.6s cubic-bezier(0.24, 1, 0.3, 1);
+}
+
+.slide-blur-content {
+  transition: all 0.6s cubic-bezier(0.24, 1, 0.3, 1);
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mobile-menu-enter {
+  animation: slideDown 0.35s cubic-bezier(0.24, 1, 0.3, 1) forwards;
+}
+
+.enfoque-card {
+  transition: transform 0.3s cubic-bezier(0.24, 1, 0.3, 1),
+    box-shadow 0.3s cubic-bezier(0.24, 1, 0.3, 1),
+    border-color 0.3s ease;
+}
+
+.enfoque-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(112, 48, 160, 0.12);
+  border-color: var(--accent);
+}

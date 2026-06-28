@@ -1,0 +1,580 @@
+"use client";
+
+import { professionals } from "@/data/professionals";
+import { formatCurrency, getAdminStats } from "@/lib/admin-stats";
+import {
+  addSlot,
+  clearAdminSession,
+  getAdminSession,
+  getAppointmentsByProfessional,
+  getAvailability,
+  initStorage,
+  removeSlot,
+  setAdminSession,
+  updateAppointmentStatus,
+  verifyPin,
+} from "@/lib/booking-storage";
+import type { AppointmentStatus } from "@/types";
+import { cn } from "@/lib/utils";
+import { AnimatePresence, motion } from "framer-motion";
+import {
+  ArrowLeft,
+  BarChart3,
+  Calendar,
+  CalendarDays,
+  Check,
+  ChevronRight,
+  Clock,
+  DollarSign,
+  LayoutDashboard,
+  Lock,
+  LogOut,
+  Plus,
+  Sparkles,
+  Trash2,
+  TrendingUp,
+  Users,
+  X,
+} from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useMemo, useState } from "react";
+
+type View = "login" | "select-pro" | "dashboard";
+type Tab = "overview" | "appointments" | "availability";
+
+const TIME_SLOTS = ["08:00", "09:00", "10:00", "11:00", "14:00", "15:00", "16:00", "17:00", "18:00"];
+
+const STATUS_STYLES: Record<AppointmentStatus, string> = {
+  pendiente: "bg-amber-50 text-amber-700 ring-amber-200",
+  completada: "bg-emerald-50 text-emerald-700 ring-emerald-200",
+  cancelada: "bg-red-50 text-red-600 ring-red-200",
+};
+
+export default function AdminPage() {
+  const [view, setView] = useState<View>("login");
+  const [tab, setTab] = useState<Tab>("overview");
+  const [pin, setPin] = useState("");
+  const [pinError, setPinError] = useState(false);
+  const [selectedProId, setSelectedProId] = useState<string | null>(null);
+  const [filter, setFilter] = useState<AppointmentStatus | "all">("all");
+  const [newDate, setNewDate] = useState("");
+  const [newTime, setNewTime] = useState("09:00");
+  const [tick, setTick] = useState(0);
+
+  const refresh = () => setTick((t) => t + 1);
+
+  useEffect(() => {
+    initStorage();
+    const session = getAdminSession();
+    if (session) {
+      setSelectedProId(session);
+      setView("dashboard");
+    }
+  }, []);
+
+  const pro = professionals.find((p) => p.id === selectedProId);
+  const stats = useMemo(
+    () => (selectedProId ? getAdminStats(selectedProId) : null),
+    [selectedProId, tick],
+  );
+  const appointments = useMemo(
+    () => (selectedProId ? getAppointmentsByProfessional(selectedProId) : []),
+    [selectedProId, tick],
+  );
+  const availability = useMemo(
+    () => (selectedProId ? getAvailability(selectedProId) : []),
+    [selectedProId, tick],
+  );
+
+  const filteredAppointments = useMemo(
+    () => (filter === "all" ? appointments : appointments.filter((a) => a.status === filter)),
+    [appointments, filter],
+  );
+
+  const maxBar = Math.max(...(stats?.byMonth.map((m) => m.count) ?? [1]), 1);
+
+  const handlePinSubmit = () => {
+    if (verifyPin(pin)) {
+      setPinError(false);
+      setView("select-pro");
+    } else setPinError(true);
+  };
+
+  const handleSelectPro = (id: string) => {
+    setSelectedProId(id);
+    setAdminSession(id);
+    setView("dashboard");
+    refresh();
+  };
+
+  const handleLogout = () => {
+    clearAdminSession();
+    setSelectedProId(null);
+    setView("login");
+    setPin("");
+    setTab("overview");
+  };
+
+  const formatAptDate = (d: string) =>
+    new Date(d + "T12:00:00").toLocaleDateString("es-CO", {
+      weekday: "short",
+      day: "numeric",
+      month: "short",
+    });
+
+  if (view === "login") {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-violet-light/60 via-white to-cream p-6">
+        <motion.div
+          initial={{ opacity: 0, y: 24, scale: 0.98 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          className="w-full max-w-md overflow-hidden rounded-3xl bg-white shadow-xl shadow-primary/10 ring-1 ring-primary/10"
+        >
+          <div className="border-b border-primary/10 bg-gradient-to-r from-violet-light/80 to-white px-8 py-6">
+            <div className="flex items-center gap-3">
+              <Image src="/logo.png" alt="HABITADAS" width={40} height={40} className="h-10 w-10" />
+              <div>
+                <p className="font-serif text-xl text-primary-dark">HABITADAS</p>
+                <p className="text-xs text-foreground/50">Panel profesional</p>
+              </div>
+            </div>
+          </div>
+          <div className="p-8">
+            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10">
+              <Lock className="h-7 w-7 text-primary" />
+            </div>
+            <h1 className="mt-5 text-center text-xl font-semibold text-headline">Acceso seguro</h1>
+            <p className="mt-1 text-center text-sm text-foreground/50">Ingresa tu PIN de 4 dígitos</p>
+            <input
+              type="password"
+              maxLength={4}
+              value={pin}
+              onChange={(e) => setPin(e.target.value.replace(/\D/g, ""))}
+              onKeyDown={(e) => e.key === "Enter" && handlePinSubmit()}
+              placeholder="••••"
+              className="mt-6 w-full rounded-2xl border border-primary/15 bg-light px-4 py-4 text-center text-3xl tracking-[0.6em] text-headline outline-none focus:border-primary focus:ring-4 focus:ring-primary/10"
+            />
+            {pinError && <p className="mt-2 text-center text-sm text-red-500">PIN incorrecto</p>}
+            <button
+              onClick={handlePinSubmit}
+              className="mt-6 w-full rounded-2xl bg-primary py-4 text-sm font-semibold text-white transition-all hover:bg-primary-dark hover:shadow-lg hover:shadow-primary/25"
+            >
+              Ingresar al panel
+            </button>
+            <Link href="/" className="mt-4 flex items-center justify-center gap-1 text-xs text-foreground/40 hover:text-primary">
+              <ArrowLeft className="h-3 w-3" /> Volver al sitio
+            </Link>
+          </div>
+        </motion.div>
+      </div>
+    );
+  }
+
+  if (view === "select-pro") {
+    return (
+      <div className="min-h-screen bg-[#F4F0FA] p-6 pt-12">
+        <div className="mx-auto max-w-3xl">
+          <button onClick={handleLogout} className="mb-8 flex items-center gap-2 text-sm text-foreground/50 hover:text-primary">
+            <ArrowLeft className="h-4 w-4" /> Cerrar sesión
+          </button>
+          <h1 className="font-serif text-3xl text-headline">Selecciona tu perfil</h1>
+          <p className="mt-2 text-foreground/50">Accede al dashboard de tu consulta</p>
+          <div className="mt-8 grid gap-3 sm:grid-cols-2">
+            {professionals.map((p, i) => (
+              <motion.button
+                key={p.id}
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.05 }}
+                onClick={() => handleSelectPro(p.id)}
+                className="group flex items-center gap-4 rounded-2xl bg-white p-5 text-left shadow-sm ring-1 ring-primary/10 transition-all hover:-translate-y-0.5 hover:shadow-md hover:ring-primary/30"
+              >
+                <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-xl">
+                  <Image src={p.image} alt={p.name} fill className="object-cover" sizes="56px" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="truncate font-semibold text-headline">{p.name}</p>
+                  <p className="text-sm text-foreground/50">{p.title}</p>
+                </div>
+                <ChevronRight className="h-5 w-5 text-primary/30 transition-transform group-hover:translate-x-1 group-hover:text-primary" />
+              </motion.button>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!pro || !stats) return null;
+
+  const navItems: { id: Tab; label: string; icon: typeof LayoutDashboard }[] = [
+    { id: "overview", label: "Resumen", icon: LayoutDashboard },
+    { id: "appointments", label: "Citas", icon: CalendarDays },
+    { id: "availability", label: "Disponibilidad", icon: Clock },
+  ];
+
+  return (
+    <div className="flex min-h-screen">
+      {/* Sidebar */}
+      <aside className="fixed inset-y-0 left-0 z-40 hidden w-64 flex-col border-r border-primary/10 bg-white shadow-sm lg:flex">
+        <div className="border-b border-primary/10 px-5 py-5">
+          <div className="flex items-center gap-3">
+            <Image src="/logo.png" alt="" width={36} height={36} className="h-9 w-9" />
+            <div>
+              <p className="font-serif text-lg text-primary-dark">HABITADAS</p>
+              <p className="text-[10px] tracking-widest text-primary/60 uppercase">Panel Pro</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="border-b border-primary/10 px-4 py-4">
+          <div className="flex items-center gap-3 rounded-xl bg-violet-light/50 p-3">
+            <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-lg ring-2 ring-white">
+              <Image src={pro.image} alt="" fill className="object-cover" sizes="40px" />
+            </div>
+            <div className="min-w-0">
+              <p className="truncate text-sm font-medium text-headline">{pro.name.split(" ").slice(-2).join(" ")}</p>
+              <p className="truncate text-xs text-foreground/50">{pro.title}</p>
+            </div>
+          </div>
+        </div>
+
+        <nav className="flex-1 space-y-1 p-3">
+          {navItems.map(({ id, label, icon: Icon }) => (
+            <button
+              key={id}
+              onClick={() => setTab(id)}
+              className={cn(
+                "flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all",
+                tab === id
+                  ? "bg-primary text-white shadow-md shadow-primary/20"
+                  : "text-foreground/55 hover:bg-violet-light/50 hover:text-primary-dark",
+              )}
+            >
+              <Icon className="h-4 w-4" />
+              {label}
+              {id === "appointments" && stats.pending > 0 && (
+                <span className="ml-auto rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-bold text-amber-700">
+                  {stats.pending}
+                </span>
+              )}
+            </button>
+          ))}
+        </nav>
+
+        <div className="space-y-1 border-t border-primary/10 p-3">
+          <button
+            onClick={() => { setView("select-pro"); setTab("overview"); }}
+            className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-foreground/50 hover:bg-violet-light/40 hover:text-primary-dark"
+          >
+            <Users className="h-4 w-4" /> Cambiar perfil
+          </button>
+          <button
+            onClick={handleLogout}
+            className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-red-500/70 hover:bg-red-50 hover:text-red-600"
+          >
+            <LogOut className="h-4 w-4" /> Cerrar sesión
+          </button>
+          <Link href="/" className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-foreground/40 hover:text-primary">
+            <ArrowLeft className="h-4 w-4" /> Ir al sitio
+          </Link>
+        </div>
+      </aside>
+
+      <div className="flex flex-1 flex-col lg:ml-64">
+        <header className="sticky top-0 z-30 flex items-center justify-between border-b border-primary/10 bg-white/95 px-4 py-3 backdrop-blur-lg lg:hidden">
+          <div className="flex items-center gap-2">
+            <Image src="/logo.png" alt="" width={28} height={28} />
+            <span className="font-serif text-primary-dark">Panel Pro</span>
+          </div>
+          <button onClick={handleLogout} className="rounded-lg p-2 text-foreground/40 hover:text-primary">
+            <LogOut className="h-5 w-5" />
+          </button>
+        </header>
+
+        <div className="flex gap-1 overflow-x-auto border-b border-primary/10 bg-white px-4 py-2 lg:hidden">
+          {navItems.map(({ id, label }) => (
+            <button
+              key={id}
+              onClick={() => setTab(id)}
+              className={cn(
+                "shrink-0 rounded-full px-4 py-1.5 text-xs font-medium",
+                tab === id ? "bg-primary text-white" : "bg-violet-light/60 text-foreground/50",
+              )}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+
+        <main className="flex-1 p-4 sm:p-6 lg:p-8">
+          <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <p className="text-xs font-medium tracking-widest text-primary uppercase">
+                {new Date().toLocaleDateString("es-CO", { weekday: "long", day: "numeric", month: "long" })}
+              </p>
+              <h1 className="mt-1 font-serif text-2xl text-headline sm:text-3xl">
+                {tab === "overview" && "Resumen general"}
+                {tab === "appointments" && "Gestión de citas"}
+                {tab === "availability" && "Disponibilidad"}
+              </h1>
+            </div>
+            <div className="flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1.5 ring-1 ring-emerald-200">
+              <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-500" />
+              <span className="text-xs font-medium text-emerald-700">En línea</span>
+            </div>
+          </div>
+
+          <AnimatePresence mode="wait">
+            {tab === "overview" && (
+              <motion.div key="overview" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="space-y-6">
+                <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+                  {[
+                    { label: "Ingresos totales", value: formatCurrency(stats.totalRevenue), sub: "Citas completadas", icon: DollarSign, bg: "bg-emerald-50 ring-emerald-100", iconC: "text-emerald-500" },
+                    { label: "Ingresos del mes", value: formatCurrency(stats.monthRevenue), sub: "Mes actual", icon: TrendingUp, bg: "bg-violet-light/70 ring-primary/10", iconC: "text-primary" },
+                    { label: "Valor por sesión", value: formatCurrency(stats.sessionPrice), sub: "Tarifa configurada", icon: Sparkles, bg: "bg-accent/20 ring-accent/30", iconC: "text-primary-dark" },
+                    { label: "Tasa completación", value: `${stats.completionRate}%`, sub: `${stats.completed} de ${stats.totalAppointments} citas`, icon: BarChart3, bg: "bg-white ring-primary/10", iconC: "text-primary" },
+                  ].map((kpi) => (
+                    <div key={kpi.label} className={cn("overflow-hidden rounded-2xl p-5 shadow-sm ring-1", kpi.bg)}>
+                      <div className="flex items-start justify-between">
+                        <p className="text-xs font-medium text-foreground/50">{kpi.label}</p>
+                        <kpi.icon className={cn("h-4 w-4", kpi.iconC)} />
+                      </div>
+                      <p className="mt-3 text-2xl font-bold text-headline">{kpi.value}</p>
+                      <p className="mt-1 text-xs text-foreground/40">{kpi.sub}</p>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="grid gap-6 lg:grid-cols-3">
+                  <div className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-primary/10 lg:col-span-1">
+                    <h3 className="text-sm font-semibold text-headline">Estado de citas</h3>
+                    <div className="mt-5 space-y-4">
+                      {stats.statusBreakdown.map((s) => (
+                        <div key={s.status}>
+                          <div className="mb-1.5 flex justify-between text-sm">
+                            <span className="text-foreground/60">{s.label}</span>
+                            <span className="font-semibold text-headline">{s.count}</span>
+                          </div>
+                          <div className="h-2 overflow-hidden rounded-full bg-violet-light/60">
+                            <div
+                              className={cn(
+                                "h-full rounded-full transition-all duration-700",
+                                s.status === "pendiente" && "bg-amber-400",
+                                s.status === "completada" && "bg-emerald-500",
+                                s.status === "cancelada" && "bg-red-400",
+                              )}
+                              style={{ width: `${stats.totalAppointments ? (s.count / stats.totalAppointments) * 100 : 0}%` }}
+                            />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="mt-6 grid grid-cols-3 gap-2">
+                      {[
+                        { n: stats.pending, l: "Pend.", c: "text-amber-600" },
+                        { n: stats.completed, l: "Compl.", c: "text-emerald-600" },
+                        { n: stats.cancelled, l: "Cancel.", c: "text-red-500" },
+                      ].map((x) => (
+                        <div key={x.l} className="rounded-xl bg-violet-light/40 py-3 text-center">
+                          <p className={cn("text-xl font-bold", x.c)}>{x.n}</p>
+                          <p className="text-[10px] text-foreground/40">{x.l}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-primary/10 lg:col-span-2">
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-sm font-semibold text-headline">Actividad — últimos 6 meses</h3>
+                      <span className="text-xs text-foreground/40">Citas · Ingresos</span>
+                    </div>
+                    <div className="mt-6 flex h-40 items-end justify-between gap-2">
+                      {stats.byMonth.map((m) => (
+                        <div key={m.label} className="flex flex-1 flex-col items-center gap-2">
+                          <span className="text-[10px] font-medium text-emerald-600">
+                            {m.revenue > 0 ? `$${(m.revenue / 1000).toFixed(0)}k` : ""}
+                          </span>
+                          <div
+                            className="w-full max-w-[40px] rounded-t-lg bg-gradient-to-t from-primary to-accent transition-all duration-700"
+                            style={{ height: `${Math.max((m.count / maxBar) * 100, m.count > 0 ? 8 : 2)}%` }}
+                          />
+                          <span className="text-[10px] text-foreground/40">{m.label}</span>
+                          <span className="text-xs font-semibold text-headline">{m.count}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-primary/10">
+                  <div className="flex items-center justify-between">
+                    <h3 className="flex items-center gap-2 text-sm font-semibold text-headline">
+                      <Calendar className="h-4 w-4 text-primary" />
+                      Próximas citas
+                    </h3>
+                    <button onClick={() => setTab("appointments")} className="text-xs text-primary hover:text-primary-dark">
+                      Ver todas →
+                    </button>
+                  </div>
+                  {stats.upcoming.length === 0 ? (
+                    <p className="mt-6 text-center text-sm text-foreground/40">No hay citas próximas</p>
+                  ) : (
+                    <div className="mt-4 divide-y divide-primary/8">
+                      {stats.upcoming.slice(0, 5).map((apt) => (
+                        <div key={apt.id} className="flex items-center justify-between py-3">
+                          <div>
+                            <p className="font-medium text-headline">{apt.clientName}</p>
+                            <p className="text-xs capitalize text-foreground/50">{formatAptDate(apt.date)} · {apt.time}</p>
+                          </div>
+                          <span className="text-sm font-semibold text-emerald-600">{formatCurrency(stats.sessionPrice)}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </motion.div>
+            )}
+
+            {tab === "appointments" && (
+              <motion.div key="appointments" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="space-y-4">
+                <div className="flex flex-wrap gap-2">
+                  {(["all", "pendiente", "completada", "cancelada"] as const).map((f) => (
+                    <button
+                      key={f}
+                      onClick={() => setFilter(f)}
+                      className={cn(
+                        "rounded-full px-4 py-1.5 text-xs font-medium capitalize transition-all",
+                        filter === f ? "bg-primary text-white shadow-sm" : "bg-white text-foreground/50 ring-1 ring-primary/15 hover:ring-primary/40",
+                      )}
+                    >
+                      {f === "all" ? "Todas" : f}
+                    </button>
+                  ))}
+                </div>
+
+                <div className="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-primary/10">
+                  {filteredAppointments.length === 0 ? (
+                    <p className="py-16 text-center text-sm text-foreground/40">No hay citas en este filtro</p>
+                  ) : (
+                    <div className="divide-y divide-primary/8">
+                      {filteredAppointments.map((apt) => (
+                        <div key={apt.id} className="p-5 transition-colors hover:bg-violet-light/20">
+                          <div className="flex flex-wrap items-start justify-between gap-3">
+                            <div className="min-w-0 flex-1">
+                              <div className="flex flex-wrap items-center gap-2">
+                                <p className="font-semibold text-headline">{apt.clientName}</p>
+                                <span className={cn("rounded-full px-2.5 py-0.5 text-[10px] font-semibold capitalize ring-1", STATUS_STYLES[apt.status])}>
+                                  {apt.status}
+                                </span>
+                              </div>
+                              <p className="mt-1 text-sm capitalize text-foreground/55">
+                                {formatAptDate(apt.date)} · {apt.time}
+                              </p>
+                              <p className="mt-2 line-clamp-2 text-xs text-foreground/45">{apt.reason}</p>
+                              <div className="mt-2 flex flex-wrap gap-3 text-xs text-foreground/40">
+                                <span>{apt.clientPhone}</span>
+                                <span>{apt.clientEmail}</span>
+                                <span>Ref: {apt.paymentReference}</span>
+                              </div>
+                            </div>
+                            <p className="text-lg font-bold text-emerald-600">{formatCurrency(stats.sessionPrice)}</p>
+                          </div>
+                          {apt.status === "pendiente" && (
+                            <div className="mt-4 flex gap-2">
+                              <button
+                                onClick={() => { updateAppointmentStatus(apt.id, "completada"); refresh(); }}
+                                className="flex items-center gap-1.5 rounded-xl bg-emerald-600 px-4 py-2 text-xs font-semibold text-white hover:bg-emerald-700"
+                              >
+                                <Check className="h-3.5 w-3.5" /> Marcar completada
+                              </button>
+                              <button
+                                onClick={() => { updateAppointmentStatus(apt.id, "cancelada"); refresh(); }}
+                                className="flex items-center gap-1.5 rounded-xl bg-red-50 px-4 py-2 text-xs font-medium text-red-600 ring-1 ring-red-200 hover:bg-red-100"
+                              >
+                                <X className="h-3.5 w-3.5" /> Cancelar
+                              </button>
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </motion.div>
+            )}
+
+            {tab === "availability" && (
+              <motion.div key="availability" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="space-y-6">
+                <div className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-primary/10">
+                  <h3 className="flex items-center gap-2 text-sm font-semibold text-headline">
+                    <Plus className="h-4 w-4 text-primary" /> Agregar horario
+                  </h3>
+                  <div className="mt-4 flex flex-wrap gap-3">
+                    <input
+                      type="date"
+                      value={newDate}
+                      onChange={(e) => setNewDate(e.target.value)}
+                      className="rounded-xl border border-primary/15 bg-light px-4 py-2.5 text-sm text-headline outline-none focus:border-primary focus:ring-2 focus:ring-primary/10"
+                    />
+                    <select
+                      value={newTime}
+                      onChange={(e) => setNewTime(e.target.value)}
+                      className="rounded-xl border border-primary/15 bg-light px-4 py-2.5 text-sm text-headline outline-none focus:border-primary focus:ring-2 focus:ring-primary/10"
+                    >
+                      {TIME_SLOTS.map((t) => (
+                        <option key={t} value={t}>{t}</option>
+                      ))}
+                    </select>
+                    <button
+                      onClick={() => { if (newDate) { addSlot(pro.id, newDate, newTime); refresh(); } }}
+                      disabled={!newDate}
+                      className="flex items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-white hover:bg-primary-dark disabled:opacity-40"
+                    >
+                      <Plus className="h-4 w-4" /> Agregar
+                    </button>
+                  </div>
+                </div>
+
+                <div className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-primary/10">
+                  <h3 className="text-sm font-semibold text-headline">Horarios configurados</h3>
+                  {availability.length === 0 ? (
+                    <p className="mt-4 text-sm text-foreground/40">Sin disponibilidad configurada</p>
+                  ) : (
+                    <div className="mt-4 max-h-[480px] space-y-4 overflow-y-auto">
+                      {availability.map((day) => (
+                        <div key={day.date} className="rounded-xl bg-violet-light/30 p-4 ring-1 ring-primary/8">
+                          <p className="text-xs font-semibold capitalize text-primary-dark">
+                            {new Date(day.date + "T12:00:00").toLocaleDateString("es-CO", { weekday: "long", day: "numeric", month: "long" })}
+                          </p>
+                          <div className="mt-2 flex flex-wrap gap-2">
+                            {day.slots.map((time) => (
+                              <span
+                                key={time}
+                                className="inline-flex items-center gap-1.5 rounded-lg bg-white px-3 py-1.5 text-xs font-medium text-primary-dark ring-1 ring-primary/15"
+                              >
+                                <Clock className="h-3 w-3 text-primary" />
+                                {time}
+                                <button
+                                  onClick={() => { removeSlot(pro.id, day.date, time); refresh(); }}
+                                  className="ml-1 text-foreground/30 hover:text-red-500"
+                                >
+                                  <Trash2 className="h-3 w-3" />
+                                </button>
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </main>
+      </div>
+    </div>
+  );
+}

@@ -1,0 +1,179 @@
+"use client";
+
+import { areas } from "@/data/areas";
+import { professionals } from "@/data/professionals";
+import { cn } from "@/lib/utils";
+import type { AreaSlug } from "@/types";
+import { motion } from "framer-motion";
+import { Calendar, GraduationCap } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import { Suspense, useState } from "react";
+
+function ProfessionalsContent() {
+  const searchParams = useSearchParams();
+  const initialArea = searchParams.get("area") as AreaSlug | null;
+  const [activeArea, setActiveArea] = useState<AreaSlug | "all">(
+    initialArea && areas.some((a) => a.slug === initialArea) ? initialArea : "all",
+  );
+
+  const filtered =
+    activeArea === "all"
+      ? professionals
+      : professionals.filter((p) => p.areas.includes(activeArea));
+
+  return (
+    <div className="min-h-screen bg-light pt-24 pb-20">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-12 text-center"
+        >
+          <p className="mb-2 text-sm font-medium tracking-widest text-primary uppercase">
+            Red de profesionales
+          </p>
+          <h1 className="font-serif text-4xl text-headline md:text-5xl">
+            Encuentra tu especialista
+          </h1>
+          <p className="mx-auto mt-3 max-w-xl text-foreground/65">
+            Filtra por área, conoce la formación de cada profesional y agenda en línea.
+          </p>
+          <Link
+            href={filtered.length === 1 ? `/profesionales/${filtered[0].slug}/agendar` : "#profesionales-grid"}
+            className="mt-6 inline-flex items-center gap-2 rounded-full bg-primary px-8 py-4 text-sm font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-primary-dark hover:shadow-lg hover:shadow-primary/25"
+          >
+            <Calendar className="h-5 w-5" />
+            Agendar una cita
+          </Link>
+        </motion.div>
+
+        <div className="mb-12 flex flex-wrap justify-center gap-2">
+          <button
+            onClick={() => setActiveArea("all")}
+            className={cn(
+              "rounded-full px-4 py-2 text-sm font-medium transition-all duration-300",
+              activeArea === "all"
+                ? "bg-primary text-white shadow-md shadow-primary/25"
+                : "bg-white text-foreground/70 ring-1 ring-primary/15 hover:ring-primary/40",
+            )}
+          >
+            Todas las áreas
+          </button>
+          {areas.map((area) => (
+            <button
+              key={area.slug}
+              onClick={() => setActiveArea(area.slug)}
+              className={cn(
+                "rounded-full px-4 py-2 text-sm font-medium transition-all duration-300",
+                activeArea === area.slug
+                  ? "bg-primary text-white shadow-md shadow-primary/25"
+                  : "bg-white text-foreground/70 ring-1 ring-primary/15 hover:ring-primary/40",
+              )}
+            >
+              {area.label}
+            </button>
+          ))}
+        </div>
+
+        <motion.div
+          id="profesionales-grid"
+          layout
+          className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+        >
+          {filtered.map((prof, i) => (
+            <motion.div
+              key={prof.id}
+              layout
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.06 }}
+              className="group overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-primary/10 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-primary/15"
+            >
+              <Link href={`/profesionales/${prof.slug}`} className="block">
+                <div className="relative aspect-[4/3] overflow-hidden">
+                  <Image
+                    src={prof.image}
+                    alt={prof.name}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    sizes="(max-width:768px) 100vw, 33vw"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-primary-dark/80 via-primary/20 to-transparent" />
+                  <div className="absolute right-0 bottom-0 left-0 p-5">
+                    <h3 className="font-serif text-xl text-white">{prof.name}</h3>
+                    <p className="text-sm text-white/80">{prof.title}</p>
+                  </div>
+                </div>
+              </Link>
+              <div className="p-5">
+                <p className="text-sm text-foreground/65">{prof.shortBio}</p>
+
+                <div className="mt-3 flex items-start gap-2 text-xs text-foreground/50">
+                  <GraduationCap className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary/50" />
+                  <span>{prof.education[0]?.degree} · {prof.education[0]?.institution}</span>
+                </div>
+
+                <div className="mt-3 flex flex-wrap gap-1.5">
+                  {prof.specializations.slice(0, 3).map((s) => (
+                    <span
+                      key={s}
+                      className="rounded-full bg-violet-light/60 px-2.5 py-0.5 text-xs font-medium text-primary-dark"
+                    >
+                      {s}
+                    </span>
+                  ))}
+                </div>
+
+                <div className="mt-3 flex flex-wrap gap-1.5">
+                  {prof.areas.slice(0, 2).map((a) => {
+                    const area = areas.find((ar) => ar.slug === a);
+                    return (
+                      <span
+                        key={a}
+                        className="rounded-full px-2 py-0.5 text-[10px] font-medium text-white"
+                        style={{ backgroundColor: area?.color ?? "#7030A0" }}
+                      >
+                        {area?.label}
+                      </span>
+                    );
+                  })}
+                </div>
+
+                <div className="mt-4 flex gap-2">
+                  <Link
+                    href={`/profesionales/${prof.slug}`}
+                    className="flex-1 rounded-full border border-primary/20 py-2.5 text-center text-xs font-medium text-primary transition-colors hover:bg-violet-light/50"
+                  >
+                    Ver perfil
+                  </Link>
+                  <Link
+                    href={`/profesionales/${prof.slug}/agendar`}
+                    className="flex-1 rounded-full bg-primary py-2.5 text-center text-xs font-semibold text-white transition-all hover:bg-primary-dark"
+                  >
+                    Agendar
+                  </Link>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {filtered.length === 0 && (
+          <p className="py-20 text-center text-foreground/50">
+            No hay profesionales en esta área por ahora.
+          </p>
+        )}
+      </div>
+    </div>
+  );
+}
+
+export default function ProfesionalesPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-light pt-32 text-center">Cargando...</div>}>
+      <ProfessionalsContent />
+    </Suspense>
+  );
+}

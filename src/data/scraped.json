@@ -1,0 +1,205 @@
+{
+  "scrapedAt": "2026-06-28T16:30:00.000Z",
+  "source": "https://themodernpsychology.com/es/inicio/",
+  "scrapeMethod": "local-download-with-original-filenames",
+  "colors": {
+    "primary": "#717F71",
+    "secondary": "#6D5A46",
+    "accent": "#475347",
+    "light": "#FDFAF7",
+    "cream": "#F3EFEB",
+    "dark": "#171F17",
+    "text": "#0C0C0C",
+    "headline": "#070707"
+  },
+  "fonts": [
+    "Alice",
+    "Montserrat"
+  ],
+  "videos": {
+    "hero": "",
+    "office": ""
+  },
+  "logo": {
+    "default": "/scraped/MP-Logo.svg",
+    "white": "/scraped/MP-Logo-WHITE.svg",
+    "favicon": "/scraped/favicon-mp.svg"
+  },
+  "hero": {
+    "subtitle": "Servicios de Salud Mental en South Miami",
+    "title": "Psicología Moderna para los Desafíos de Hoy",
+    "description": "Atención compasiva y basada en evidencia para niños, adolescentes, adultos y familias en South Miami, enfocada en la sanación, el crecimiento y el bienestar emocional a largo plazo.",
+    "video": ""
+  },
+  "welcome": {
+    "eyebrow": "Bienvenidos a Modern Psychology",
+    "title": "El Enfoque Moderno de South Miami para la Salud Mental",
+    "paragraphs": [
+      "En Modern Psychology en South Miami, apoyamos a niños, adolescentes, adultos y familias en cada etapa de su bienestar emocional y mental. Nuestro enfoque combina terapias basadas en evidencia con un ambiente cálido y compasivo que ayuda a las personas a obtener claridad, desarrollar resiliencia y avanzar con confianza.",
+      "Ya sea que estés buscando apoyo para tu hijo, navegando los retos de la adolescencia, o manejando ansiedad, estrés, dificultades en las relaciones o transiciones importantes como adulto, ofrecemos atención personalizada diseñada para satisfacer las diversas necesidades de nuestra comunidad de Miami."
+    ],
+    "image": "/scraped/20211003_19453477.jpg"
+  },
+  "office": {
+    "badge": "\"Mejor Servicio de Salud Mental 2025\" según BusinessRate",
+    "title": "Un Espacio Diseñado para tu Comodidad",
+    "paragraphs": [
+      "Nuestra oficina de terapia en South Miami está diseñada cuidadosamente para sentirse como un refugio tranquilo del estrés cotidiano. Con tonos cálidos, iluminación suave y detalles intencionales que crean una sensación de serenidad, es un espacio donde puedes relajarte, respirar profundo y sentirte verdaderamente apoyado durante tus sesiones.",
+      "Estamos orgullosos de que Modern Psychology haya sido reconocido como el Mejor Servicio de Salud Mental en South Miami para el 2025 por BusinessRate, un reflejo de nuestro compromiso continuo con una atención compasiva, basada en evidencia."
+    ],
+    "image": "/scraped/20211003_195514960-2048x1363.jpg",
+    "video": ""
+  },
+  "services": [
+    {
+      "title": "Terapia Individual",
+      "description": "Apoyo personalizado y uno a uno diseñado para ayudarte a comprender patrones, reducir síntomas y crear cambios significativos. Ideal para ansiedad, depresión, trauma y transiciones de vida.",
+      "image": "/scraped/2202038680.jpg"
+    },
+    {
+      "title": "Terapia de Pareja",
+      "description": "Fortalezcan su conexión a través de una comunicación guiada, comprensión emocional y crecimiento en conjunto. Reconstruyan la confianza, resuelvan conflictos y vuelvan a conectarse de manera significativa.",
+      "image": "/scraped/2167024571.jpg"
+    },
+    {
+      "title": "Terapia para Niños y Adolescentes",
+      "description": "Consejería especializada que apoya a niños y jóvenes en los desafíos emocionales, sociales y conductuales que surgen durante la niñez y la adolescencia.",
+      "image": "/scraped/398253928.jpg"
+    },
+    {
+      "title": "Terapia Familiar",
+      "description": "Apoyo para mejorar la dinámica familiar y fortalecer la comunicación entre padres, adolescentes y cuidadores. Promueve la conexión y reduce la tensión dentro del hogar.",
+      "image": "/scraped/1387143441.jpg"
+    },
+    {
+      "title": "Sesiones en Línea",
+      "description": "Atención experta desde la comodidad de tu hogar. Terapia por video segura y compatible con HIPAA, que se adapta a tu horario y mantiene el mismo nivel de apoyo profesional.",
+      "image": "/scraped/2175077429-scaled.jpg"
+    },
+    {
+      "title": "Sesiones Intensivas",
+      "description": "Tiempo de terapia extendido para un trabajo más profundo y enfocado. Ideal para el procesamiento de trauma, avances significativos y desafíos emocionales complejos que requieren atención dedicada.",
+      "image": "/scraped/2215349197.jpg"
+    }
+  ],
+  "challenges": [
+    {
+      "title": "Ansiedad y Trastornos de Pánico",
+      "description": "Te ayudamos a manejar pensamientos abrumadores, síntomas físicos y respuestas de miedo mediante técnicas calmantes y basadas en evidencia."
+    },
+    {
+      "title": "Depresión y Trastornos del Estado de Ánimo",
+      "description": "Nuestro enfoque apoya la estabilización del estado de ánimo, la resiliencia emocional y una motivación renovada en tu vida diaria."
+    },
+    {
+      "title": "Trauma y TEPT (PTSD)",
+      "description": "Ofrecemos un espacio seguro para procesar el trauma, reducir detonantes y reconstruir una sensación de seguridad y empoderamiento."
+    },
+    {
+      "title": "Dificultades en las Relaciones",
+      "description": "Te guiamos hacia una comunicación más saludable, mayor comprensión emocional y conexiones más satisfactorias."
+    },
+    {
+      "title": "Transiciones de Vida",
+      "description": "Apoyo para navegar cambios importantes con claridad, confianza y equilibrio emocional."
+    },
+    {
+      "title": "Duelo y Pérdida",
+      "description": "Atención compasiva para ayudarte a honrar tu experiencia y avanzar a tu propio ritmo a través de la complejidad del duelo."
+    },
+    {
+      "title": "Manejo del Estrés",
+      "description": "Herramientas y estrategias prácticas para reducir el estrés, restaurar el equilibrio y fortalecer tu bienestar emocional."
+    },
+    {
+      "title": "Problemas de Autoestima",
+      "description": "Te ayudamos a desarrollar confianza, valor propio y una relación más positiva y auténtica contigo mismo(a)."
+    },
+    {
+      "title": "Recuperación de Adicciones",
+      "description": "Apoyo terapéutico para romper patrones poco saludables, construir estrategias de afrontamiento y lograr un cambio sostenible."
+    },
+    {
+      "title": "TDAH y Diferencias de Aprendizaje",
+      "description": "Guía para mejorar el enfoque, la organización y la regulación emocional con estrategias prácticas y de apoyo."
+    },
+    {
+      "title": "Trastornos Alimentarios",
+      "description": "Un enfoque compasivo y estructurado para sanar tu relación con la comida, tu cuerpo y contigo mismo(a)."
+    },
+    {
+      "title": "Trastornos del Sueño",
+      "description": "Apoyo para mejorar los hábitos de sueño, reducir interrupciones y crear patrones de descanso más saludables."
+    }
+  ],
+  "team": [
+    {
+      "name": "Liz Lopez, RMHCI",
+      "role": "Fundadora y Consejera Registrada de Salud Mental en Práctica Supervisada",
+      "image": "/scraped/liz-photo.jpg",
+      "featured": true
+    },
+    {
+      "name": "Lugannys Soto, LMHC",
+      "role": "Consejera Licenciada de Salud Mental",
+      "image": "/scraped/Lugannys-Soto-photo.jpg"
+    },
+    {
+      "name": "Nataly Acevedo, RMHCI",
+      "role": "Consejera Registrada de Salud Mental en Práctica Supervisada",
+      "image": "/scraped/Nataly-Acevedo-photo.jpg"
+    },
+    {
+      "name": "Sofia Ricardo, RMHCI",
+      "role": "Consejera Registrada de Salud Mental en Práctica Supervisada",
+      "image": "/scraped/Sofia-Ricardo-photo.jpg"
+    },
+    {
+      "name": "Yamila Rosales, BS, RMHCI",
+      "role": "Consejera Registrada de Salud Mental en Práctica Supervisada",
+      "image": "/scraped/Yamila-Rosales-photo.jpg"
+    }
+  ],
+  "testimonials": [
+    {
+      "author": "Chris H.",
+      "quote": "Estaba atrapado(a) en un momento muy difícil, pero tú muestras una empatía genuina y una excelente capacidad de escucha. Explicas las cosas de una manera que realmente tiene sentido, y me escuchas sin hacerme sentir juzgado(a). Me has hecho sentir completamente seguro(a) para explorar incluso las partes más difíciles de mi vida."
+    },
+    {
+      "author": "Claudia",
+      "quote": "No tengo palabras para agradecer a Modern Psychology por el impacto tan profundo que han tenido en mi vida. Desde el momento en que entré por sus puertas, me sentí visto(a), escuchado(a) y apoyado(a) de maneras que nunca imaginé posibles."
+    },
+    {
+      "author": "Olga P.",
+      "quote": "Este lugar ha sido una verdadera bendición para mí. Desde el momento en que llegué, me sentí muy bien recibido(a) y en un ambiente seguro y comprensivo. El equipo es increíblemente profesional y atento."
+    },
+    {
+      "author": "Jenise R.",
+      "quote": "Después de que mi mamá falleció, me sentía abrumado(a) por el duelo. Liz me brindó un espacio seguro y reconfortante donde pude expresar mis sentimientos abiertamente. Desde la primera sesión me sentí muy a gusto y conectamos de inmediato."
+    },
+    {
+      "author": "Danny H.",
+      "quote": "Uno de los lugares más tranquilos de todo South Miami. Liz y Edgar son muy amables y atentos. Realmente se toman el tiempo para entender a cada paciente y han creado un ambiente sumamente acogedor."
+    }
+  ],
+  "animations": {
+    "scroll": [
+      "fadeInUp",
+      "fadeIn",
+      "fadeInLeft",
+      "fadeInRight",
+      "fadeInUpBlur"
+    ],
+    "carousel": {
+      "therapy": "fade_blur",
+      "testimonials": {
+        "autoplay": 5000,
+        "loop": true
+      }
+    },
+    "hover": {
+      "translateY": -8,
+      "scale": 1.08
+    }
+  }
+}
