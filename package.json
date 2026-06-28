@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev --webpack",
     "build": "npm run verify:assets && next build",
+    "build:pages": "npm run verify:assets && next build",
     "start": "next start",
     "lint": "eslint",
     "verify:assets": "tsx scripts/verify-assets.ts",

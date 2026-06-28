@@ -108,10 +108,11 @@ export function downloadAppointmentPdf(
 
   const payRows: [string, string][] = [
     ["Banco", bankInfo.bank],
+    ["País", bankInfo.country],
     ["Tipo cuenta", bankInfo.accountType],
     ["Número", bankInfo.accountNumber],
     ["Titular", bankInfo.holder],
-    ["NIT", bankInfo.nit],
+    ["RUC", bankInfo.ruc],
     ["Referencia", appointment.paymentReference],
   ];
 

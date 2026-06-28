@@ -160,9 +160,10 @@ export function verifyPin(pin: string) {
 }
 
 export const bankInfo = {
-  bank: "Bancolombia",
+  bank: "Banco Pichincha",
+  country: "Ecuador",
   accountType: "Ahorros",
-  accountNumber: "12345678901",
-  holder: "HABITADAS S.A.S",
-  nit: "900.000.000-1",
+  accountNumber: "2200123456",
+  holder: "HABITADAS",
+  ruc: "1790123456001",
 };

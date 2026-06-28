@@ -229,14 +229,17 @@ export function BookingFlow({ professional }: { professional: Professional }) {
             >
               <h2 className="text-lg font-semibold text-headline">Pago por transferencia</h2>
               <div className="rounded-2xl bg-gradient-to-br from-violet-light/60 to-white p-5 ring-1 ring-primary/10">
-                <p className="text-sm font-semibold text-primary-dark">Datos bancarios HABITADAS</p>
+                <p className="text-sm font-semibold text-primary-dark">
+                  Datos bancarios HABITADAS — {bankInfo.bank} ({bankInfo.country})
+                </p>
                 <dl className="mt-3 grid gap-2 text-sm sm:grid-cols-2">
                   {[
                     ["Banco", bankInfo.bank],
+                    ["País", bankInfo.country],
                     ["Tipo", bankInfo.accountType],
                     ["Cuenta", bankInfo.accountNumber],
                     ["Titular", bankInfo.holder],
-                    ["NIT", bankInfo.nit],
+                    ["RUC", bankInfo.ruc],
                   ].map(([k, v]) => (
                     <div key={k} className="flex flex-col gap-0.5 rounded-xl bg-white/70 px-3 py-2 sm:flex-row sm:justify-between sm:gap-2">
                       <dt className="text-foreground/50">{k}</dt>
