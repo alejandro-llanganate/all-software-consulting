@@ -2,6 +2,7 @@ import { SectionTransition } from "@/components/animations/SectionTransition";
 import { Challenges } from "@/components/sections/Challenges";
 import { Cta } from "@/components/sections/Cta";
 import { Hero } from "@/components/sections/Hero";
+import { MentorflowPartner } from "@/components/sections/MentorflowPartner";
 import { Office } from "@/components/sections/Office";
 import { Services } from "@/components/sections/Services";
 import { Team } from "@/components/sections/Team";
@@ -32,6 +33,9 @@ export default function Home() {
       </SectionTransition>
       <SectionTransition variant="scale">
         <Cta />
+      </SectionTransition>
+      <SectionTransition variant="fade">
+        <MentorflowPartner />
       </SectionTransition>
     </>
   );

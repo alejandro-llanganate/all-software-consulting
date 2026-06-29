@@ -265,3 +265,10 @@ export const navLinks = [
 ];
 
 export const videos = { hero: "", office: "" };
+
+export const mentorflowPartner = {
+  eyebrow: "Nuestro cliente",
+  name: "Mentorflow",
+  tagline: "Mentoría y acompañamiento empresarial para fortalecer su negocio.",
+  lead: "Asesorados y acompañados por",
+};
