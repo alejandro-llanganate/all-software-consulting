@@ -167,35 +167,41 @@ export const services = [
 export const prices = [
   {
     title: "Terapia Individual",
-    price: 7,
+    price: 6,
     currency: "USD",
+    from: true,
     duration: "45 a 50 minutos",
     notes: [
       "Presencial o virtual",
       "Sin límite de sesiones",
       "Evaluaciones específicas incluidas de ser necesario",
+      "El valor final se confirma según lo que completes al agendar",
     ],
   },
   {
     title: "Terapia de Pareja",
     price: 20,
     currency: "USD",
+    from: true,
     duration: "45 a 50 minutos",
     notes: [
       "Presencial o virtual",
       "Sin límite de sesiones",
       "Evaluaciones específicas incluidas de ser necesario",
+      "Precio desde este valor: depende mucho de lo que completes en el agendamiento de la cita",
     ],
   },
   {
     title: "Terapia Familiar",
     price: 25,
     currency: "USD",
+    from: true,
     duration: "45 a 50 minutos",
     notes: [
       "Presencial o virtual",
       "Sin límite de sesiones",
       "Evaluaciones específicas incluidas de ser necesario",
+      "Precio desde este valor: depende mucho de lo que completes en el agendamiento de la cita",
     ],
   },
 ];
@@ -318,7 +324,8 @@ export const sections = {
   },
   prices: {
     title: "Nuestros precios",
-    description: "Tarifas claras y asequibles. Sesiones de 45 a 50 minutos.",
+    description:
+      "Tarifas claras y asequibles desde $6 USD. Sesiones de 45 a 50 minutos. En pareja y familiar el valor es desde el indicado y depende de lo que completes al agendar tu cita.",
   },
 };
 

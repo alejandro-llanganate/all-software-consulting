@@ -15,6 +15,7 @@ type PriceRow = {
   price: number;
   currency: string;
   duration: string;
+  from?: boolean;
   notes?: string[];
 };
 
@@ -33,6 +34,7 @@ export function Prices() {
             price: r.price,
             currency: r.currency,
             duration: r.duration,
+            from: r.from ?? local?.from ?? true,
             notes: r.notes?.length ? r.notes : local?.notes ?? [],
           };
         }),
@@ -62,7 +64,12 @@ export function Prices() {
               className="flex flex-col rounded-3xl bg-white p-6 shadow-sm ring-1 ring-primary/10 sm:p-8"
             >
               <h3 className="font-serif text-xl text-headline">{p.title}</h3>
-              <p className="mt-4 flex items-baseline gap-1">
+              <p className="mt-4 flex flex-wrap items-baseline gap-x-1.5 gap-y-0">
+                {(p.from ?? true) && (
+                  <span className="text-sm font-semibold tracking-wide text-primary/70 uppercase">
+                    Desde
+                  </span>
+                )}
                 <span className="font-brand text-4xl font-extrabold text-primary">${p.price}</span>
                 <span className="text-sm text-foreground/50">{p.currency}</span>
               </p>

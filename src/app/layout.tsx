@@ -3,27 +3,7 @@ import { WhatsAppFloat } from "@/components/ui/WhatsAppFloat";
 import { colors, logo, siteConfig } from "@/data/site";
 import { assetPath } from "@/lib/asset-path";
 import type { Metadata, Viewport } from "next";
-import { Alice, Montserrat, Nunito } from "next/font/google";
 import "./globals.css";
-
-const alice = Alice({
-  variable: "--font-alice",
-  subsets: ["latin"],
-  weight: "400",
-});
-
-const montserrat = Montserrat({
-  variable: "--font-montserrat",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-});
-
-/** Tipografía redondeada similar al wordmark del logo HABITADAS */
-const nunito = Nunito({
-  variable: "--font-brand",
-  subsets: ["latin"],
-  weight: ["700", "800", "900"],
-});
 
 export const metadata: Metadata = {
   title: `${siteConfig.name} | Bienestar Emocional y Salud Mental`,
@@ -44,10 +24,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="es"
-      className={`${alice.variable} ${montserrat.variable} ${nunito.variable}`}
-    >
+    <html lang="es">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Geomini:wght@200..800&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       <body className="antialiased">
         <BookingStorageInit />
         {children}

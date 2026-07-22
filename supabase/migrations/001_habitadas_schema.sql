@@ -325,6 +325,6 @@ insert into habitadas.site_content (key, value) values
 ),
 (
   'prices',
-  '[{"title":"Terapia Individual","price":7,"currency":"USD","duration":"45 a 50 minutos"},{"title":"Terapia de Pareja","price":20,"currency":"USD","duration":"45 a 50 minutos"},{"title":"Terapia Familiar","price":25,"currency":"USD","duration":"45 a 50 minutos"}]'::jsonb
+  '[{"title":"Terapia Individual","price":6,"currency":"USD","from":true,"duration":"45 a 50 minutos"},{"title":"Terapia de Pareja","price":20,"currency":"USD","from":true,"duration":"45 a 50 minutos"},{"title":"Terapia Familiar","price":25,"currency":"USD","from":true,"duration":"45 a 50 minutos"}]'::jsonb
 )
 on conflict (key) do nothing;
