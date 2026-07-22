@@ -16,7 +16,7 @@ Todo el SQL vive en el schema **`habitadas`**, no en `public`, así no pisa tabl
 
 | Email | Contraseña |
 |---|---|
-| `stepfanie@habitadas.ec` | `Habitadas2026!` |
-| `valery@habitadas.ec` | `Habitadas2026!` |
+| `stepfanie@habitadas.site` | `Habitadas2026!` |
+| `valery@habitadas.site` | `Habitadas2026!` |
 
 Auth es compartido en el proyecto: usa emails distintos a los de otras apps.

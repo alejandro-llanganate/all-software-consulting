@@ -223,7 +223,7 @@ export default function AdminPage() {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="correo@habitadas.ec"
+                  placeholder="correo@habitadas.site"
                   className="w-full rounded-2xl border border-primary/15 bg-light px-4 py-3 text-sm text-headline outline-none focus:border-primary focus:ring-4 focus:ring-primary/10"
                 />
                 <input

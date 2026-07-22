@@ -14,12 +14,12 @@ export const SUPABASE_SCHEMA = "habitadas" as const;
 /** Logins de las profesionales (Auth → Users, luego migration 002) */
 export const PROFESSIONAL_LOGINS = [
   {
-    email: "stepfanie@habitadas.ec",
+    email: "stepfanie@habitadas.site",
     password: "Habitadas2026!",
     name: "Stepfanie Villacís",
   },
   {
-    email: "valery@habitadas.ec",
+    email: "valery@habitadas.site",
     password: "Habitadas2026!",
     name: "Lic. Valery Cevallos",
   },

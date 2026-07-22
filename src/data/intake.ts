@@ -164,7 +164,7 @@ export const INTAKE_OPTIONS = {
 };
 
 export const PRIVACY_SUMMARY =
-  "HABITADAS tratará tus datos personales con confidencialidad para gestionar tu proceso terapéutico, facturación y comunicaciones. No compartimos tu información con terceros ajenos a la atención, salvo obligación legal. Puedes solicitar acceso, rectificación o eliminación de tus datos escribiendo a contacto@habitadas.com.";
+  "HABITADAS tratará tus datos personales con confidencialidad para gestionar tu proceso terapéutico, facturación y comunicaciones. No compartimos tu información con terceros ajenos a la atención, salvo obligación legal. Puedes solicitar acceso, rectificación o eliminación de tus datos escribiendo a contacto@habitadas.site.";
 
 export function patientFullName(data: IntakeData) {
   if (data.beneficiary === "yo") {

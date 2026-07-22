@@ -37,12 +37,12 @@ const admin = createClient(url, serviceKey, {
 
 const users = [
   {
-    email: "stepfanie@habitadas.ec",
+    email: "stepfanie@habitadas.site",
     password: "Habitadas2026!",
     professionalId: "11111111-1111-1111-1111-111111111111",
   },
   {
-    email: "valery@habitadas.ec",
+    email: "valery@habitadas.site",
     password: "Habitadas2026!",
     professionalId: "22222222-2222-2222-2222-222222222222",
   },

@@ -11,7 +11,7 @@ export const siteConfig = {
   phone: "+593 98 437 0041",
   phoneDigits: "593984370041",
   whatsapp: "593984370041",
-  email: "contacto@habitadas.com",
+  email: "contacto@habitadas.site",
   address: "Quito, Pichincha, Ecuador",
   mapEmbedUrl:
     "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.7905!2d-78.4678!3d-0.1807!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91d59a2561a0b0b1%3A0x0!2sQuito!5e0!3m2!1ses!2sec!4v1",

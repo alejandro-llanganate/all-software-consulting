@@ -267,7 +267,7 @@ insert into habitadas.professionals (
   '[{"name":"Práctica en Neuropsicología Clínica","issuer":"NeuroLogic International","year":"2026"},{"name":"Intervención psicológica en consultorio","issuer":"Megasalud Santa Ana","year":"2024 – actualidad"}]'::jsonb,
   7,
   true,
-  'stepfanie@habitadas.ec'
+  'stepfanie@habitadas.site'
 ),
 (
   '22222222-2222-2222-2222-222222222222',
@@ -285,7 +285,7 @@ insert into habitadas.professionals (
   '[{"name":"Ejercicio profesional en psicología clínica","issuer":"HABITADAS","year":"Actualidad"}]'::jsonb,
   7,
   true,
-  'valery@habitadas.ec'
+  'valery@habitadas.site'
 )
 on conflict (id) do update set
   name = excluded.name,
@@ -321,7 +321,7 @@ insert into habitadas.site_content (key, value) values
 ),
 (
   'contact',
-  '{"phone":"+593 98 437 0041","whatsapp":"593984370041","email":"contacto@habitadas.com","address":"Quito, Pichincha, Ecuador","instagram":"https://www.instagram.com/habitadas.ec/","facebook":"https://www.facebook.com/habitadas.ec/"}'::jsonb
+  '{"phone":"+593 98 437 0041","whatsapp":"593984370041","email":"contacto@habitadas.site","address":"Quito, Pichincha, Ecuador","instagram":"https://www.instagram.com/habitadas.ec/","facebook":"https://www.facebook.com/habitadas.ec/"}'::jsonb
 ),
 (
   'prices',
