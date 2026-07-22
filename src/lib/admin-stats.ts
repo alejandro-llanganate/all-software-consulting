@@ -92,5 +92,5 @@ export function getAdminStats(professionalId: string): AdminStats {
 }
 
 export function formatCurrency(n: number) {
-  return `$${n.toLocaleString("es-CO")}`;
+  return `$${n.toLocaleString("es-EC")} USD`;
 }

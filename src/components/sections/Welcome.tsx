@@ -1,6 +1,7 @@
 "use client";
 
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
+import { BookCta } from "@/components/ui/BookCta";
 import { welcome } from "@/data/site";
 import { fadeInLeft, fadeInRight, fadeInUp } from "@/lib/animations";
 import { motion } from "framer-motion";
@@ -36,15 +37,12 @@ export function Welcome() {
             ))}
             <ScrollReveal animation="fadeInUp" delay="xl">
               <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                <Link
-                  href="/profesionales"
-                  className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-primary-dark hover:shadow-md hover:shadow-primary/25 sm:w-auto"
-                >
-                  Agendar con un profesional
+                <BookCta className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-primary-dark hover:shadow-md hover:shadow-primary/25 sm:w-auto">
+                  Agenda tu cita aquí
                   <span className="transition-transform duration-300 group-hover:translate-x-1">
                     →
                   </span>
-                </Link>
+                </BookCta>
                 <Link
                   href="#servicios"
                   className="inline-flex w-full items-center justify-center gap-2 rounded-full border-2 border-primary px-6 py-3 text-sm font-medium text-primary transition-all duration-300 hover:bg-primary/5 sm:w-auto"
@@ -65,7 +63,7 @@ export function Welcome() {
           >
             <Image
               src={welcome.image}
-              alt="Comunidad HABITADAS — bienestar psicosocial"
+              alt="Fortalecimiento personal con enfoque psicosocial — HABITADAS"
               fill
               className="object-cover"
               sizes="(max-width: 1024px) 100vw, 50vw"

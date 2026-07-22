@@ -1,8 +1,9 @@
 import { BookingStorageInit } from "@/components/providers/BookingStorageInit";
+import { WhatsAppFloat } from "@/components/ui/WhatsAppFloat";
 import { colors, logo, siteConfig } from "@/data/site";
 import { assetPath } from "@/lib/asset-path";
 import type { Metadata, Viewport } from "next";
-import { Alice, Montserrat } from "next/font/google";
+import { Alice, Montserrat, Nunito } from "next/font/google";
 import "./globals.css";
 
 const alice = Alice({
@@ -17,10 +18,17 @@ const montserrat = Montserrat({
   weight: ["300", "400", "500", "600", "700"],
 });
 
+/** Tipografía redondeada similar al wordmark del logo HABITADAS */
+const nunito = Nunito({
+  variable: "--font-brand",
+  subsets: ["latin"],
+  weight: ["700", "800", "900"],
+});
+
 export const metadata: Metadata = {
   title: `${siteConfig.name} | Bienestar Emocional y Salud Mental`,
   description:
-    "Empresa psicosocial orientada al bienestar emocional y fortalecimiento personal. Enfoque en mujeres y NNA en situación de vulnerabilidad. Promoción y prevención en salud mental.",
+    "Empresa psicosocial en Quito. Terapias basadas en evidencia, cognitivo-conductuales y conductuales contextuales. Acceso asequible a salud mental.",
   icons: { icon: assetPath(logo.favicon) },
 };
 
@@ -36,10 +44,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" className={`${alice.variable} ${montserrat.variable}`}>
+    <html
+      lang="es"
+      className={`${alice.variable} ${montserrat.variable} ${nunito.variable}`}
+    >
       <body className="antialiased">
         <BookingStorageInit />
         {children}
+        <WhatsAppFloat />
       </body>
     </html>
   );

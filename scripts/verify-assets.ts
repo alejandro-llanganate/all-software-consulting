@@ -15,7 +15,7 @@ const SOURCE_DIRS = ["src/data", "src/components", "src/app"];
 
 function collectImageRefs(): Set<string> {
   const refs = new Set<string>();
-  const pattern = /["'`]\/(?:hero|team|scraped|logo\.png|uploads)[^"'`\s]*/g;
+  const pattern = /["'`]\/(?:hero|team|scraped|logo\.png|logo-white\.png|uploads)[^"'`\s]*/g;
 
   for (const dir of SOURCE_DIRS) {
     const fullDir = join(ROOT, dir);

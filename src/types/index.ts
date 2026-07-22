@@ -57,6 +57,8 @@ export interface Appointment {
   paymentReference: string;
   status: AppointmentStatus;
   createdAt: string;
+  /** Ficha socioeconómica / intake del wizard */
+  intake?: Record<string, unknown>;
 }
 
 export interface DayAvailability {

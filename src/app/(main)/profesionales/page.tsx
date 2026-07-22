@@ -1,5 +1,6 @@
 "use client";
 
+import { BookCta } from "@/components/ui/BookCta";
 import { areas } from "@/data/areas";
 import { professionals } from "@/data/professionals";
 import { cn } from "@/lib/utils";
@@ -32,21 +33,18 @@ function ProfessionalsContent() {
           className="mb-12 text-center"
         >
           <p className="mb-2 text-sm font-medium tracking-widest text-primary uppercase">
-            Red de profesionales
+            Nuestro equipo
           </p>
           <h1 className="font-serif text-3xl text-headline sm:text-4xl md:text-5xl">
-            Encuentra tu especialista
+            Nuestras profesionales
           </h1>
           <p className="mx-auto mt-3 max-w-xl text-foreground/65">
-            Filtra por área, conoce la formación de cada profesional y agenda en línea.
+            Conoce sus perfiles y agenda tu cita completando la ficha socioeconómica.
           </p>
-          <Link
-            href={filtered.length === 1 ? `/profesionales/${filtered[0].slug}/agendar` : "#profesionales-grid"}
-            className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-6 py-3.5 text-sm font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-primary-dark hover:shadow-lg hover:shadow-primary/25 sm:w-auto sm:px-8 sm:py-4"
-          >
+          <BookCta className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-6 py-3.5 text-sm font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-primary-dark hover:shadow-lg hover:shadow-primary/25 sm:w-auto sm:px-8 sm:py-4">
             <Calendar className="h-5 w-5" />
-            Agendar una cita
-          </Link>
+            Agenda tu cita aquí
+          </BookCta>
         </motion.div>
 
         <div className="mb-8 flex gap-2 overflow-x-auto pb-2 [-webkit-overflow-scrolling:touch] sm:mb-12 sm:flex-wrap sm:justify-center sm:overflow-visible">
@@ -80,7 +78,7 @@ function ProfessionalsContent() {
         <motion.div
           id="profesionales-grid"
           layout
-          className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+          className="mx-auto grid max-w-4xl gap-6 sm:grid-cols-2"
         >
           {filtered.map((prof, i) => (
             <motion.div
@@ -97,8 +95,8 @@ function ProfessionalsContent() {
                     src={prof.image}
                     alt={prof.name}
                     fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-110"
-                    sizes="(max-width:768px) 100vw, 33vw"
+                    className="object-cover object-top transition-transform duration-700 group-hover:scale-110"
+                    sizes="(max-width:768px) 100vw, 50vw"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-primary-dark/80 via-primary/20 to-transparent" />
                   <div className="absolute right-0 bottom-0 left-0 p-5">
@@ -109,12 +107,12 @@ function ProfessionalsContent() {
               </Link>
               <div className="p-5">
                 <p className="text-sm text-foreground/65">{prof.shortBio}</p>
-
                 <div className="mt-3 flex items-start gap-2 text-xs text-foreground/50">
                   <GraduationCap className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary/50" />
-                  <span className="line-clamp-2">{prof.education[0]?.degree} · {prof.education[0]?.institution}</span>
+                  <span className="line-clamp-2">
+                    {prof.education[0]?.degree} · {prof.education[0]?.institution}
+                  </span>
                 </div>
-
                 <div className="mt-3 flex flex-wrap gap-1.5">
                   {prof.specializations.slice(0, 3).map((s) => (
                     <span
@@ -125,22 +123,6 @@ function ProfessionalsContent() {
                     </span>
                   ))}
                 </div>
-
-                <div className="mt-3 flex flex-wrap gap-1.5">
-                  {prof.areas.slice(0, 2).map((a) => {
-                    const area = areas.find((ar) => ar.slug === a);
-                    return (
-                      <span
-                        key={a}
-                        className="rounded-full px-2 py-0.5 text-[10px] font-medium text-white"
-                        style={{ backgroundColor: area?.color ?? "#7030A0" }}
-                      >
-                        {area?.label}
-                      </span>
-                    );
-                  })}
-                </div>
-
                 <div className="mt-4 flex flex-col gap-2 sm:flex-row">
                   <Link
                     href={`/profesionales/${prof.slug}`}
@@ -148,12 +130,12 @@ function ProfessionalsContent() {
                   >
                     Ver perfil
                   </Link>
-                  <Link
-                    href={`/profesionales/${prof.slug}/agendar`}
+                  <BookCta
+                    professionalSlug={prof.slug}
                     className="flex-1 rounded-full bg-primary py-3 text-center text-sm font-semibold text-white transition-all hover:bg-primary-dark sm:py-2.5 sm:text-xs"
                   >
-                    Agendar
-                  </Link>
+                    Agenda tu cita
+                  </BookCta>
                 </div>
               </div>
             </motion.div>
@@ -161,7 +143,7 @@ function ProfessionalsContent() {
         </motion.div>
 
         {filtered.length === 0 && (
-          <p className="py-20 text-center text-foreground/50">
+          <p className="py-16 text-center text-foreground/50">
             No hay profesionales en esta área por ahora.
           </p>
         )}
@@ -172,7 +154,7 @@ function ProfessionalsContent() {
 
 export default function ProfesionalesPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-light pt-32 text-center">Cargando...</div>}>
+    <Suspense fallback={<div className="min-h-screen bg-light pt-24" />}>
       <ProfessionalsContent />
     </Suspense>
   );

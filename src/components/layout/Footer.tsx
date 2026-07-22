@@ -27,25 +27,45 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 md:py-16">
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4 md:gap-12">
           <div>
-            <Link href="/" className="mb-4 flex items-center gap-3">
+            <Link href="/" className="mb-4 inline-block">
               <Image
-                src={logo.default}
+                src={logo.white}
                 alt={siteConfig.brandName}
-                width={40}
-                height={40}
-                className="h-10 w-10 brightness-0 invert"
+                width={200}
+                height={90}
+                className="h-12 w-auto object-contain sm:h-14"
               />
-              <span className="font-serif text-xl text-white">{siteConfig.brandName}</span>
             </Link>
             <p className="mb-6 text-sm leading-relaxed text-white/60">
               {siteConfig.tagline}. Promoción y prevención en salud mental.
             </p>
             <div className="flex gap-3">
-              <a href="#" aria-label="Instagram" className="rounded-full bg-white/10 p-2.5 transition-all duration-300 hover:-translate-y-0.5 hover:bg-accent/30">
+              <a
+                href={siteConfig.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram habitadas.ec"
+                className="rounded-full bg-white/10 p-2.5 transition-all duration-300 hover:-translate-y-0.5 hover:bg-accent/30"
+              >
                 <InstagramIcon className="h-5 w-5" />
               </a>
-              <a href="#" aria-label="Facebook" className="rounded-full bg-white/10 p-2.5 transition-all duration-300 hover:-translate-y-0.5 hover:bg-accent/30">
+              <a
+                href={siteConfig.facebook}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Facebook habitadas.ec"
+                className="rounded-full bg-white/10 p-2.5 transition-all duration-300 hover:-translate-y-0.5 hover:bg-accent/30"
+              >
                 <FacebookIcon className="h-5 w-5" />
+              </a>
+              <a
+                href={`https://wa.me/${siteConfig.whatsapp}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="WhatsApp"
+                className="rounded-full bg-white/10 p-2.5 transition-all duration-300 hover:-translate-y-0.5 hover:bg-accent/30"
+              >
+                <Phone className="h-5 w-5" />
               </a>
             </div>
           </div>
@@ -105,7 +125,20 @@ export function Footer() {
         </div>
 
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 md:flex-row">
-          <p className="text-sm text-white/50">© {siteConfig.name}. Todos los derechos reservados.</p>
+          <div className="flex flex-col items-center gap-1.5 text-center md:items-start md:text-left">
+            <p className="text-sm text-white/50">© {siteConfig.name}. Todos los derechos reservados.</p>
+            <p className="text-xs text-white/40 sm:text-sm">
+              Sistema desarrollado por{" "}
+              <a
+                href="https://www.fermenta.online/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-accent transition-colors hover:text-white"
+              >
+                Fermenta EC
+              </a>
+            </p>
+          </div>
           <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-white/50 md:justify-end">
             <Link href="#" className="hover:text-white">Política de Privacidad</Link>
             <Link href="#" className="hover:text-white">Accesibilidad</Link>

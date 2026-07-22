@@ -2,6 +2,7 @@
 
 import { areas } from "@/data/areas";
 import type { Professional } from "@/types";
+import { BookCta } from "@/components/ui/BookCta";
 import { motion } from "framer-motion";
 import { ArrowLeft, Award, BookOpen, Calendar, GraduationCap } from "lucide-react";
 import Image from "next/image";
@@ -96,18 +97,18 @@ export function ProfessionalProfile({ professional, profAreas }: Props) {
 
             <div className="mt-6 flex items-center gap-4">
               <span className="text-2xl font-semibold text-primary-dark">
-                ${professional.sessionPrice.toLocaleString("es-CO")}
+                ${professional.sessionPrice} USD
               </span>
-              <span className="text-sm text-foreground/50">/ sesión</span>
+              <span className="text-sm text-foreground/50">/ sesión · 45–50 min</span>
             </div>
 
-            <Link
-              href={`/profesionales/${professional.slug}/agendar`}
+            <BookCta
+              professionalSlug={professional.slug}
               className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-8 py-4 text-sm font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-primary-dark hover:shadow-lg hover:shadow-primary/30 sm:w-auto"
             >
               <Calendar className="h-5 w-5" />
-              Agendar cita
-            </Link>
+              Agenda tu cita aquí
+            </BookCta>
           </motion.div>
         </div>
 

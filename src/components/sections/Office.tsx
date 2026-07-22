@@ -2,32 +2,12 @@
 
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { office } from "@/data/site";
-import { fadeInLeft, fadeInRight } from "@/lib/animations";
-import { assetPath } from "@/lib/asset-path";
+import { fadeInLeft, fadeInRight, fadeInUp } from "@/lib/animations";
 import { motion } from "framer-motion";
 import { Award } from "lucide-react";
 import Image from "next/image";
-import { useEffect, useRef } from "react";
 
 export function Office() {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const hasVideo = Boolean(office.video);
-
-  useEffect(() => {
-    if (!hasVideo) return;
-    const video = videoRef.current;
-    if (!video) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) video.play().catch(() => {});
-        else video.pause();
-      },
-      { threshold: 0.3 },
-    );
-    observer.observe(video);
-    return () => observer.disconnect();
-  }, [hasVideo]);
-
   return (
     <section className="bg-cream py-16 sm:py-24 lg:py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -37,29 +17,31 @@ export function Office() {
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
             variants={fadeInLeft}
-            transition={{ delay: 0.25 }}
-            className="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-2xl"
+            transition={{ delay: 0.15 }}
+            className="space-y-3"
           >
-            {hasVideo ? (
-              <video
-                ref={videoRef}
-                className="h-full w-full object-cover"
-                muted
-                playsInline
-                loop
-                poster={assetPath(office.image)}
-              >
-                <source src={assetPath(office.video)} type="video/mp4" />
-              </video>
-            ) : (
+            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-2xl">
               <Image
-                src={office.image}
-                alt="Oficina de terapia en South Miami"
+                src={office.gallery[0]}
+                alt="Consultorio HABITADAS"
                 fill
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />
-            )}
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              {office.gallery.slice(1).map((img) => (
+                <div key={img} className="relative aspect-[4/3] overflow-hidden rounded-xl shadow-md">
+                  <Image
+                    src={img}
+                    alt="Espacio de consulta HABITADAS"
+                    fill
+                    className="object-cover"
+                    sizes="25vw"
+                  />
+                </div>
+              ))}
+            </div>
           </motion.div>
 
           <motion.div
@@ -67,26 +49,31 @@ export function Office() {
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
             variants={fadeInRight}
-            transition={{ delay: 0.5 }}
+            transition={{ delay: 0.25 }}
           >
             <ScrollReveal animation="fadeIn" delay="xs">
-              <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2">
-                <Award className="h-4 w-4 text-primary-dark" />
-                <span className="text-xs font-medium text-primary-dark">
-                  {office.badge}
-                </span>
-              </div>
+              <p className="mb-3 inline-flex items-center gap-2 text-sm font-medium tracking-[0.12em] text-primary uppercase">
+                <Award className="h-4 w-4" />
+                {office.badge}
+              </p>
             </ScrollReveal>
-            <ScrollReveal animation="fadeInUpBlur" delay="sm">
-              <h2 className="font-serif text-3xl leading-tight text-headline sm:text-4xl md:text-5xl">
-                {office.title}
-              </h2>
-            </ScrollReveal>
-            {office.paragraphs.map((p, i) => (
-              <ScrollReveal key={i} animation="fadeInUp" delay={i === 0 ? "md" : "lg"}>
-                <p className="mt-5 leading-relaxed text-foreground/75">{p}</p>
-              </ScrollReveal>
+            <h2 className="font-serif text-3xl leading-tight text-headline sm:text-4xl md:text-5xl">
+              {office.title}
+            </h2>
+            {office.paragraphs.map((p) => (
+              <p key={p.slice(0, 32)} className="mt-5 leading-relaxed text-foreground/75">
+                {p}
+              </p>
             ))}
+            <motion.p
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeInUp}
+              className="mt-6 inline-flex rounded-full bg-primary/10 px-4 py-2 text-xs font-bold tracking-wider text-primary uppercase"
+            >
+              Talleres psicoeducativos
+            </motion.p>
           </motion.div>
         </div>
       </div>

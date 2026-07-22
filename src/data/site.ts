@@ -1,13 +1,27 @@
 import { assetPath as a } from "@/lib/asset-path";
 
+/** Ficha socioeconómica externa (referencia); el flujo principal es el wizard interno */
+export const SOCIOECONOMIC_FORM_URL =
+  "https://kumpita.cloud/registrate/?tipo_registro=usuario";
+
 export const siteConfig = {
-  name: "HABITADAS S.A.S",
+  name: "HABITADAS",
   brandName: "HABITADAS",
   tagline: "Bienestar emocional y fortalecimiento personal",
-  phone: "+593 98 438 4524",
+  phone: "+593 98 437 0041",
+  phoneDigits: "593984370041",
+  whatsapp: "593984370041",
   email: "contacto@habitadas.com",
-  address: "Quito, Ecuador",
-  bookingUrl: "/profesionales",
+  address: "Quito, Pichincha, Ecuador",
+  mapEmbedUrl:
+    "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.7905!2d-78.4678!3d-0.1807!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91d59a2561a0b0b1%3A0x0!2sQuito!5e0!3m2!1ses!2sec!4v1",
+  mapLink: "https://maps.google.com/?q=Quito,+Ecuador",
+  bookingUrl: "/agendar",
+  professionalsUrl: "/profesionales",
+  instagram: "https://www.instagram.com/habitadas.ec/",
+  facebook: "https://www.facebook.com/habitadas.ec/",
+  instagramHandle: "habitadas.ec",
+  facebookHandle: "habitadas.ec",
 };
 
 export const colors = {
@@ -23,7 +37,8 @@ export const colors = {
 
 export const logo = {
   default: a("/logo.png"),
-  white: a("/logo.png"),
+  white: a("/logo-white.png"),
+  full: a("/logo-full.png"),
   favicon: a("/logo.png"),
 };
 
@@ -31,145 +46,209 @@ export const hero = {
   subtitle: "Empresa psicosocial · Promoción y prevención en salud mental",
   title: "Un espacio habitado para tu bienestar emocional",
   description:
-    "Red de psicólogos y especialistas listos para acompañarte. Agenda tu cita en línea con el profesional que mejor se adapte a ti.",
+    "Acompañamiento psicológico con enfoques basados en evidencia: terapias conductuales contextuales y terapia cognitivo-conductual. Agenda tu cita y da el primer paso.",
   image: a("/hero/portada.jpg"),
   video: "",
+  approaches: [
+    "Basadas en evidencia",
+    "Terapias conductuales contextuales",
+    "Terapia cognitivo-conductual (TCC)",
+  ],
 };
+
+export const rightsMarquee = [
+  "La salud mental es un derecho",
+  "Acceso asequible para todos",
+  "Cuidarnos también es habitar",
+  "Terapia basada en evidencia",
+];
 
 export const welcome = {
   eyebrow: "Bienvenidos a HABITADAS",
   title: "Fortalecimiento personal con enfoque psicosocial",
   paragraphs: [
-    "Articulamos una red de psicólogos clínicos, neuropsicólogos y especialistas para facilitar el acceso a salud mental accesible y de calidad.",
-    "Enfoque en promoción y prevención, con especial atención a mujeres y NNA en situación de vulnerabilidad.",
+    "Somos una empresa psicosocial en Quito dedicada a la promoción y prevención en salud mental. Creemos que la salud mental es un derecho no negociable; por eso el acceso asequible es indispensable para todas las personas.",
+    "Trabajamos con enfoques basados en evidencia — terapias conductuales contextuales y terapia cognitivo-conductual — para acompañarte con profesionalismo y calidez.",
   ],
-  image: a("/hero/comunidad.jpg"),
+  image: a("/hero/welcome.jpg"),
   enfoque: {
-    title: "Nuestro enfoque",
+    title: "Nuestro enfoque terapéutico",
     items: [
-      { label: "Promoción", desc: "Fomentamos hábitos y entornos que cuidan la salud mental antes de la crisis." },
-      { label: "Prevención", desc: "Intervenimos temprano en factores de riesgo emocional y psicosocial." },
-      { label: "Accesibilidad", desc: "Servicios adaptados a las realidades socioeconómicas de cada persona." },
-      { label: "Red colaborativa", desc: "Profesionales independientes unidos por un mismo propósito de cuidado." },
+      {
+        label: "Basado en evidencia",
+        desc: "Intervenciones respaldadas por investigación científica y buenas prácticas clínicas.",
+      },
+      {
+        label: "Conductuales contextuales",
+        desc: "Terapias que integran contexto, valores y acción para un cambio significativo.",
+      },
+      {
+        label: "Cognitivo-conductual",
+        desc: "TCC para trabajar pensamientos, emociones y conductas con herramientas concretas.",
+      },
+      {
+        label: "Acceso asequible",
+        desc: "Tarifas pensadas para que más personas puedan cuidar su salud mental.",
+      },
     ],
   },
+};
+
+export const history = {
+  eyebrow: "Nuestra historia",
+  title: "Habitar el cuidado emocional",
+  paragraphs: [
+    "HABITADAS nace en Quito con una convicción clara: la salud mental debe ser cercana, humana y accesible. Queremos espacios donde las personas se sientan acompañadas, sin juicios, y con profesionales comprometidos.",
+    "Desde el acompañamiento psicológico individual hasta la terapia de pareja y familiar, construimos un lugar habitado — un refugio para el bienestar emocional, la prevención y la comunidad.",
+    "Hoy seguimos creciendo con transparencia, ética y la certeza de que cuidar la mente es un derecho, no un privilegio.",
+  ],
+  image: a("/hero/historia.jpg"),
 };
 
 export const office = {
   badge: "Espacios habitados para el cuidado emocional",
   title: "Consultorios y espacios de apoyo",
   paragraphs: [
-    "Disponemos de consultorios para profesionales que deseen brindar atención psicológica de manera independiente, en un entorno cálido, seguro y pensado para el bienestar de quienes nos visitan.",
-    "Además, creamos espacios de comunidad: grupos de apoyo, encuentros psicoeducativos, actividades de bienestar y nuestro club de psicología, donde el aprendizaje y el cuidado mutuo se encuentran.",
+    "Disponemos de consultorios pensados para el bienestar: un entorno cálido, seguro y profesional para tu proceso terapéutico, de forma presencial o virtual.",
+    "Además, impulsamos talleres psicoeducativos para comunidades, familias y grupos que buscan herramientas de autocuidado y regulación emocional.",
   ],
-  image: a("/hero/espacios.jpg"),
+  image: a("/hero/consultorio-1.jpg"),
+  gallery: [
+    a("/hero/consultorio-1.jpg"),
+    a("/hero/consultorio-2.jpg"),
+    a("/hero/consultorio-3.jpg"),
+  ],
   video: "",
 };
 
 export const services = [
   {
+    title: "Acompañamiento Psicológico",
+    description:
+      "Orientación y contención emocional con profesionales certificados, en un espacio seguro y confidencial.",
+    image: a("/hero/consultorio.jpg"),
+  },
+  {
+    title: "Terapia Individual",
+    description:
+      "Proceso personalizado de 45–50 minutos. Presencial o virtual, sin límite de sesiones, con evaluaciones específicas si son necesarias.",
+    image: a("/hero/taller.jpg"),
+    price: 7,
+  },
+  {
+    title: "Terapia de Pareja",
+    description:
+      "Fortalece la comunicación y el vínculo. Sesiones de 45–50 minutos, presencial o virtual.",
+    image: a("/hero/comunidad.jpg"),
+    price: 20,
+  },
+  {
+    title: "Terapia Familiar",
+    description:
+      "Trabajo con el sistema familiar para mejorar dinámicas y bienestar compartido. Sesiones de 45–50 minutos.",
+    image: a("/hero/proyecto.jpg"),
+    price: 25,
+  },
+  {
     title: "Talleres Psicoeducativos",
     description:
-      "Espacios formativos sobre temas relevantes de salud mental: regulación emocional, autocuidado, vínculos saludables, resiliencia y más. Diseñados para comunidades, familias y grupos específicos.",
-    image: a("/hero/taller.jpg"),
-  },
-  {
-    title: "Capacitaciones Empresariales",
-    description:
-      "Formación para empresas, instituciones y organizaciones en riesgos psicosociales, bienestar laboral, burnout, manejo de ansiedad, comunicación efectiva y cultura organizacional saludable.",
+      "Espacios formativos sobre salud mental: regulación emocional, autocuidado, vínculos saludables y resiliencia.",
     image: a("/hero/capacitacion.jpg"),
-  },
-  {
-    title: "Proyectos Psicosociales",
-    description:
-      "Diseño y ejecución de proyectos orientados a comunidades vulnerables, mujeres y adultos mayores. Incluye intervención grupal, acompañamiento psicosocial y trabajo comunitario.",
-    image: a("/hero/proyecto.jpg"),
-  },
-  {
-    title: "Red de Profesionales",
-    description:
-      "Articulación de psicólogos clínicos, neuropsicólogos y especialistas independientes. Los servicios clínicos son brindados directamente por cada profesional, bajo su propia responsabilidad.",
-    image: a("/hero/red-profesionales.jpg"),
-  },
-  {
-    title: "Espacios de Atención",
-    description:
-      "Consultorios disponibles para profesionales que deseen brindar atención psicológica de manera independiente, en instalaciones acogedoras y equipadas.",
-    image: a("/hero/consultorio.jpg"),
   },
   {
     title: "Comunidad y Apoyo",
     description:
-      "Grupos de apoyo, encuentros psicoeducativos, actividades de bienestar y club de psicología. Espacios donde compartir, aprender y sanar en comunidad.",
-    image: a("/hero/club.jpg"),
-  },
-  {
-    title: "Campamento Vacacional",
-    description:
-      "Experiencias vacacionales para niños y niñas con actividades lúdicas, psicoeducativas y de fortalecimiento emocional en un entorno seguro y supervisado por profesionales.",
+      "Grupos de apoyo gratuitos (con registro previo) y campamento vacacional para niñas y niños. Comunícate por WhatsApp para inscribirte.",
     image: a("/hero/campamento.jpg"),
+    freeGroup: true,
   },
 ];
 
-export const challenges = [
+export const prices = [
   {
-    title: "Mujeres en Vulnerabilidad",
-    description: "Acompañamiento psicosocial para mujeres en situación de vulnerabilidad.",
-    areaSlug: "mujeres" as const,
+    title: "Terapia Individual",
+    price: 7,
+    currency: "USD",
+    duration: "45 a 50 minutos",
+    notes: [
+      "Presencial o virtual",
+      "Sin límite de sesiones",
+      "Evaluaciones específicas incluidas de ser necesario",
+    ],
   },
   {
-    title: "Niños, Niñas y Adolescentes",
-    description: "Intervenciones adaptadas al desarrollo emocional de NNA.",
-    areaSlug: "nna-infancia" as const,
+    title: "Terapia de Pareja",
+    price: 20,
+    currency: "USD",
+    duration: "45 a 50 minutos",
+    notes: [
+      "Presencial o virtual",
+      "Sin límite de sesiones",
+      "Evaluaciones específicas incluidas de ser necesario",
+    ],
+  },
+  {
+    title: "Terapia Familiar",
+    price: 25,
+    currency: "USD",
+    duration: "45 a 50 minutos",
+    notes: [
+      "Presencial o virtual",
+      "Sin límite de sesiones",
+      "Evaluaciones específicas incluidas de ser necesario",
+    ],
+  },
+];
+
+export const howToBook = {
+  eyebrow: "Proceso sencillo",
+  title: "Cómo agendar una cita",
+  intro:
+    "Creemos que la salud mental es un derecho no negociable. Completa un wizard corto con tu ficha, preferencias y elige horario.",
+  steps: [
+    {
+      n: "01",
+      title: "Cuéntanos tu situación",
+      desc: "Ficha breve: a quién acompañamos, servicio y contexto socioeconómico confidencial.",
+    },
+    {
+      n: "02",
+      title: "Elige profesional y horario",
+      desc: "Selecciona a tu profesional y una fecha/hora disponible en el calendario.",
+    },
+    {
+      n: "03",
+      title: "Confirma tu cita",
+      desc: "Registra el pago por transferencia y descarga tu comprobante.",
+    },
+  ],
+  cta: "Agenda tu cita aquí",
+};
+
+export const disclaimer = {
+  title: "Importante",
+  body: "Los servicios disponibles a través de HABITADAS son proporcionados de forma independiente por profesionales de salud mental certificados. Los profesionales de salud mental no recetan medicamentos a través de HABITADAS. Si estás pasando por una crisis o emergencia, por favor contacta a los servicios de emergencia más cercanos a tu ubicación.",
+};
+
+export const challenges = [
+  {
+    title: "Ansiedad y Estrés",
+    description: "Herramientas prácticas con enfoque cognitivo-conductual.",
+    areaSlug: "ansiedad-estres" as const,
   },
   {
     title: "Neuropsicología",
-    description: "Evaluación cognitiva y funciones ejecutivas.",
+    description: "Evaluación y acompañamiento neurocognitivo.",
     areaSlug: "neuropsicologia" as const,
   },
   {
-    title: "Burnout y Agotamiento",
-    description: "Prevención y recuperación del agotamiento emocional.",
-    areaSlug: "bienestar-laboral" as const,
-  },
-  {
-    title: "Ansiedad y Estrés",
-    description: "Herramientas para manejar ansiedad y estrés crónico.",
-    areaSlug: "ansiedad-estres" as const,
-  },
-  {
-    title: "Bienestar Laboral",
-    description: "Entornos de trabajo saludables y sostenibles.",
-    areaSlug: "bienestar-laboral" as const,
-  },
-  {
-    title: "Trauma y Duelo",
-    description: "Procesamiento emocional y resiliencia.",
-    areaSlug: "trauma-duelo" as const,
-  },
-  {
-    title: "Comunidades Vulnerables",
-    description: "Proyectos psicosociales con enfoque comunitario.",
-    areaSlug: "comunitaria" as const,
-  },
-  {
-    title: "Regulación Emocional",
-    description: "Autoconocimiento y manejo de conflictos.",
-    areaSlug: "ansiedad-estres" as const,
-  },
-  {
-    title: "Vínculos y Familia",
-    description: "Dinámicas familiares y comunicación asertiva.",
+    title: "Pareja y Familia",
+    description: "Comunicación, vínculos y dinámicas saludables.",
     areaSlug: "pareja-familia" as const,
   },
   {
-    title: "Prevención en Salud Mental",
-    description: "Fortalecimiento de factores protectores.",
-    areaSlug: "comunitaria" as const,
-  },
-  {
-    title: "Resiliencia Comunitaria",
-    description: "Capacidades colectivas frente a adversidades.",
+    title: "Bienestar emocional",
+    description: "Prevención, autocuidado y fortalecimiento personal.",
     areaSlug: "comunitaria" as const,
   },
 ];
@@ -189,23 +268,18 @@ export const team = professionals.map((p) => ({
 export const testimonials = [
   {
     author: "María Elena G.",
-    quote: "Los talleres psicoeducativos de HABITADAS me dieron herramientas que nunca había tenido. Sentí que por primera vez alguien entendía mi realidad como mujer cabeza de familia y me acompañó sin juzgarme.",
-  },
-  {
-    author: "Institución Educativa La Esperanza",
-    quote: "La capacitación en riesgos psicosociales transformó la cultura de nuestro equipo docente. Hoy tenemos un lenguaje común sobre bienestar emocional y sabemos cómo cuidarnos mutuamente.",
+    quote:
+      "En HABITADAS encontré un espacio seguro y tarifas accesibles. Por primera vez sentí que la terapia estaba a mi alcance.",
   },
   {
     author: "Camila R.",
-    quote: "Mi hija participó en el campamento vacacional y volvió más segura, más comunicativa. El equipo de HABITADAS creó un espacio donde los niños pudieron ser ellos mismos, con alegría y contención.",
+    quote:
+      "Las sesiones de pareja nos ayudaron a comunicarnos mejor. Profesionales cálidas y muy claras en el proceso.",
   },
   {
-    author: "Prof. James M.",
-    quote: "Encontrar un consultorio en HABITADAS me permitió enfocarme en mis pacientes. El espacio es cálido, profesional y transmite la misma calidez que busco ofrecer en cada sesión.",
-  },
-  {
-    author: "Rosa Patricia L.",
-    quote: "El grupo de apoyo para mujeres fue un refugio en uno de los momentos más difíciles de mi vida. En HABITADAS encontré comunidad, no solo terapia. Eso marca la diferencia.",
+    author: "Andrés P.",
+    quote:
+      "El enfoque basado en evidencia me dio herramientas concretas. Recomiendo HABITADAS a cualquiera que busque cuidarse.",
   },
 ];
 
@@ -217,31 +291,34 @@ export const animationConfig = {
 
 export const sections = {
   services: {
-    title: "Lo que ofrece HABITADAS",
+    title: "Nuestros servicios",
     description:
-      "Talleres, capacitaciones, proyectos comunitarios y una red de profesionales para el bienestar de toda la familia.",
+      "Acompañamiento psicológico, terapia individual, de pareja y familiar, talleres psicoeducativos y comunidad.",
   },
   challenges: {
     title: "Áreas de intervención",
-    description: "Haz clic en un área para ver los profesionales especializados.",
+    description: "Haz clic en un área para ver a nuestras profesionales.",
   },
   team: {
-    eyebrow: "Conoce nuestra red",
-    title: "Profesionales independientes",
-    description: "Psicólogos, neuropsicólogos y especialistas. Elige tu profesional y agenda en minutos.",
+    eyebrow: "Nuestro equipo",
+    title: "Profesionales de HABITADAS",
+    description: "Psicólogas certificadas en Quito. Conoce sus perfiles y agenda tu cita.",
   },
   testimonials: {
     eyebrow: "Testimonios",
-    title: "Historias de fortalecimiento y comunidad",
-    description:
-      "Cada experiencia compartida refleja el impacto de espacios habitados: lugares donde el cuidado emocional, la prevención y la comunidad se encuentran.",
+    title: "Historias de fortalecimiento",
+    description: "Voces de quienes encontraron en HABITADAS un espacio habitado para su bienestar.",
   },
   cta: {
-    title: "Tu bienestar empieza con un profesional",
+    title: "Agenda tu cita aquí",
     description:
-      "Elige entre nuestra red de especialistas, agenda en línea y da el primer paso hacia tu bienestar emocional.",
-    button: "Agendar cita",
-    hint: "Pasa el cursor para descubrir nuestros espacios",
+      "Completa tu ficha socioeconómica y da el primer paso hacia tu bienestar emocional.",
+    button: "Agenda tu cita aquí",
+    hint: "Salud mental accesible · Quito, Ecuador",
+  },
+  prices: {
+    title: "Nuestros precios",
+    description: "Tarifas claras y asequibles. Sesiones de 45 a 50 minutos.",
   },
 };
 
@@ -251,7 +328,7 @@ export const navLinks = [
     label: "Sobre Nosotros",
     href: "#sobre-nosotros",
     children: [
-      { label: "Nuestra empresa", href: "#sobre-nosotros" },
+      { label: "Nuestra historia", href: "#historia" },
       { label: "Nuestro enfoque", href: "#sobre-nosotros" },
       { label: "Profesionales", href: "/profesionales" },
     ],
@@ -261,14 +338,9 @@ export const navLinks = [
     href: "#servicios",
     children: services.map((s) => ({ label: s.title, href: "#servicios" })),
   },
+  { label: "Precios", href: "#precios" },
+  { label: "Cómo agendar", href: "/agendar" },
   { label: "Profesionales", href: "/profesionales" },
 ];
 
 export const videos = { hero: "", office: "" };
-
-export const mentorflowPartner = {
-  eyebrow: "Nuestro cliente",
-  name: "Mentorflow",
-  tagline: "Mentoría y acompañamiento empresarial para fortalecer su negocio.",
-  lead: "Asesorados y acompañados por",
-};

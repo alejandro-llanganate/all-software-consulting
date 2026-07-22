@@ -1,6 +1,7 @@
 "use client";
 
 import { logo, navLinks, siteConfig } from "@/data/site";
+import { BookCta } from "@/components/ui/BookCta";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown, Menu, Phone, X } from "lucide-react";
@@ -25,18 +26,15 @@ export function Header() {
   return (
     <header className="fixed top-0 right-0 left-0 z-50 border-b border-primary/8 bg-white py-3 shadow-[0_2px_24px_rgba(112,48,160,0.08)]">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Link href="/" className="relative z-10 flex min-w-0 items-center gap-2 sm:gap-3">
+        <Link href="/" className="relative z-10 flex min-w-0 items-center">
           <Image
             src={logo.default}
-            alt="HABITADAS"
-            width={48}
-            height={48}
-            className="h-10 w-10 object-contain"
+            alt="HABITADAS — Empresa psicosocial"
+            width={200}
+            height={90}
+            className="h-10 w-auto object-contain sm:h-12"
             priority
           />
-          <span className="truncate font-serif text-lg tracking-wide text-primary-dark sm:text-xl">
-            {siteConfig.brandName}
-          </span>
         </Link>
 
         <nav className="hidden items-center gap-7 lg:flex">
@@ -97,18 +95,17 @@ export function Header() {
 
         <div className="hidden items-center gap-4 lg:flex">
           <a
-            href={`tel:${siteConfig.phone.replace(/\D/g, "")}`}
+            href={`https://wa.me/${siteConfig.whatsapp}`}
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex items-center gap-2 text-sm font-medium text-primary-dark transition-colors hover:text-primary"
           >
             <Phone className="h-4 w-4" />
             <span className="hidden xl:inline">{siteConfig.phone}</span>
           </a>
-          <Link
-            href={siteConfig.bookingUrl}
-            className="rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-primary-dark hover:shadow-md hover:shadow-primary/25"
-          >
-            Agendar cita
-          </Link>
+          <BookCta className="rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-primary-dark hover:shadow-md hover:shadow-primary/25">
+            Agenda tu cita
+          </BookCta>
         </div>
 
         <button
@@ -156,13 +153,11 @@ export function Header() {
                   ))}
                 </motion.div>
               ))}
-              <Link
-                href="/profesionales"
+              <BookCta
                 className="mt-2 rounded-full bg-primary py-3 text-center text-white"
-                onClick={() => setIsOpen(false)}
               >
-                Agendar cita
-              </Link>
+                Agenda tu cita
+              </BookCta>
               <Link
                 href={homeHref("#contacto")}
                 className="mt-2 rounded-full border border-primary/20 py-3 text-center text-primary"
