@@ -2,18 +2,40 @@
 
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { BookCta } from "@/components/ui/BookCta";
-import { hero, siteConfig } from "@/data/site";
+import { hero as heroFallback, siteConfig } from "@/data/site";
 import { fadeInUp, fadeInUpBlur } from "@/lib/animations";
+import { fetchSiteContent } from "@/lib/supabase/api";
+import { isSupabaseConfigured } from "@/lib/supabase/config";
 import { motion } from "framer-motion";
 import { Calendar, Phone } from "lucide-react";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+
+type HeroCopy = {
+  subtitle: string;
+  title: string;
+  description: string;
+};
 
 export function Hero() {
+  const [hero, setHero] = useState<HeroCopy>({
+    subtitle: heroFallback.subtitle,
+    title: heroFallback.title,
+    description: heroFallback.description,
+  });
+
+  useEffect(() => {
+    if (!isSupabaseConfigured()) return;
+    void fetchSiteContent<HeroCopy>("hero").then((remote) => {
+      if (remote?.title) setHero(remote);
+    });
+  }, []);
+
   return (
     <section
       id="inicio"
       className="relative flex min-h-[85dvh] items-center overflow-hidden bg-cover bg-center bg-no-repeat pt-20 sm:min-h-screen sm:bg-[center_30%]"
-      style={{ backgroundImage: `url('${hero.image}')` }}
+      style={{ backgroundImage: `url('${heroFallback.image}')` }}
       aria-label={`${siteConfig.brandName} — bienestar emocional`}
     >
       <div className="absolute inset-0 bg-gradient-to-r from-dark/88 via-primary-dark/70 to-primary/35" />
@@ -43,7 +65,7 @@ export function Hero() {
 
           <ScrollReveal animation="fadeInUp" delay="lg">
             <ul className="mt-5 flex flex-col gap-2 sm:flex-row sm:flex-wrap">
-              {hero.approaches.map((item) => (
+              {heroFallback.approaches.map((item) => (
                 <li
                   key={item}
                   className="inline-flex items-center rounded-full border border-white/25 bg-white/10 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-sm"

@@ -1,9 +1,10 @@
 import type { Professional } from "@/types";
 import { assetPath as a } from "@/lib/asset-path";
 
+/** IDs alineados con seed de Supabase (`supabase/migrations/001_habitadas_schema.sql`) */
 export const professionals: Professional[] = [
   {
-    id: "prof-1",
+    id: "11111111-1111-1111-1111-111111111111",
     slug: "stepfanie-villacis",
     name: "Stepfanie Villacís",
     title: "Psicóloga | Neuropsicología Clínica",
@@ -48,7 +49,7 @@ export const professionals: Professional[] = [
     ],
   },
   {
-    id: "prof-2",
+    id: "22222222-2222-2222-2222-222222222222",
     slug: "valery-cevallos",
     name: "Lic. Valery Cevallos",
     title: "Mgtr. Psicología Clínica",

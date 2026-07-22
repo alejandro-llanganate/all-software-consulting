@@ -2,12 +2,44 @@
 
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { BookCta } from "@/components/ui/BookCta";
-import { prices, sections } from "@/data/site";
+import { prices as pricesFallback, sections } from "@/data/site";
 import { fadeInUp } from "@/lib/animations";
+import { fetchSiteContent } from "@/lib/supabase/api";
+import { isSupabaseConfigured } from "@/lib/supabase/config";
 import { motion } from "framer-motion";
 import { Check, Clock } from "lucide-react";
+import { useEffect, useState } from "react";
+
+type PriceRow = {
+  title: string;
+  price: number;
+  currency: string;
+  duration: string;
+  notes?: string[];
+};
 
 export function Prices() {
+  const [items, setItems] = useState(pricesFallback);
+
+  useEffect(() => {
+    if (!isSupabaseConfigured()) return;
+    void fetchSiteContent<PriceRow[]>("prices").then((remote) => {
+      if (!remote?.length) return;
+      setItems(
+        remote.map((r) => {
+          const local = pricesFallback.find((p) => p.title === r.title);
+          return {
+            title: r.title,
+            price: r.price,
+            currency: r.currency,
+            duration: r.duration,
+            notes: r.notes?.length ? r.notes : local?.notes ?? [],
+          };
+        }),
+      );
+    });
+  }, []);
+
   return (
     <section id="precios" className="bg-light py-16 sm:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -19,7 +51,7 @@ export function Prices() {
         </ScrollReveal>
 
         <div className="grid gap-5 md:grid-cols-3">
-          {prices.map((p, i) => (
+          {items.map((p, i) => (
             <motion.article
               key={p.title}
               initial="hidden"

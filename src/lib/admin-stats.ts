@@ -31,8 +31,12 @@ function monthLabel(date: Date) {
   return date.toLocaleDateString("es-CO", { month: "short", year: "2-digit" });
 }
 
-export function getAdminStats(professionalId: string): AdminStats {
-  const appointments = getAppointmentsByProfessional(professionalId);
+export function getAdminStats(
+  professionalId: string,
+  appointmentsOverride?: Appointment[],
+): AdminStats {
+  const appointments =
+    appointmentsOverride ?? getAppointmentsByProfessional(professionalId);
   const sessionPrice = getSessionPrice(professionalId);
   const completed = appointments.filter((a) => a.status === "completada");
   const pending = appointments.filter((a) => a.status === "pendiente");

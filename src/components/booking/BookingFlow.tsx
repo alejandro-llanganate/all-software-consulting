@@ -2,9 +2,13 @@
 
 import { BookingCalendar } from "@/components/booking/BookingCalendar";
 import { FormField } from "@/components/ui/FormField";
-import { bankInfo, createAppointment, getAvailableSlots } from "@/lib/booking-storage";
+import {
+  bankInfo,
+  createAppointment,
+  getAvailableSlotsAsync,
+} from "@/lib/booking-storage";
 import { downloadAppointmentPdf } from "@/lib/download-appointment-pdf";
-import type { Appointment, Professional } from "@/types";
+import type { Appointment, DayAvailability, Professional } from "@/types";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   Calendar,
@@ -16,7 +20,7 @@ import {
   Phone,
   User,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type Step = 1 | 2 | 3 | 4 | 5;
 
@@ -39,10 +43,20 @@ export function BookingFlow({ professional }: { professional: Professional }) {
   const [clientId, setClientId] = useState("");
   const [paymentReference, setPaymentReference] = useState("");
   const [slotVersion, setSlotVersion] = useState(0);
+  const [slots, setSlots] = useState<DayAvailability[]>([]);
+  const [saving, setSaving] = useState(false);
+  const [confirmError, setConfirmError] = useState("");
   const [confirmedAppointment, setConfirmedAppointment] = useState<Appointment | null>(null);
 
-  void slotVersion;
-  const slots = getAvailableSlots(professional.id);
+  useEffect(() => {
+    let cancelled = false;
+    getAvailableSlotsAsync(professional.id).then((s) => {
+      if (!cancelled) setSlots(s);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [professional.id, slotVersion]);
 
   const refreshSlots = () => setSlotVersion((v) => v + 1);
 
@@ -51,23 +65,37 @@ export function BookingFlow({ professional }: { professional: Professional }) {
     setSelectedTime(time);
   };
 
-  const handleConfirm = () => {
-    const appointment = createAppointment({
-      professionalId: professional.id,
-      professionalName: professional.name,
-      date: selectedDate,
-      time: selectedTime,
-      reason,
-      clientName,
-      clientEmail,
-      clientPhone,
-      clientId,
-      paymentMethod: "transferencia",
-      paymentReference,
-    });
-    setConfirmedAppointment(appointment);
-    setStep(5);
-    refreshSlots();
+  const handleConfirm = async () => {
+    if (saving) return;
+    setSaving(true);
+    setConfirmError("");
+    try {
+      const appointment = await createAppointment({
+        professionalId: professional.id,
+        professionalName: professional.name,
+        date: selectedDate,
+        time: selectedTime,
+        reason,
+        clientName,
+        clientEmail,
+        clientPhone,
+        clientId,
+        paymentMethod: "transferencia",
+        paymentReference,
+      });
+      setConfirmedAppointment(appointment);
+      setStep(5);
+      refreshSlots();
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : "";
+      setConfirmError(
+        msg === "SLOT_TAKEN"
+          ? "Ese horario acaba de ocuparse. Elige otro."
+          : "No se pudo registrar la cita.",
+      );
+    } finally {
+      setSaving(false);
+    }
   };
 
   const formatDate = (d: string) =>
@@ -266,13 +294,16 @@ export function BookingFlow({ professional }: { professional: Professional }) {
                   Atrás
                 </button>
                 <button
-                  disabled={!paymentReference.trim()}
-                  onClick={handleConfirm}
+                  disabled={!paymentReference.trim() || saving}
+                  onClick={() => void handleConfirm()}
                   className="flex-1 rounded-full bg-primary py-3 text-sm font-semibold text-white disabled:opacity-40"
                 >
-                  Confirmar cita
+                  {saving ? "Guardando…" : "Confirmar cita"}
                 </button>
               </div>
+              {confirmError && (
+                <p className="mt-3 text-center text-sm text-red-600">{confirmError}</p>
+              )}
             </motion.div>
           )}
 

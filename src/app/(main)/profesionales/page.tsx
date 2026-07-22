@@ -2,15 +2,17 @@
 
 import { BookCta } from "@/components/ui/BookCta";
 import { areas } from "@/data/areas";
-import { professionals } from "@/data/professionals";
+import { professionals as staticProfessionals } from "@/data/professionals";
+import { fetchProfessionals } from "@/lib/supabase/api";
+import { isSupabaseConfigured } from "@/lib/supabase/config";
 import { cn } from "@/lib/utils";
-import type { AreaSlug } from "@/types";
+import type { AreaSlug, Professional } from "@/types";
 import { motion } from "framer-motion";
 import { Calendar, GraduationCap } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 
 function ProfessionalsContent() {
   const searchParams = useSearchParams();
@@ -18,6 +20,14 @@ function ProfessionalsContent() {
   const [activeArea, setActiveArea] = useState<AreaSlug | "all">(
     initialArea && areas.some((a) => a.slug === initialArea) ? initialArea : "all",
   );
+  const [professionals, setProfessionals] = useState<Professional[]>(staticProfessionals);
+
+  useEffect(() => {
+    if (!isSupabaseConfigured()) return;
+    void fetchProfessionals().then((remote) => {
+      if (remote?.length) setProfessionals(remote);
+    });
+  }, []);
 
   const filtered =
     activeArea === "all"

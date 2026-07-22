@@ -12,11 +12,17 @@ import {
   PRIVACY_SUMMARY,
   type IntakeData,
 } from "@/data/intake";
-import { professionals } from "@/data/professionals";
-import { bankInfo, createAppointment, getAvailableSlots } from "@/lib/booking-storage";
+import { professionals as staticProfessionals } from "@/data/professionals";
+import {
+  bankInfo,
+  createAppointment,
+  getAvailableSlotsAsync,
+} from "@/lib/booking-storage";
 import { downloadAppointmentPdf } from "@/lib/download-appointment-pdf";
+import { fetchProfessionals } from "@/lib/supabase/api";
+import { isSupabaseConfigured } from "@/lib/supabase/config";
 import { cn } from "@/lib/utils";
-import type { Appointment, Professional } from "@/types";
+import type { Appointment, DayAvailability, Professional } from "@/types";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   ArrowLeft,
@@ -27,7 +33,7 @@ import {
   Shield,
 } from "lucide-react";
 import Image from "next/image";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 const TOTAL_STEPS = 10;
 
@@ -53,17 +59,37 @@ export function IntakeWizard({ professional: initialPro }: Props) {
   const [selectedTime, setSelectedTime] = useState("");
   const [email, setEmail] = useState("");
   const [paymentReference, setPaymentReference] = useState("");
+  const [professionals, setProfessionals] = useState(staticProfessionals);
   const [slotVersion, setSlotVersion] = useState(0);
+  const [slots, setSlots] = useState<DayAvailability[]>([]);
+  const [saving, setSaving] = useState(false);
   const [confirmed, setConfirmed] = useState<Appointment | null>(null);
   const [error, setError] = useState("");
 
   const professional = useMemo(
     () => professionals.find((p) => p.id === proId) ?? initialPro ?? null,
-    [proId, initialPro],
+    [proId, initialPro, professionals],
   );
 
-  void slotVersion;
-  const slots = professional ? getAvailableSlots(professional.id) : [];
+  useEffect(() => {
+    if (!isSupabaseConfigured()) return;
+    void fetchProfessionals().then((remote) => {
+      if (remote?.length) setProfessionals(remote);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (!professional) return;
+    let cancelled = false;
+    void getAvailableSlotsAsync(professional.id).then((s) => {
+      if (!cancelled) setSlots(s);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [professional, slotVersion]);
+
+  const displaySlots = professional ? slots : [];
 
   const patch = (partial: Partial<IntakeData>) => setData((d) => ({ ...d, ...partial }));
 
@@ -179,26 +205,39 @@ export function IntakeWizard({ professional: initialPro }: Props) {
     });
   };
 
-  const confirm = () => {
-    if (!professional || !validate()) return;
+  const confirm = async () => {
+    if (!professional || !validate() || saving) return;
     const name = patientFullName(data) || contactFullName(data);
-    const apt = createAppointment({
-      professionalId: professional.id,
-      professionalName: professional.name,
-      date: selectedDate,
-      time: selectedTime,
-      reason: intakeReasonSummary(data),
-      clientName: name,
-      clientEmail: email,
-      clientPhone: data.phone,
-      clientId: data.idNumber,
-      paymentMethod: "transferencia",
-      paymentReference,
-      intake: { ...data },
-    });
-    setConfirmed(apt);
-    setSlotVersion((v) => v + 1);
-    setStep(TOTAL_STEPS + 1);
+    setSaving(true);
+    setError("");
+    try {
+      const apt = await createAppointment({
+        professionalId: professional.id,
+        professionalName: professional.name,
+        date: selectedDate,
+        time: selectedTime,
+        reason: intakeReasonSummary(data),
+        clientName: name,
+        clientEmail: email,
+        clientPhone: data.phone,
+        clientId: data.idNumber,
+        paymentMethod: "transferencia",
+        paymentReference,
+        intake: { ...data },
+      });
+      setConfirmed(apt);
+      setSlotVersion((v) => v + 1);
+      setStep(TOTAL_STEPS + 1);
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : "Error al guardar";
+      setError(
+        msg === "SLOT_TAKEN"
+          ? "Ese horario acaba de ocuparse. Elige otro."
+          : "No se pudo registrar la cita. Intenta de nuevo.",
+      );
+    } finally {
+      setSaving(false);
+    }
   };
 
   if (confirmed && professional) {
@@ -769,7 +808,7 @@ export function IntakeWizard({ professional: initialPro }: Props) {
                   desc={`Disponibilidad de ${professional.name}`}
                 />
                 <BookingCalendar
-                  slots={slots}
+                  slots={displaySlots}
                   selectedDate={selectedDate}
                   selectedTime={selectedTime}
                   onSelect={(d, t) => {
@@ -854,10 +893,11 @@ export function IntakeWizard({ professional: initialPro }: Props) {
           ) : (
             <button
               type="button"
-              onClick={confirm}
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-emerald-600 px-6 py-3 text-sm font-semibold text-white hover:bg-emerald-700"
+              onClick={() => void confirm()}
+              disabled={saving}
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-emerald-600 px-6 py-3 text-sm font-semibold text-white hover:bg-emerald-700 disabled:opacity-60"
             >
-              Confirmar cita <CheckCircle2 className="h-4 w-4" />
+              {saving ? "Guardando…" : "Confirmar cita"} <CheckCircle2 className="h-4 w-4" />
             </button>
           )}
         </div>

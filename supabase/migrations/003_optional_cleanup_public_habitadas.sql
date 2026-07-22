@@ -1,0 +1,12 @@
+-- Opcional: si ya corriste la versión vieja en public.*,
+-- esto NO borra datos de otras apps; solo limpia tablas HABITADAS de public.
+-- Ejecuta solo si estás seguro de que public.professionals / appointments
+-- son de HABITADAS y no de otra app.
+
+-- drop table if exists public.appointments cascade;
+-- drop table if exists public.availability_days cascade;
+-- drop table if exists public.site_content cascade;
+-- drop table if exists public.professionals cascade;
+-- drop function if exists public.create_appointment(uuid, date, text, text, text, text, text, text, text, text, jsonb);
+-- drop function if exists public.get_booked_slots(uuid);
+-- drop function if exists public.current_professional_id();

@@ -1,6 +1,6 @@
 "use client";
 
-import { addSlot, removeSlot } from "@/lib/booking-storage";
+import { addSlotAsync, removeSlotAsync } from "@/lib/booking-storage";
 import { cn } from "@/lib/utils";
 import type { DayAvailability } from "@/types";
 import { AnimatePresence, motion } from "framer-motion";
@@ -91,25 +91,29 @@ export function AdminAvailabilityCalendar({ professionalId, availability, onRefr
     setSelectedDate(today);
   };
 
-  const toggleSlot = (time: string) => {
+  const toggleSlot = async (time: string) => {
     if (!selectedDate) return;
     if (selectedSlots.includes(time)) {
-      removeSlot(professionalId, selectedDate, time);
+      await removeSlotAsync(professionalId, selectedDate, time);
     } else {
-      addSlot(professionalId, selectedDate, time);
+      await addSlotAsync(professionalId, selectedDate, time);
     }
     onRefresh();
   };
 
-  const addBulk = (times: string[]) => {
+  const addBulk = async (times: string[]) => {
     if (!selectedDate) return;
-    times.forEach((t) => addSlot(professionalId, selectedDate, t));
+    for (const t of times) {
+      await addSlotAsync(professionalId, selectedDate, t);
+    }
     onRefresh();
   };
 
-  const clearDay = () => {
+  const clearDay = async () => {
     if (!selectedDate) return;
-    [...selectedSlots].forEach((t) => removeSlot(professionalId, selectedDate, t));
+    for (const t of [...selectedSlots]) {
+      await removeSlotAsync(professionalId, selectedDate, t);
+    }
     onRefresh();
   };
 

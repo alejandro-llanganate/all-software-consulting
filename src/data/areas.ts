@@ -13,7 +13,7 @@ export const areas: {
     label: "Ansiedad y Estrés",
     short: "Regulación emocional y manejo del estrés",
     color: "#7030A0",
-    image: a("/hero/taller.jpg"),
+    image: a("/hero/ansiedad-estres.jpg"),
   },
   {
     slug: "nna-infancia",
@@ -27,7 +27,7 @@ export const areas: {
     label: "Neuropsicología",
     short: "Evaluación cognitiva y funciones ejecutivas",
     color: "#6A3D9A",
-    image: a("/hero/red-profesionales.jpg"),
+    image: a("/hero/neuropsicologia.jpg"),
   },
   {
     slug: "bienestar-laboral",

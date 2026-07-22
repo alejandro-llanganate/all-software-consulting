@@ -10,11 +10,13 @@
     "lint": "eslint",
     "verify:assets": "tsx scripts/verify-assets.ts",
     "scrape": "tsx scripts/scrape-site.ts",
+    "supabase:seed-auth": "node scripts/seed-auth.mjs",
     "docker:build": "docker compose build",
     "docker:up": "docker compose up -d",
     "docker:down": "docker compose down"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.110.8",
     "cheerio": "^1.1.0",
     "clsx": "^2.1.1",
     "framer-motion": "^12.42.0",
@@ -32,6 +34,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "dotenv": "^17.4.2",
     "eslint": "^9",
     "eslint-config-next": "16.2.9",
     "tailwindcss": "^4",
