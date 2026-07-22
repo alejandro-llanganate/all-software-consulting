@@ -1,13 +1,15 @@
 /**
- * Credenciales Supabase pegadas en código (sin .env).
- * Project Settings → API → Project URL + anon public
+ * Credenciales Supabase (cliente). Sin secret key — GitHub la bloquea en el repo.
+ * El secret solo para seed local: SUPABASE_SERVICE_ROLE_KEY=... npm run supabase:seed-auth
  */
-export const SUPABASE_URL = "https://TU_PROJECT.supabase.co";
+export const SUPABASE_URL = "https://asgqeizkclbhcoaktcss.supabase.co";
+
+/** Publishable / anon (segura en el navegador con RLS) */
 export const SUPABASE_ANON_KEY =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.PEGA_AQUI_LA_ANON_KEY";
+  "sb_publishable_84Tj1KhfhmaUVeWidpwhHw_kNfD6yxO";
 
 /** Schema Postgres aislado — no pisa tablas de public */
-export const SUPABASE_SCHEMA = "habitadas";
+export const SUPABASE_SCHEMA = "habitadas" as const;
 
 /** Logins de las profesionales (Auth → Users, luego migration 002) */
 export const PROFESSIONAL_LOGINS = [
@@ -23,16 +25,8 @@ export const PROFESSIONAL_LOGINS = [
   },
 ] as const;
 
-/** Solo scripts de seed (service_role). Nunca en el navegador. */
-export const SUPABASE_SERVICE_ROLE_KEY = "";
-
 export function isSupabaseConfigured(): boolean {
-  return (
-    Boolean(SUPABASE_URL) &&
-    !SUPABASE_URL.includes("TU_PROJECT") &&
-    Boolean(SUPABASE_ANON_KEY) &&
-    !SUPABASE_ANON_KEY.includes("PEGA_AQUI")
-  );
+  return Boolean(SUPABASE_URL && SUPABASE_ANON_KEY);
 }
 
 export function getSupabaseEnv() {

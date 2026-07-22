@@ -1,8 +1,9 @@
 /**
  * Crea usuarios Auth de las psicólogas y los vincula a professionals.
- * Credenciales en src/lib/supabase/config.ts (hardcoded).
  *
- *   node scripts/seed-auth.mjs
+ *   SUPABASE_SERVICE_ROLE_KEY=sb_secret_... node scripts/seed-auth.mjs
+ *
+ * URL sale de config.ts; el secret NUNCA va al repo (GitHub lo bloquea).
  */
 import { createClient } from "@supabase/supabase-js";
 import { readFileSync } from "node:fs";
@@ -20,11 +21,12 @@ function pick(name) {
 }
 
 const url = pick("SUPABASE_URL");
-const serviceKey = pick("SUPABASE_SERVICE_ROLE_KEY");
+const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY ?? "";
 
-if (!url || url.includes("TU_PROJECT") || !serviceKey) {
+if (!url || !serviceKey) {
   console.error(
-    "Pega SUPABASE_URL y SUPABASE_SERVICE_ROLE_KEY en src/lib/supabase/config.ts",
+    "Falta URL en config.ts o SUPABASE_SERVICE_ROLE_KEY en el entorno.\n" +
+      "  SUPABASE_SERVICE_ROLE_KEY=sb_secret_... npm run supabase:seed-auth",
   );
   process.exit(1);
 }

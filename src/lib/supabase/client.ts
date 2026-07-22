@@ -1,11 +1,9 @@
-import { createClient, type SupabaseClient } from "@supabase/supabase-js";
+import { createClient } from "@supabase/supabase-js";
 import {
   getSupabaseEnv,
   isSupabaseConfigured,
   SUPABASE_SCHEMA,
 } from "./config";
-
-let browserClient: SupabaseClient | null = null;
 
 function createHabitadasClient() {
   const { url, anonKey } = getSupabaseEnv();
@@ -20,8 +18,12 @@ function createHabitadasClient() {
   });
 }
 
-/** Cliente browser/server apuntando al schema `habitadas` (no a public). */
-export function getSupabase(): SupabaseClient | null {
+type HabitadasClient = ReturnType<typeof createHabitadasClient>;
+
+let browserClient: HabitadasClient | null = null;
+
+/** Cliente apuntando al schema `habitadas` (no a public). */
+export function getSupabase(): HabitadasClient | null {
   if (!isSupabaseConfigured()) return null;
   if (typeof window === "undefined") {
     return createHabitadasClient();
