@@ -20,13 +20,13 @@ function WhatsAppIcon({ className }: { className?: string }) {
 }
 
 function StepIcon({ icon }: { icon: (typeof journey.steps)[number]["icon"] }) {
-  const cls = "h-10 w-10 text-white sm:h-11 sm:w-11 md:h-12 md:w-12";
+  const cls = "h-11 w-11 text-white sm:h-12 sm:w-12 md:h-[3.25rem] md:w-[3.25rem]";
   const map: Record<string, ReactNode> = {
     clipboard: (
       <span className="relative inline-flex items-center justify-center">
         <ClipboardList className={cls} strokeWidth={1.35} />
         <UserRound
-          className="absolute right-0 bottom-0 h-3.5 w-3.5 text-white sm:h-4 sm:w-4"
+          className="absolute right-0 bottom-0 h-4 w-4 text-white sm:h-4.5 sm:w-4.5"
           strokeWidth={2}
         />
       </span>
@@ -38,65 +38,100 @@ function StepIcon({ icon }: { icon: (typeof journey.steps)[number]["icon"] }) {
   return map[icon] ?? null;
 }
 
-/** Flecha curva suave entre pasos del zigzag */
-function FlowArrow({ down, id }: { down: boolean; id: string }) {
-  const markerId = `flow-arrow-${id}`;
+/**
+ * Flecha profesional: curva limpia + punta geométrica fija
+ * (sin SVG marker, que suele deformarse).
+ */
+function FlowArrow({ down }: { down: boolean }) {
   return (
     <svg
-      className={`pointer-events-none absolute left-[calc(100%-0.25rem)] z-0 hidden overflow-visible lg:block ${
-        down
-          ? "top-[42%] h-24 w-14 xl:w-16"
-          : "top-[58%] h-24 w-14 -translate-y-full xl:w-16"
+      className={`pointer-events-none absolute left-full z-[1] hidden w-[3.25rem] overflow-visible lg:block xl:w-14 ${
+        down ? "top-[38%] h-[5.5rem]" : "bottom-[38%] h-[5.5rem]"
       }`}
-      viewBox="0 0 64 96"
+      viewBox="0 0 56 88"
       fill="none"
       aria-hidden
     >
-      <defs>
-        <marker
-          id={markerId}
-          markerWidth="8"
-          markerHeight="8"
-          refX="6"
-          refY="4"
-          orient="auto"
-          markerUnits="strokeWidth"
-        >
+      {down ? (
+        <>
           <path
-            d="M0 0.5 L6.5 4 L0 7.5"
-            fill="none"
-            stroke="rgba(255,255,255,0.85)"
-            strokeWidth="1.6"
+            d="M2 6 C 20 8, 26 36, 30 50 S 40 78, 48 80"
+            stroke="white"
+            strokeOpacity="0.75"
+            strokeWidth="1.75"
+            strokeLinecap="round"
+          />
+          <path
+            d="M42.5 74.5 L50.5 80.5 L42 85"
+            stroke="white"
+            strokeOpacity="0.9"
+            strokeWidth="1.75"
             strokeLinecap="round"
             strokeLinejoin="round"
+            fill="none"
           />
-        </marker>
-      </defs>
-      {down ? (
-        <path
-          d="M4 10 C 22 10, 28 34, 32 48 C 36 62, 42 78, 58 82"
-          stroke="rgba(255,255,255,0.8)"
-          strokeWidth="2.4"
-          strokeLinecap="round"
-          markerEnd={`url(#${markerId})`}
-        />
+        </>
       ) : (
-        <path
-          d="M4 86 C 22 86, 28 62, 32 48 C 36 34, 42 18, 58 14"
-          stroke="rgba(255,255,255,0.8)"
-          strokeWidth="2.4"
-          strokeLinecap="round"
-          markerEnd={`url(#${markerId})`}
-        />
+        <>
+          <path
+            d="M2 82 C 20 80, 26 52, 30 38 S 40 10, 48 8"
+            stroke="white"
+            strokeOpacity="0.75"
+            strokeWidth="1.75"
+            strokeLinecap="round"
+          />
+          <path
+            d="M42 13.5 L50.5 7.5 L42 3"
+            stroke="white"
+            strokeOpacity="0.9"
+            strokeWidth="1.75"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            fill="none"
+          />
+        </>
       )}
     </svg>
+  );
+}
+
+function StepCopy({
+  step,
+  iconFirst,
+}: {
+  step: (typeof journey.steps)[number];
+  iconFirst: boolean;
+}) {
+  const title = (
+    <p className="relative z-10 max-w-[15rem] font-title text-lg leading-snug text-white sm:text-xl md:text-[1.35rem]">
+      <span className="mr-1.5 inline-block align-baseline text-3xl leading-none text-white sm:text-4xl md:text-[2.75rem]">
+        {step.n}.
+      </span>
+      {step.title}
+    </p>
+  );
+  const icon = (
+    <div className={`relative z-10 flex items-center justify-center ${iconFirst ? "mb-3.5" : "mt-3.5"}`}>
+      <StepIcon icon={step.icon} />
+    </div>
+  );
+
+  return iconFirst ? (
+    <>
+      {icon}
+      {title}
+    </>
+  ) : (
+    <>
+      {title}
+      {icon}
+    </>
   );
 }
 
 export function Journey() {
   return (
     <section id="camino" className="bg-light py-8 sm:py-10 lg:py-12">
-      {/* Rectángulo morado inset (más estrecho que la pantalla) */}
       <div className="mx-auto max-w-7xl px-3 sm:px-5 lg:px-6">
         <div className="relative overflow-hidden rounded-[1.75rem] bg-gradient-to-b from-[#7030A0] via-[#5C2D8A] to-[#45206A] px-5 py-12 shadow-[0_24px_60px_rgba(45,27,78,0.18)] sm:rounded-[2rem] sm:px-8 sm:py-14 md:px-12 lg:px-14 lg:py-16">
           <div className="relative mx-auto max-w-6xl">
@@ -104,16 +139,14 @@ export function Journey() {
               <h2 className="whitespace-nowrap font-title text-[clamp(1.15rem,3.6vw,2.65rem)] leading-tight text-white">
                 {journey.title}
               </h2>
-              <p className="mx-auto mt-4 max-w-xl font-subtitle text-base text-white/90 sm:text-lg md:text-xl">
+              <p className="mx-auto mt-5 max-w-2xl font-subtitle text-lg text-white/90 sm:text-xl md:text-2xl">
                 {journey.intro}
               </p>
             </div>
 
-            <ol className="relative mt-12 grid grid-cols-1 gap-10 sm:mt-14 sm:grid-cols-2 sm:gap-x-10 sm:gap-y-14 lg:mt-16 lg:grid-cols-4 lg:gap-x-8 lg:gap-y-0 lg:pt-4 lg:pb-8">
+            <ol className="relative mt-12 grid grid-cols-1 gap-10 sm:mt-14 sm:grid-cols-2 sm:gap-x-10 sm:gap-y-14 lg:mt-16 lg:grid-cols-4 lg:gap-x-10 lg:gap-y-0 lg:pt-4 lg:pb-8">
               {journey.steps.map((step, i) => {
                 const high = i % 2 === 0;
-                const iconFirst = !high;
-
                 return (
                   <motion.li
                     key={step.n}
@@ -121,39 +154,12 @@ export function Journey() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: i * 0.1, duration: 0.45 }}
-                    className={`relative z-10 flex flex-col items-center px-2 text-center ${
+                    className={`relative z-10 flex flex-col items-center px-1 text-center ${
                       high ? "lg:-translate-y-6" : "lg:translate-y-10"
                     }`}
                   >
-                    {i < journey.steps.length - 1 ? (
-                      <FlowArrow down={high} id={step.n} />
-                    ) : null}
-
-                    {iconFirst ? (
-                      <>
-                        <div className="relative z-10 mb-3 flex items-center justify-center">
-                          <StepIcon icon={step.icon} />
-                        </div>
-                        <p className="relative z-10 max-w-[13rem] font-title text-base leading-snug text-white sm:text-lg">
-                          <span className="mr-1.5 inline-block text-2xl text-white sm:text-3xl md:text-4xl">
-                            {step.n}.
-                          </span>
-                          {step.title}
-                        </p>
-                      </>
-                    ) : (
-                      <>
-                        <p className="relative z-10 max-w-[13rem] font-title text-base leading-snug text-white sm:text-lg">
-                          <span className="mr-1.5 inline-block text-2xl text-white sm:text-3xl md:text-4xl">
-                            {step.n}.
-                          </span>
-                          {step.title}
-                        </p>
-                        <div className="relative z-10 mt-3 flex items-center justify-center">
-                          <StepIcon icon={step.icon} />
-                        </div>
-                      </>
-                    )}
+                    {i < journey.steps.length - 1 ? <FlowArrow down={high} /> : null}
+                    <StepCopy step={step} iconFirst={!high} />
                   </motion.li>
                 );
               })}
