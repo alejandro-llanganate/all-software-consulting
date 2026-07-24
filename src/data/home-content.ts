@@ -6,7 +6,7 @@ export const aboutHabitadas = {
   bodyBold:
     "En Habitadas creemos que el bienestar emocional debe ser un derecho, no un privilegio. Somos un espacio seguro donde acompañamos a mujeres, niñas, niños y sus familias con atención psicológica profesional, humana y accesible, adaptada a la realidad de cada persona.",
   image: a("/hero/que-es-habitadas.jpg"),
-  cta: "Queremos acompañarte.",
+  cta: "Queremos acompañarte",
 };
 
 export const journey = {

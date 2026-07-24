@@ -33,16 +33,19 @@ export function AboutHabitadas() {
           transition={{ duration: 0.5, delay: 0.1 }}
         >
           <h2 className="font-title text-3xl text-headline sm:text-4xl md:text-5xl">
-            {aboutHabitadas.title}
-          </h2>
-          <p className="mt-4 font-subtitle text-lg text-primary sm:text-xl">
             {aboutHabitadas.subtitle}
+          </h2>
+          <p
+            className="mt-5 pt-2 text-lg text-primary sm:mt-6 sm:pt-3 sm:text-xl md:text-2xl"
+            style={{ fontFamily: "Raleway, system-ui, sans-serif", fontWeight: 700 }}
+          >
+            {aboutHabitadas.title}
           </p>
           <p className="mt-6 font-body text-base leading-relaxed text-foreground/80 sm:text-lg">
             <strong className="font-body font-normal text-headline">{aboutHabitadas.bodyBold}</strong>
           </p>
           <div className="mt-8">
-            <FrostedCta className="border-primary/25 bg-primary/15 text-primary-dark hover:bg-primary/25">
+            <FrostedCta className="cta-invite border-primary bg-primary px-11 py-5 text-xl font-title text-white hover:bg-primary-dark hover:text-white sm:px-14 sm:py-6 sm:text-2xl">
               {aboutHabitadas.cta}
             </FrostedCta>
           </div>

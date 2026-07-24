@@ -40,7 +40,7 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=Elms+Sans:ital,wght@0,400;1,400&family=Raleway:wght@500;800&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Elms+Sans:ital,wght@0,400;1,400&family=Raleway:wght@500;700;800&display=swap"
           rel="stylesheet"
         />
       </head>

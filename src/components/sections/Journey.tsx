@@ -1,29 +1,15 @@
 "use client";
 
+import { FrostedCta } from "@/components/ui/FrostedCta";
 import { journey } from "@/data/home-content";
 import { motion } from "framer-motion";
 import {
   Armchair,
   CalendarClock,
   ClipboardList,
-  Heart,
   UserRound,
 } from "lucide-react";
 import type { ReactNode } from "react";
-
-function Flower({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 32 32" fill="none" aria-hidden>
-      <path
-        d="M16 6c1.2 3.2 3.8 5 7 5-1.2 3.2-1 6.6 1 9.4-3.2.2-5.6 2.4-7 5.4-1.4-3-3.8-5.2-7-5.4 2-2.8 2.2-6.2 1-9.4 3.2 0 5.8-1.8 7-5Z"
-        fill="#D4B4F0"
-        stroke="#EDE0FF"
-        strokeWidth="1"
-      />
-      <circle cx="16" cy="16" r="2.5" fill="#fff" />
-    </svg>
-  );
-}
 
 function WhatsAppIcon({ className }: { className?: string }) {
   return (
@@ -34,158 +20,158 @@ function WhatsAppIcon({ className }: { className?: string }) {
 }
 
 function StepIcon({ icon }: { icon: (typeof journey.steps)[number]["icon"] }) {
-  const cls = "h-7 w-7 text-white sm:h-8 sm:w-8";
+  const cls = "h-10 w-10 text-white sm:h-11 sm:w-11 md:h-12 md:w-12";
   const map: Record<string, ReactNode> = {
     clipboard: (
       <span className="relative inline-flex items-center justify-center">
-        <ClipboardList className={cls} strokeWidth={1.4} />
-        <UserRound className="absolute bottom-0.5 right-0 h-3 w-3 text-white" strokeWidth={2.2} />
+        <ClipboardList className={cls} strokeWidth={1.35} />
+        <UserRound
+          className="absolute right-0 bottom-0 h-3.5 w-3.5 text-white sm:h-4 sm:w-4"
+          strokeWidth={2}
+        />
       </span>
     ),
     whatsapp: <WhatsAppIcon className={cls} />,
-    calendar: <CalendarClock className={cls} strokeWidth={1.4} />,
-    chair: <Armchair className={cls} strokeWidth={1.4} />,
+    calendar: <CalendarClock className={cls} strokeWidth={1.35} />,
+    chair: <Armchair className={cls} strokeWidth={1.35} />,
   };
   return map[icon] ?? null;
 }
 
-/** Tarjeta con punta superior (forma casita / pentágono) */
-const houseClip =
-  "polygon(50% 0%, 100% 14%, 100% 100%, 0% 100%, 0% 14%)";
+/** Flecha curva suave entre pasos del zigzag */
+function FlowArrow({ down, id }: { down: boolean; id: string }) {
+  const markerId = `flow-arrow-${id}`;
+  return (
+    <svg
+      className={`pointer-events-none absolute left-[calc(100%-0.25rem)] z-0 hidden overflow-visible lg:block ${
+        down
+          ? "top-[42%] h-24 w-14 xl:w-16"
+          : "top-[58%] h-24 w-14 -translate-y-full xl:w-16"
+      }`}
+      viewBox="0 0 64 96"
+      fill="none"
+      aria-hidden
+    >
+      <defs>
+        <marker
+          id={markerId}
+          markerWidth="8"
+          markerHeight="8"
+          refX="6"
+          refY="4"
+          orient="auto"
+          markerUnits="strokeWidth"
+        >
+          <path
+            d="M0 0.5 L6.5 4 L0 7.5"
+            fill="none"
+            stroke="rgba(255,255,255,0.85)"
+            strokeWidth="1.6"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </marker>
+      </defs>
+      {down ? (
+        <path
+          d="M4 10 C 22 10, 28 34, 32 48 C 36 62, 42 78, 58 82"
+          stroke="rgba(255,255,255,0.8)"
+          strokeWidth="2.4"
+          strokeLinecap="round"
+          markerEnd={`url(#${markerId})`}
+        />
+      ) : (
+        <path
+          d="M4 86 C 22 86, 28 62, 32 48 C 36 34, 42 18, 58 14"
+          stroke="rgba(255,255,255,0.8)"
+          strokeWidth="2.4"
+          strokeLinecap="round"
+          markerEnd={`url(#${markerId})`}
+        />
+      )}
+    </svg>
+  );
+}
 
 export function Journey() {
   return (
-    <section id="camino" className="relative overflow-hidden py-16 sm:py-20 lg:py-24">
-      {/* Fondo visible: overlay más ligero */}
-      <div
-        className="absolute inset-0 scale-105 bg-cover bg-center"
-        style={{
-          backgroundImage: `url('${journey.background}')`,
-          filter: "brightness(1.12) saturate(1.05)",
-        }}
-      />
-      <div className="absolute inset-0 bg-[#7030A0]/38" />
-      <div className="absolute inset-0 bg-gradient-to-b from-[#55247A]/25 via-transparent to-[#2D1B4E]/45" />
+    <section id="camino" className="bg-light py-8 sm:py-10 lg:py-12">
+      {/* Rectángulo morado inset (más estrecho que la pantalla) */}
+      <div className="mx-auto max-w-7xl px-3 sm:px-5 lg:px-6">
+        <div className="relative overflow-hidden rounded-[1.75rem] bg-gradient-to-b from-[#7030A0] via-[#5C2D8A] to-[#45206A] px-5 py-12 shadow-[0_24px_60px_rgba(45,27,78,0.18)] sm:rounded-[2rem] sm:px-8 sm:py-14 md:px-12 lg:px-14 lg:py-16">
+          <div className="relative mx-auto max-w-6xl">
+            <div className="mx-auto max-w-4xl text-center">
+              <h2 className="whitespace-nowrap font-title text-[clamp(1.15rem,3.6vw,2.65rem)] leading-tight text-white">
+                {journey.title}
+              </h2>
+              <p className="mx-auto mt-4 max-w-xl font-subtitle text-base text-white/90 sm:text-lg md:text-xl">
+                {journey.intro}
+              </p>
+            </div>
 
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Cabecera */}
-        <div className="mx-auto max-w-3xl text-center">
-          <div className="flex items-center justify-center gap-2.5 sm:gap-4">
-            <Flower className="h-7 w-7 shrink-0 drop-shadow-[0_0_10px_rgba(212,180,240,0.85)] sm:h-8 sm:w-8" />
-            <h2 className="font-title text-[1.65rem] leading-[1.15] text-white drop-shadow-sm sm:text-3xl md:text-4xl lg:text-[2.65rem]">
-              {journey.title}
-            </h2>
-            <Flower className="h-7 w-7 shrink-0 drop-shadow-[0_0_10px_rgba(212,180,240,0.85)] sm:h-8 sm:w-8" />
-          </div>
+            <ol className="relative mt-12 grid grid-cols-1 gap-10 sm:mt-14 sm:grid-cols-2 sm:gap-x-10 sm:gap-y-14 lg:mt-16 lg:grid-cols-4 lg:gap-x-8 lg:gap-y-0 lg:pt-4 lg:pb-8">
+              {journey.steps.map((step, i) => {
+                const high = i % 2 === 0;
+                const iconFirst = !high;
 
-          {/* Separador con diamante */}
-          <div className="mx-auto mt-5 flex max-w-md items-center gap-3 px-4">
-            <span className="h-px flex-1 bg-gradient-to-r from-transparent via-[#E8D5F5] to-[#C6A4E6]" />
-            <span className="h-2 w-2 rotate-45 rounded-[1px] bg-[#E8D5F5] shadow-[0_0_8px_rgba(232,213,245,0.9)]" />
-            <span className="h-px flex-1 bg-gradient-to-l from-transparent via-[#E8D5F5] to-[#C6A4E6]" />
-          </div>
+                return (
+                  <motion.li
+                    key={step.n}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.1, duration: 0.45 }}
+                    className={`relative z-10 flex flex-col items-center px-2 text-center ${
+                      high ? "lg:-translate-y-6" : "lg:translate-y-10"
+                    }`}
+                  >
+                    {i < journey.steps.length - 1 ? (
+                      <FlowArrow down={high} id={step.n} />
+                    ) : null}
 
-          <p className="mx-auto mt-4 max-w-2xl font-subtitle text-sm text-white/95 drop-shadow-sm sm:text-base md:text-lg">
-            {journey.intro}
-          </p>
-        </div>
+                    {iconFirst ? (
+                      <>
+                        <div className="relative z-10 mb-3 flex items-center justify-center">
+                          <StepIcon icon={step.icon} />
+                        </div>
+                        <p className="relative z-10 max-w-[13rem] font-title text-base leading-snug text-white sm:text-lg">
+                          <span className="mr-1.5 inline-block text-2xl text-white sm:text-3xl md:text-4xl">
+                            {step.n}.
+                          </span>
+                          {step.title}
+                        </p>
+                      </>
+                    ) : (
+                      <>
+                        <p className="relative z-10 max-w-[13rem] font-title text-base leading-snug text-white sm:text-lg">
+                          <span className="mr-1.5 inline-block text-2xl text-white sm:text-3xl md:text-4xl">
+                            {step.n}.
+                          </span>
+                          {step.title}
+                        </p>
+                        <div className="relative z-10 mt-3 flex items-center justify-center">
+                          <StepIcon icon={step.icon} />
+                        </div>
+                      </>
+                    )}
+                  </motion.li>
+                );
+              })}
+            </ol>
 
-        {/* Pasos */}
-        <div className="relative mt-14 sm:mt-16 lg:mt-20">
-          {/* Línea ondulada (desktop) */}
-          <div className="pointer-events-none absolute top-0 right-0 left-0 z-20 hidden h-10 lg:block">
-            <svg
-              className="absolute inset-x-[6%] top-3 h-10 w-[88%]"
-              viewBox="0 0 1000 40"
-              fill="none"
-              preserveAspectRatio="none"
-              aria-hidden
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 }}
+              className="mt-10 flex justify-center sm:mt-12 lg:mt-16"
             >
-              <path
-                d="M20 20 C 140 4, 220 36, 320 20 S 500 4, 600 20 S 780 36, 900 20 L 955 20"
-                stroke="#DCC6F5"
-                strokeWidth="4"
-                strokeLinecap="round"
-                className="drop-shadow-[0_0_6px_rgba(220,198,245,0.95)]"
-              />
-              <path
-                d="M935 10 L968 20 L935 30"
-                stroke="#EDE0FF"
-                strokeWidth="4"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+              <FrostedCta className="cta-invite border-white/30 bg-white/15 px-10 py-4 text-lg font-title text-white hover:bg-white/25 sm:px-12 sm:py-5 sm:text-xl">
+                Queremos acompañarte
+              </FrostedCta>
+            </motion.div>
           </div>
-
-          <ol className="grid gap-8 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4 lg:gap-5 lg:pt-2">
-            {journey.steps.map((step, i) => (
-              <motion.li
-                key={step.n}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.09, duration: 0.45 }}
-                className="relative flex flex-col items-center"
-              >
-                {/* Número sobre la línea */}
-                <span className="relative z-30 mb-3 flex h-9 w-9 items-center justify-center rounded-full bg-white font-title text-sm text-[#7030A0] shadow-[0_4px_16px_rgba(45,27,78,0.25)] ring-2 ring-[#DCC6F5]/80 lg:mb-4">
-                  {step.n}
-                </span>
-
-                {/* Card casita */}
-                <div
-                  className="relative flex w-full flex-1 flex-col px-4 pb-6 pt-10 sm:px-5 sm:pb-7 sm:pt-11"
-                  style={{
-                    clipPath: houseClip,
-                    background:
-                      "linear-gradient(180deg, rgba(155,89,199,0.72) 0%, rgba(85,36,122,0.88) 100%)",
-                    boxShadow:
-                      "0 0 0 1.5px rgba(232,213,245,0.55), 0 16px 36px rgba(45,27,78,0.28)",
-                  }}
-                >
-                  {/* borde glow simulado */}
-                  <div
-                    className="pointer-events-none absolute inset-0 opacity-80"
-                    style={{
-                      clipPath: houseClip,
-                      boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.28)",
-                    }}
-                  />
-
-                  <div className="relative flex justify-center">
-                    <div className="flex h-[3.75rem] w-[3.75rem] items-center justify-center rounded-full border border-white/45 bg-white/15 shadow-[0_0_18px_rgba(198,164,230,0.35)] sm:h-16 sm:w-16">
-                      <StepIcon icon={step.icon} />
-                    </div>
-                  </div>
-
-                  <h3 className="relative mt-4 text-center font-subtitle text-[0.95rem] leading-snug text-white sm:text-base">
-                    {step.title}
-                  </h3>
-                  <p className="relative mt-2.5 flex-1 text-center font-body text-[0.78rem] leading-relaxed text-white/92 sm:text-[0.82rem]">
-                    {step.desc}
-                  </p>
-                </div>
-              </motion.li>
-            ))}
-          </ol>
         </div>
-
-        {/* Pie */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.3 }}
-          className="mx-auto mt-10 flex max-w-lg items-center gap-3 rounded-full border border-white/50 bg-[#4a2080]/45 px-4 py-2.5 shadow-[0_8px_28px_rgba(45,27,78,0.2)] backdrop-blur-sm sm:mt-12 sm:max-w-xl sm:gap-4 sm:px-5 sm:py-3"
-        >
-          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/50 bg-white/15">
-            <Heart className="h-3.5 w-3.5 fill-[#E8D5F5] text-[#E8D5F5]" />
-          </span>
-          <p className="font-body text-xs leading-snug text-white sm:text-sm">
-            {journey.footer}
-          </p>
-        </motion.div>
       </div>
     </section>
   );
