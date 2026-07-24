@@ -169,7 +169,7 @@ header a {
   color: transparent;
   -webkit-text-fill-color: transparent;
   pointer-events: none;
-  animation: hero-purple-wave 4.2s cubic-bezier(0.45, 0.05, 0.25, 1) forwards;
+  animation: hero-purple-wave 6s cubic-bezier(0.45, 0.05, 0.25, 1) forwards;
 }
 
 @media (prefers-reduced-motion: reduce) {
