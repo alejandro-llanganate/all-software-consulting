@@ -39,10 +39,15 @@ function StepIcon({ icon }: { icon: (typeof journey.steps)[number]["icon"] }) {
 }
 
 /**
- * Flecha profesional: curva limpia + punta geométrica fija
- * (sin SVG marker, que suele deformarse).
+ * Flecha profesional: la punta rota según la tangente
+ * al final de la curva (no queda horizontal).
  */
 function FlowArrow({ down }: { down: boolean }) {
+  // Ángulo de la punta ≈ dirección del último tramo de la curva
+  const tipAngle = down ? 35 : -35;
+  const tipX = 49;
+  const tipY = down ? 81.2 : 6.8;
+
   return (
     <svg
       className={`pointer-events-none absolute left-full z-[1] hidden w-[3.25rem] overflow-visible lg:block xl:w-14 ${
@@ -53,44 +58,31 @@ function FlowArrow({ down }: { down: boolean }) {
       aria-hidden
     >
       {down ? (
-        <>
-          <path
-            d="M2 6 C 20 8, 26 36, 30 50 S 40 78, 48 80"
-            stroke="white"
-            strokeOpacity="0.75"
-            strokeWidth="1.75"
-            strokeLinecap="round"
-          />
-          <path
-            d="M42.5 74.5 L50.5 80.5 L42 85"
-            stroke="white"
-            strokeOpacity="0.9"
-            strokeWidth="1.75"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            fill="none"
-          />
-        </>
+        <path
+          d="M2 6 C 20 8, 26 38, 32 54 C 38 70, 44 78, 47.5 80.5"
+          stroke="white"
+          strokeOpacity="0.78"
+          strokeWidth="1.75"
+          strokeLinecap="round"
+        />
       ) : (
-        <>
-          <path
-            d="M2 82 C 20 80, 26 52, 30 38 S 40 10, 48 8"
-            stroke="white"
-            strokeOpacity="0.75"
-            strokeWidth="1.75"
-            strokeLinecap="round"
-          />
-          <path
-            d="M42 13.5 L50.5 7.5 L42 3"
-            stroke="white"
-            strokeOpacity="0.9"
-            strokeWidth="1.75"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            fill="none"
-          />
-        </>
+        <path
+          d="M2 82 C 20 80, 26 50, 32 34 C 38 18, 44 10, 47.5 7.5"
+          stroke="white"
+          strokeOpacity="0.78"
+          strokeWidth="1.75"
+          strokeLinecap="round"
+        />
       )}
+
+      {/* Punta alineada con el final de la línea */}
+      <g transform={`translate(${tipX} ${tipY}) rotate(${tipAngle})`}>
+        <path
+          d="M0 0 L-9 -5.2 L-9 5.2 Z"
+          fill="white"
+          fillOpacity="0.92"
+        />
+      </g>
     </svg>
   );
 }
