@@ -16,7 +16,7 @@ export function Challenges() {
     <section className="bg-violet-light/40 py-16 sm:py-24 lg:py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <ScrollReveal animation="fadeInUpBlur" className="mx-auto mb-12 max-w-2xl text-center">
-          <h2 className="font-serif text-3xl text-headline sm:text-4xl md:text-5xl">
+          <h2 className="font-title text-3xl text-headline sm:text-4xl md:text-5xl">
             {sections.challenges.title}
           </h2>
           <p className="mt-3 text-foreground/70">{sections.challenges.description}</p>

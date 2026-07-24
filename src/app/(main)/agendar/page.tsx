@@ -21,13 +21,13 @@ export default function AgendarPage() {
           Volver al inicio
         </Link>
         <div className="mb-8 text-center">
-          <p className="text-xs font-semibold tracking-[0.2em] text-primary uppercase">
+          <p className="font-subtitle text-xs tracking-[0.2em] text-primary uppercase">
             Cómo agendar una cita
           </p>
-          <h1 className="mt-2 font-serif text-3xl text-headline sm:text-4xl">
+          <h1 className="mt-2 font-title text-3xl text-headline sm:text-4xl">
             Agenda tu cita aquí
           </h1>
-          <p className="mx-auto mt-3 max-w-xl text-sm text-foreground/65">
+          <p className="mx-auto mt-3 max-w-xl font-body text-sm text-foreground/65">
             Un wizard corto con ficha socioeconómica, preferencias y calendario. Creemos que la
             salud mental es un derecho; el acceso asequible es indispensable.
           </p>

@@ -110,7 +110,7 @@ export function BookingFlow({ professional }: { professional: Professional }) {
       {/* Header */}
       <div className="bg-gradient-to-r from-primary to-primary-dark px-4 py-5 text-white sm:px-8 sm:py-6">
         <p className="text-xs font-medium tracking-widest text-white/70 uppercase">Agendar cita</p>
-        <h1 className="mt-1 font-serif text-xl sm:text-2xl md:text-3xl">{professional.name}</h1>
+        <h1 className="mt-1 font-title text-xl sm:text-2xl md:text-3xl">{professional.name}</h1>
         <p className="mt-1 flex flex-wrap gap-x-2 text-xs text-white/75 sm:text-sm">
           {professional.title} · ${professional.sessionPrice.toLocaleString("es-CO")}/sesión
         </p>
@@ -317,7 +317,7 @@ export function BookingFlow({ professional }: { professional: Professional }) {
               <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-primary/10">
                 <CheckCircle2 className="h-10 w-10 text-primary" />
               </div>
-              <h2 className="mt-5 font-serif text-2xl text-headline sm:text-3xl">¡Cita confirmada!</h2>
+              <h2 className="mt-5 font-title text-2xl text-headline sm:text-3xl">¡Cita confirmada!</h2>
               <p className="mx-auto mt-3 max-w-md text-foreground/65">
                 Tu cita con <strong>{professional.name}</strong> quedó registrada para el{" "}
                 <strong className="capitalize">{formatDate(selectedDate)}</strong> a las{" "}

@@ -1,6 +1,6 @@
 import { BookingStorageInit } from "@/components/providers/BookingStorageInit";
 import { WhatsAppFloat } from "@/components/ui/WhatsAppFloat";
-import { colors, logo, siteConfig } from "@/data/site";
+import { colors, siteConfig } from "@/data/site";
 import { assetPath } from "@/lib/asset-path";
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
@@ -9,7 +9,14 @@ export const metadata: Metadata = {
   title: `${siteConfig.name} | Bienestar Emocional y Salud Mental`,
   description:
     "Empresa psicosocial en Quito. Terapias basadas en evidencia, cognitivo-conductuales y conductuales contextuales. Acceso asequible a salud mental.",
-  icons: { icon: assetPath(logo.favicon) },
+  icons: {
+    icon: [
+      { url: assetPath("/favicon-habitadas.png"), type: "image/png" },
+      { url: assetPath("/favicon.ico"), sizes: "any" },
+    ],
+    apple: [{ url: assetPath("/favicon-habitadas.png"), type: "image/png" }],
+    shortcut: assetPath("/favicon-habitadas.png"),
+  },
 };
 
 export const viewport: Viewport = {
@@ -33,7 +40,7 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=Geomini:wght@200..800&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Elms+Sans:ital,wght@0,400;1,400&family=Raleway:wght@500;800&display=swap"
           rel="stylesheet"
         />
       </head>

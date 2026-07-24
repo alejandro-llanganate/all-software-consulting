@@ -26,7 +26,7 @@ export function Welcome() {
               </p>
             </ScrollReveal>
             <ScrollReveal animation="fadeInUpBlur" delay="sm">
-              <h2 className="font-serif text-3xl leading-tight text-headline sm:text-4xl md:text-5xl">
+              <h2 className="font-title text-3xl leading-tight text-headline sm:text-4xl md:text-5xl">
                 {welcome.title}
               </h2>
             </ScrollReveal>
@@ -75,7 +75,7 @@ export function Welcome() {
         {/* Enfoque — promoción y prevención */}
         <div className="mt-20">
           <ScrollReveal animation="fadeInUpBlur" className="mb-10 text-center">
-            <h3 className="font-serif text-2xl text-headline sm:text-3xl md:text-4xl">
+            <h3 className="font-title text-2xl text-headline sm:text-3xl md:text-4xl">
               {welcome.enfoque.title}
             </h3>
             <p className="mx-auto mt-3 max-w-2xl text-foreground/65">

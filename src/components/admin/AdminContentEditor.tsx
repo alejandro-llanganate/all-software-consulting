@@ -101,7 +101,7 @@ export function AdminContentEditor() {
   return (
     <div className="mx-auto max-w-2xl space-y-6">
       <section className="space-y-3 rounded-2xl bg-white p-6 shadow-sm ring-1 ring-primary/10">
-        <h2 className="font-serif text-xl text-headline">Hero</h2>
+        <h2 className="font-title text-xl text-headline">Hero</h2>
         {(
           [
             ["Subtítulo", "subtitle"],
@@ -130,7 +130,7 @@ export function AdminContentEditor() {
       </section>
 
       <section className="space-y-3 rounded-2xl bg-white p-6 shadow-sm ring-1 ring-primary/10">
-        <h2 className="font-serif text-xl text-headline">Contacto</h2>
+        <h2 className="font-title text-xl text-headline">Contacto</h2>
         {(Object.keys(emptyContact) as (keyof ContactContent)[]).map((key) => (
           <label key={key} className="block">
             <span className="text-xs font-semibold uppercase tracking-wide text-foreground/50">{key}</span>
@@ -144,7 +144,7 @@ export function AdminContentEditor() {
       </section>
 
       <section className="space-y-3 rounded-2xl bg-white p-6 shadow-sm ring-1 ring-primary/10">
-        <h2 className="font-serif text-xl text-headline">Precios (JSON)</h2>
+        <h2 className="font-title text-xl text-headline">Precios (JSON)</h2>
         <textarea
           value={pricesJson}
           onChange={(e) => setPricesJson(e.target.value)}

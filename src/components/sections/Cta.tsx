@@ -19,7 +19,7 @@ export function Cta() {
       <section id="contacto" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
           <motion.h2
-            className="font-serif text-3xl text-white sm:text-4xl md:text-5xl"
+            className="font-title text-3xl text-white sm:text-4xl md:text-5xl"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}

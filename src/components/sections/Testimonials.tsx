@@ -16,7 +16,7 @@ export function Testimonials() {
           <p className="mb-3 text-sm font-medium tracking-[0.15em] text-primary uppercase">
             {sections.testimonials.eyebrow}
           </p>
-          <h2 className="font-serif text-3xl text-headline sm:text-4xl md:text-5xl">
+          <h2 className="font-title text-3xl text-headline sm:text-4xl md:text-5xl">
             {sections.testimonials.title}
           </h2>
           <p className="mt-4 leading-relaxed text-foreground/70">
@@ -63,7 +63,7 @@ export function Testimonials() {
                     &ldquo;{testimonial.quote}&rdquo;
                   </p>
                   <div className="mt-6 flex items-center gap-3">
-                    <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 font-serif text-sm text-primary-dark">
+                    <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 font-title text-sm text-primary-dark">
                       {testimonial.author.charAt(0)}
                     </div>
                     <p className="font-medium text-primary-dark">

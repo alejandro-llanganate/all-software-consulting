@@ -201,7 +201,7 @@ export default function AdminPage() {
             <div className="flex items-center gap-3">
               <Image src={logo.default} alt="HABITADAS" width={140} height={63} className="h-10 w-auto object-contain" />
               <div>
-                <p className="font-serif text-xl text-primary-dark">HABITADAS</p>
+                <p className="font-title text-xl text-primary-dark">HABITADAS</p>
                 <p className="text-xs text-foreground/50">Panel profesional</p>
               </div>
             </div>
@@ -281,7 +281,7 @@ export default function AdminPage() {
           <button onClick={() => void handleLogout()} className="mb-8 flex items-center gap-2 text-sm text-foreground/50 hover:text-primary">
             <ArrowLeft className="h-4 w-4" /> Cerrar sesión
           </button>
-          <h1 className="font-serif text-3xl text-headline">Selecciona tu perfil</h1>
+          <h1 className="font-title text-3xl text-headline">Selecciona tu perfil</h1>
           <p className="mt-2 text-foreground/50">Accede al dashboard de tu consulta</p>
           <div className="mt-8 grid gap-3 sm:grid-cols-2">
             {staticProfessionals.map((p, i) => (
@@ -326,7 +326,7 @@ export default function AdminPage() {
           <div className="flex items-center gap-3">
             <Image src={logo.default} alt="" width={120} height={54} className="h-9 w-auto object-contain" />
             <div>
-              <p className="font-serif text-lg text-primary-dark">HABITADAS</p>
+              <p className="font-title text-lg text-primary-dark">HABITADAS</p>
               <p className="text-[10px] tracking-widest text-primary/60 uppercase">Panel Pro</p>
             </div>
           </div>
@@ -392,7 +392,7 @@ export default function AdminPage() {
         <header className="sticky top-0 z-30 flex items-center justify-between border-b border-primary/10 bg-white/95 px-4 py-3 backdrop-blur-lg lg:hidden">
           <div className="flex min-w-0 items-center gap-2">
             <Image src={logo.default} alt="" width={100} height={45} className="h-7 w-auto object-contain" />
-            <span className="truncate font-serif text-primary-dark">Panel Pro</span>
+            <span className="truncate font-title text-primary-dark">Panel Pro</span>
           </div>
           <button onClick={() => void handleLogout()} className="rounded-lg p-2 text-foreground/40 hover:text-primary">
             <LogOut className="h-5 w-5" />
@@ -423,7 +423,7 @@ export default function AdminPage() {
               <p className="text-xs font-semibold tracking-widest text-primary uppercase">
                 {navItems.find((n) => n.id === tab)?.label}
               </p>
-              <h1 className="mt-1 font-serif text-2xl text-headline sm:text-3xl">
+              <h1 className="mt-1 font-title text-2xl text-headline sm:text-3xl">
                 Hola, {pro.name.split(" ")[0]}
               </h1>
             </div>

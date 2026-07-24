@@ -42,10 +42,10 @@ function ProfessionalsContent() {
           animate={{ opacity: 1, y: 0 }}
           className="mb-12 text-center"
         >
-          <p className="mb-2 text-sm font-medium tracking-widest text-primary uppercase">
+          <p className="mb-2 font-subtitle text-sm tracking-widest text-primary uppercase">
             Nuestro equipo
           </p>
-          <h1 className="font-serif text-3xl text-headline sm:text-4xl md:text-5xl">
+          <h1 className="font-title text-3xl text-headline sm:text-4xl md:text-5xl">
             Nuestras profesionales
           </h1>
           <p className="mx-auto mt-3 max-w-xl text-foreground/65">
@@ -110,7 +110,7 @@ function ProfessionalsContent() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-primary-dark/80 via-primary/20 to-transparent" />
                   <div className="absolute right-0 bottom-0 left-0 p-5">
-                    <h3 className="font-serif text-xl text-white">{prof.name}</h3>
+                    <h3 className="font-title text-xl text-white">{prof.name}</h3>
                     <p className="text-sm text-white/80">{prof.title}</p>
                   </div>
                 </div>

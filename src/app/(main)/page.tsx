@@ -1,18 +1,13 @@
 import { SectionTransition } from "@/components/animations/SectionTransition";
-import { Challenges } from "@/components/sections/Challenges";
-import { Cta } from "@/components/sections/Cta";
+import { AboutHabitadas } from "@/components/sections/AboutHabitadas";
+import { Blog } from "@/components/sections/Blog";
 import { Disclaimer } from "@/components/sections/Disclaimer";
 import { Hero } from "@/components/sections/Hero";
-import { History } from "@/components/sections/History";
-import { HowToBook } from "@/components/sections/HowToBook";
-import { Location } from "@/components/sections/Location";
-import { Office } from "@/components/sections/Office";
-import { Prices } from "@/components/sections/Prices";
+import { Journey } from "@/components/sections/Journey";
+import { LocationCta } from "@/components/sections/LocationCta";
 import { RightsMarquee } from "@/components/sections/RightsMarquee";
 import { Services } from "@/components/sections/Services";
 import { Team } from "@/components/sections/Team";
-import { Testimonials } from "@/components/sections/Testimonials";
-import { Welcome } from "@/components/sections/Welcome";
 
 export default function Home() {
   return (
@@ -20,37 +15,22 @@ export default function Home() {
       <Hero />
       <RightsMarquee />
       <SectionTransition variant="fade">
-        <Team />
-      </SectionTransition>
-      <SectionTransition variant="blur">
-        <Welcome />
+        <AboutHabitadas />
       </SectionTransition>
       <SectionTransition variant="slide-up">
-        <History />
-      </SectionTransition>
-      <SectionTransition variant="slide-up">
-        <Challenges />
+        <Journey />
       </SectionTransition>
       <SectionTransition variant="scale">
         <Services />
       </SectionTransition>
       <SectionTransition variant="fade">
-        <Prices />
+        <Team />
       </SectionTransition>
       <SectionTransition variant="blur">
-        <Office />
+        <Blog />
       </SectionTransition>
       <SectionTransition variant="slide-up">
-        <HowToBook />
-      </SectionTransition>
-      <SectionTransition variant="slide-up">
-        <Testimonials />
-      </SectionTransition>
-      <SectionTransition variant="scale">
-        <Cta />
-      </SectionTransition>
-      <SectionTransition variant="fade">
-        <Location />
+        <LocationCta />
       </SectionTransition>
       <Disclaimer />
     </>

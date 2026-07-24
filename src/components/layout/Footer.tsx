@@ -1,3 +1,4 @@
+import { homeServices } from "@/data/home-content";
 import { logo, navLinks, siteConfig } from "@/data/site";
 import { Mail, MapPin, Phone } from "lucide-react";
 import Image from "next/image";
@@ -20,8 +21,6 @@ function FacebookIcon({ className }: { className?: string }) {
 }
 
 export function Footer() {
-  const serviceLinks = navLinks.find((l) => l.label === "Servicios")?.children ?? [];
-
   return (
     <footer className="bg-primary-dark text-white">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 md:py-16">
@@ -71,26 +70,43 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="mb-4 text-sm font-semibold tracking-wider uppercase text-accent">
-              Sobre Nosotros
+            <h4 className="mb-4 font-subtitle text-sm tracking-wider uppercase text-accent">
+              Sitio
             </h4>
             <ul className="space-y-2">
-              <li><Link href="#sobre-nosotros" className="text-sm text-white/70 transition-opacity hover:text-white">Nuestra empresa</Link></li>
-              <li><Link href="#sobre-nosotros" className="text-sm text-white/70 transition-opacity hover:text-white">Nuestro enfoque</Link></li>
-              <li><Link href="/profesionales" className="text-sm text-white/70 transition-opacity hover:text-white">Profesionales</Link></li>
-              <li><Link href="/admin" className="text-sm text-white/70 transition-opacity hover:text-white">Panel profesional</Link></li>
+              {navLinks.map((link) => (
+                <li key={link.label}>
+                  <Link
+                    href={link.href}
+                    className="text-sm text-white/70 transition-opacity hover:text-white"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+              <li>
+                <Link
+                  href="/admin"
+                  className="text-sm text-white/70 transition-opacity hover:text-white"
+                >
+                  Panel profesional
+                </Link>
+              </li>
             </ul>
           </div>
 
           <div>
-            <h4 className="mb-4 text-sm font-semibold tracking-wider uppercase text-accent">
+            <h4 className="mb-4 font-subtitle text-sm tracking-wider uppercase text-accent">
               Servicios
             </h4>
             <ul className="space-y-2">
-              {serviceLinks.map((link) => (
-                <li key={link.label}>
-                  <Link href={link.href} className="text-sm text-white/70 transition-opacity hover:text-white">
-                    {link.label}
+              {homeServices.slice(0, 5).map((s) => (
+                <li key={s.id}>
+                  <Link
+                    href="#servicios"
+                    className="text-sm text-white/70 transition-opacity hover:text-white"
+                  >
+                    {s.title}
                   </Link>
                 </li>
               ))}
@@ -98,18 +114,24 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="mb-4 text-sm font-semibold tracking-wider uppercase text-accent">
+            <h4 className="mb-4 font-subtitle text-sm tracking-wider uppercase text-accent">
               Contacto
             </h4>
             <ul className="space-y-3">
               <li>
-                <a href={`tel:${siteConfig.phone.replace(/\D/g, "")}`} className="flex items-center gap-2 text-sm text-white/70 transition-opacity hover:text-white">
+                <a
+                  href={`tel:${siteConfig.phone.replace(/\D/g, "")}`}
+                  className="flex items-center gap-2 text-sm text-white/70 transition-opacity hover:text-white"
+                >
                   <Phone className="h-4 w-4 shrink-0" />
                   {siteConfig.phone}
                 </a>
               </li>
               <li>
-                <a href={`mailto:${siteConfig.email}`} className="flex items-center gap-2 break-all text-sm text-white/70 transition-opacity hover:text-white">
+                <a
+                  href={`mailto:${siteConfig.email}`}
+                  className="flex items-center gap-2 break-all text-sm text-white/70 transition-opacity hover:text-white"
+                >
                   <Mail className="h-4 w-4 shrink-0" />
                   {siteConfig.email}
                 </a>
@@ -126,7 +148,9 @@ export function Footer() {
 
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 md:flex-row">
           <div className="flex flex-col items-center gap-1.5 text-center md:items-start md:text-left">
-            <p className="text-sm text-white/50">© {siteConfig.name}. Todos los derechos reservados.</p>
+            <p className="text-sm text-white/50">
+              © {siteConfig.name}. Todos los derechos reservados.
+            </p>
             <p className="text-xs text-white/40 sm:text-sm">
               Sistema desarrollado por{" "}
               <a
@@ -140,9 +164,12 @@ export function Footer() {
             </p>
           </div>
           <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-white/50 md:justify-end">
-            <Link href="#" className="hover:text-white">Política de Privacidad</Link>
-            <Link href="#" className="hover:text-white">Accesibilidad</Link>
-            <Link href="#" className="hover:text-white">Mapa del Sitio</Link>
+            <Link href="#" className="hover:text-white">
+              Política de Privacidad
+            </Link>
+            <Link href="#" className="hover:text-white">
+              Accesibilidad
+            </Link>
           </div>
         </div>
       </div>

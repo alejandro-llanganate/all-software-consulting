@@ -80,7 +80,7 @@ export function BookingCalendar({ slots, selectedDate, selectedTime, onSelect }:
           >
             <ChevronLeft className="h-5 w-5" />
           </button>
-          <h3 className="font-serif text-lg text-headline">
+          <h3 className="font-title text-lg text-headline">
             {MONTHS[viewDate.month]} {viewDate.year}
           </h3>
           <button

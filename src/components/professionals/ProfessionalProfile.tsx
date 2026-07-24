@@ -55,10 +55,10 @@ export function ProfessionalProfile({ professional, profAreas }: Props) {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.15 }}
           >
-            <p className="text-sm font-medium tracking-widest text-primary uppercase">
+            <p className="font-subtitle text-sm tracking-widest text-primary uppercase">
               {professional.title}
             </p>
-            <h1 className="mt-2 font-serif text-3xl text-headline sm:text-4xl md:text-5xl">
+            <h1 className="mt-2 font-title text-3xl text-headline sm:text-4xl md:text-5xl">
               {professional.name}
             </h1>
 
@@ -75,7 +75,7 @@ export function ProfessionalProfile({ professional, profAreas }: Props) {
             </div>
 
             <div className="mt-5">
-              <p className="text-xs font-semibold tracking-wider text-primary/60 uppercase">Especializaciones</p>
+              <p className="font-subtitle text-xs tracking-wider text-primary/60 uppercase">Especializaciones</p>
               <div className="mt-2 flex flex-wrap gap-2">
                 {professional.specializations.map((s) => (
                   <span
@@ -91,20 +91,20 @@ export function ProfessionalProfile({ professional, profAreas }: Props) {
             <p className="mt-6 leading-relaxed text-foreground/75">{professional.bio}</p>
 
             <div className="mt-6 rounded-xl bg-white p-5 ring-1 ring-primary/10">
-              <h3 className="text-sm font-semibold text-primary-dark">Enfoque terapéutico</h3>
-              <p className="mt-2 text-sm text-foreground/65">{professional.approach}</p>
+              <h3 className="font-subtitle text-sm text-primary-dark">Enfoque terapéutico</h3>
+              <p className="mt-2 font-body text-sm text-foreground/65">{professional.approach}</p>
             </div>
 
             <div className="mt-6 flex items-center gap-4">
-              <span className="text-2xl font-semibold text-primary-dark">
+              <span className="font-title text-2xl text-primary-dark">
                 ${professional.sessionPrice} USD
               </span>
-              <span className="text-sm text-foreground/50">/ sesión · 45–50 min</span>
+              <span className="font-body text-sm text-foreground/50">/ sesión · 45–50 min</span>
             </div>
 
             <BookCta
               professionalSlug={professional.slug}
-              className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-8 py-4 text-sm font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-primary-dark hover:shadow-lg hover:shadow-primary/30 sm:w-auto"
+              className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-8 py-4 font-subtitle text-sm text-white transition-all hover:-translate-y-0.5 hover:bg-primary-dark hover:shadow-lg hover:shadow-primary/30 sm:w-auto"
             >
               <Calendar className="h-5 w-5" />
               Agenda tu cita aquí
@@ -124,14 +124,14 @@ export function ProfessionalProfile({ professional, profAreas }: Props) {
               <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
                 <GraduationCap className="h-5 w-5 text-primary" />
               </div>
-              <h2 className="font-serif text-2xl text-headline">Estudios superiores</h2>
+              <h2 className="font-title text-2xl text-headline">Estudios superiores</h2>
             </div>
             <ul className="space-y-5">
               {professional.education.map((edu) => (
                 <li key={`${edu.degree}-${edu.year}`} className="border-l-2 border-primary/20 pl-4">
-                  <p className="font-medium text-headline">{edu.degree}</p>
-                  <p className="mt-0.5 text-sm text-foreground/60">{edu.institution}</p>
-                  <p className="mt-1 text-xs font-medium text-primary">{edu.year}</p>
+                  <p className="font-subtitle text-headline">{edu.degree}</p>
+                  <p className="mt-0.5 font-body text-sm text-foreground/60">{edu.institution}</p>
+                  <p className="mt-1 font-subtitle text-xs text-primary">{edu.year}</p>
                 </li>
               ))}
             </ul>
@@ -148,16 +148,16 @@ export function ProfessionalProfile({ professional, profAreas }: Props) {
               <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
                 <Award className="h-5 w-5 text-primary" />
               </div>
-              <h2 className="font-serif text-2xl text-headline">Certificados y diplomas</h2>
+              <h2 className="font-title text-2xl text-headline">Certificados y diplomas</h2>
             </div>
             <ul className="space-y-5">
               {professional.certifications.map((cert) => (
                 <li key={`${cert.name}-${cert.year}`} className="flex gap-3">
                   <BookOpen className="mt-0.5 h-4 w-4 shrink-0 text-primary/50" />
                   <div>
-                    <p className="font-medium text-headline">{cert.name}</p>
-                    <p className="mt-0.5 text-sm text-foreground/60">{cert.issuer}</p>
-                    <p className="mt-1 text-xs font-medium text-primary">{cert.year}</p>
+                    <p className="font-subtitle text-headline">{cert.name}</p>
+                    <p className="mt-0.5 font-body text-sm text-foreground/60">{cert.issuer}</p>
+                    <p className="mt-1 font-subtitle text-xs text-primary">{cert.year}</p>
                   </div>
                 </li>
               ))}

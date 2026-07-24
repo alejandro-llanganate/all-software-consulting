@@ -10,7 +10,7 @@ export function Location() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <ScrollReveal animation="fadeInUp" className="mb-8 max-w-2xl">
           <p className="text-xs font-semibold tracking-[0.2em] text-primary uppercase">Encuéntranos</p>
-          <h2 className="mt-2 font-serif text-3xl text-headline sm:text-4xl">Nuestra ubicación</h2>
+          <h2 className="mt-2 font-title text-3xl text-headline sm:text-4xl">Nuestra ubicación</h2>
           <p className="mt-3 flex items-center gap-2 text-foreground/70">
             <MapPin className="h-4 w-4 shrink-0 text-primary" />
             {siteConfig.address}

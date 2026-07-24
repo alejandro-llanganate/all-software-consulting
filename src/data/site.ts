@@ -39,28 +39,24 @@ export const logo = {
   default: a("/logo.png"),
   white: a("/logo-white.png"),
   full: a("/logo-full.png"),
-  favicon: a("/logo.png"),
+  favicon: a("/favicon-habitadas.png"),
 };
 
 export const hero = {
-  subtitle: "Empresa psicosocial · Promoción y prevención en salud mental",
-  title: "Un espacio habitado para tu bienestar emocional",
-  description:
-    "Acompañamiento psicológico con enfoques basados en evidencia: terapias conductuales contextuales y terapia cognitivo-conductual. Agenda tu cita y da el primer paso.",
+  subtitle: "Empresa psicosocial",
+  title:
+    "Habitamos el cambio, porque la salud mental es un derecho, no un privilegio.",
+  description: "",
   image: a("/hero/portada.jpg"),
   video: "",
-  approaches: [
-    "Basadas en evidencia",
-    "Terapias conductuales contextuales",
-    "Terapia cognitivo-conductual (TCC)",
-  ],
+  approaches: [],
 };
 
 export const rightsMarquee = [
-  "La salud mental es un derecho",
-  "Acceso asequible para todos",
-  "Cuidarnos también es habitar",
   "Terapia basada en evidencia",
+  "Terapias conductuales contextuales",
+  "Cognitivo-conductual",
+  "Terapia ética y humana",
 ];
 
 export const welcome = {
@@ -329,25 +325,20 @@ export const sections = {
   },
 };
 
-export const navLinks = [
+export type NavLink = {
+  label: string;
+  href: string;
+  children?: { label: string; href: string }[];
+};
+
+export const navLinks: NavLink[] = [
   { label: "Inicio", href: "#inicio" },
-  {
-    label: "Sobre Nosotros",
-    href: "#sobre-nosotros",
-    children: [
-      { label: "Nuestra historia", href: "#historia" },
-      { label: "Nuestro enfoque", href: "#sobre-nosotros" },
-      { label: "Profesionales", href: "/profesionales" },
-    ],
-  },
-  {
-    label: "Servicios",
-    href: "#servicios",
-    children: services.map((s) => ({ label: s.title, href: "#servicios" })),
-  },
-  { label: "Precios", href: "#precios" },
-  { label: "Cómo agendar", href: "/agendar" },
-  { label: "Profesionales", href: "/profesionales" },
+  { label: "Qué es HABITADAS", href: "#que-es-habitadas" },
+  { label: "Servicios", href: "#servicios" },
+  { label: "Equipo", href: "#equipo" },
+  { label: "Blog", href: "#blog" },
+  { label: "Ubicación", href: "#ubicacion" },
+  { label: "Agendar", href: "/agendar" },
 ];
 
 export const videos = { hero: "", office: "" };

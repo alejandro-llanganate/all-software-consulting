@@ -44,9 +44,9 @@ type Props = {
 function StepTitle({ eyebrow, title, desc }: { eyebrow: string; title: string; desc?: string }) {
   return (
     <div className="mb-6">
-      <p className="text-[11px] font-semibold tracking-[0.2em] text-primary uppercase">{eyebrow}</p>
-      <h2 className="mt-1 font-serif text-2xl text-headline sm:text-3xl">{title}</h2>
-      {desc && <p className="mt-2 text-sm text-foreground/60">{desc}</p>}
+      <p className="font-subtitle text-[11px] tracking-[0.2em] text-primary uppercase">{eyebrow}</p>
+      <h2 className="mt-1 font-title text-2xl text-headline sm:text-3xl">{title}</h2>
+      {desc && <p className="mt-2 font-body text-sm text-foreground/60">{desc}</p>}
     </div>
   );
 }
@@ -245,7 +245,7 @@ export function IntakeWizard({ professional: initialPro }: Props) {
       <div className="overflow-hidden rounded-3xl bg-white shadow-xl ring-1 ring-primary/10">
         <div className="bg-gradient-to-r from-emerald-600 to-primary px-6 py-8 text-center text-white sm:px-10">
           <CheckCircle2 className="mx-auto h-12 w-12" />
-          <h2 className="mt-4 font-serif text-2xl sm:text-3xl">¡Cita registrada!</h2>
+          <h2 className="mt-4 font-title text-2xl sm:text-3xl">¡Cita registrada!</h2>
           <p className="mt-2 text-sm text-white/85">
             Guardamos tu ficha y preferencias. Te contactaremos para confirmar.
           </p>
@@ -278,7 +278,7 @@ export function IntakeWizard({ professional: initialPro }: Props) {
             <p className="text-[11px] font-semibold tracking-[0.18em] text-white/70 uppercase">
               Agenda tu cita
             </p>
-            <p className="font-serif text-lg sm:text-xl">
+            <p className="font-title text-lg sm:text-xl">
               {professional ? professional.name : "HABITADAS"}
             </p>
           </div>

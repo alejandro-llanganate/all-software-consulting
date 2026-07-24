@@ -15,7 +15,7 @@ export function HowToBook() {
           <p className="text-xs font-semibold tracking-[0.2em] text-primary uppercase">
             {howToBook.eyebrow}
           </p>
-          <h2 className="mt-2 font-serif text-3xl text-headline sm:text-4xl md:text-5xl">
+          <h2 className="mt-2 font-title text-3xl text-headline sm:text-4xl md:text-5xl">
             {howToBook.title}
           </h2>
           <p className="mt-4 text-foreground/70">{howToBook.intro}</p>

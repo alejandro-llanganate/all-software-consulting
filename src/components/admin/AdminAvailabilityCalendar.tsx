@@ -166,7 +166,7 @@ export function AdminAvailabilityCalendar({ professionalId, availability, onRefr
               </button>
               <div className="text-center">
                 <p className="text-[11px] font-medium tracking-widest text-white/70 uppercase">Calendario</p>
-                <h3 className="font-serif text-xl sm:text-2xl">
+                <h3 className="font-title text-xl sm:text-2xl">
                   {MONTHS[viewDate.month]} {viewDate.year}
                 </h3>
               </div>
@@ -269,7 +269,7 @@ export function AdminAvailabilityCalendar({ professionalId, availability, onRefr
               >
                 <div className="border-b border-primary/8 bg-gradient-to-br from-violet-light/50 to-white px-5 py-5">
                   <p className="text-[11px] font-semibold tracking-widest text-primary uppercase">Gestionar día</p>
-                  <h3 className="mt-1 font-serif text-xl capitalize text-headline">{formatDayLabel(selectedDate)}</h3>
+                  <h3 className="mt-1 font-title text-xl capitalize text-headline">{formatDayLabel(selectedDate)}</h3>
                   <p className="mt-1 text-sm text-foreground/50">
                     {selectedSlots.length === 0
                       ? "Sin horarios — activa los que quieras ofrecer"

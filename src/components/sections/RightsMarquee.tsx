@@ -11,7 +11,7 @@ export function RightsMarquee() {
         {items.map((text, i) => (
           <span
             key={`${text}-${i}`}
-            className="inline-flex items-center gap-10 font-brand text-sm font-extrabold tracking-[0.12em] uppercase sm:text-base"
+            className="inline-flex items-center gap-10 font-title text-sm tracking-[0.12em] uppercase sm:text-base"
           >
             {text}
             <span className="text-accent" aria-hidden>

@@ -57,7 +57,7 @@ export function Office() {
                 {office.badge}
               </p>
             </ScrollReveal>
-            <h2 className="font-serif text-3xl leading-tight text-headline sm:text-4xl md:text-5xl">
+            <h2 className="font-title text-3xl leading-tight text-headline sm:text-4xl md:text-5xl">
               {office.title}
             </h2>
             {office.paragraphs.map((p) => (

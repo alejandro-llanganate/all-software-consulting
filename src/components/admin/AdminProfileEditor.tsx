@@ -64,7 +64,7 @@ export function AdminProfileEditor({ professional, onSaved }: Props) {
   return (
     <div className="mx-auto max-w-2xl space-y-4 rounded-2xl bg-white p-6 shadow-sm ring-1 ring-primary/10">
       <div>
-        <h2 className="font-serif text-xl text-headline">Tu perfil público</h2>
+        <h2 className="font-title text-xl text-headline">Tu perfil público</h2>
         <p className="mt-1 text-sm text-foreground/50">
           Estos datos se muestran en /profesionales y en la ficha de agendar.
         </p>

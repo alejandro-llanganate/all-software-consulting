@@ -49,7 +49,7 @@ export function Header() {
               >
                 <Link
                   href={href}
-                  className="flex items-center gap-1 text-sm font-medium text-foreground/75 transition-colors duration-300 hover:text-primary"
+                  className="flex items-center gap-1 font-subtitle text-sm text-foreground/75 transition-colors duration-300 hover:text-primary"
                 >
                   {link.label}
                   {link.children && (
@@ -98,12 +98,12 @@ export function Header() {
             href={`https://wa.me/${siteConfig.whatsapp}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 text-sm font-medium text-primary-dark transition-colors hover:text-primary"
+            className="flex items-center gap-2 font-subtitle text-sm text-primary-dark transition-colors hover:text-primary"
           >
             <Phone className="h-4 w-4" />
             <span className="hidden xl:inline">{siteConfig.phone}</span>
           </a>
-          <BookCta className="rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-primary-dark hover:shadow-md hover:shadow-primary/25">
+          <BookCta className="rounded-full bg-primary px-5 py-2.5 font-subtitle text-sm text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-primary-dark hover:shadow-md hover:shadow-primary/25">
             Agenda tu cita
           </BookCta>
         </div>
@@ -136,7 +136,7 @@ export function Header() {
                 >
                   <Link
                     href={link.href.startsWith("#") ? homeHref(link.href) : link.href}
-                    className="block py-3 font-medium text-foreground"
+                    className="block py-3 font-subtitle text-foreground"
                     onClick={() => setIsOpen(false)}
                   >
                     {link.label}

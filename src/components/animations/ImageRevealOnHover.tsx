@@ -87,7 +87,7 @@ export function ImageRevealOnHover({
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className={cn("relative overflow-hidden", className)}
+      className={cn("relative flex flex-col overflow-hidden", className)}
     >
       {/* Fondo base oscuro */}
       <div className="absolute inset-0 z-0 bg-primary-dark" />
@@ -152,7 +152,7 @@ export function ImageRevealOnHover({
       )}
 
       {/* Contenido */}
-      <div className="relative z-10">{children}</div>
+      <div className="relative z-10 flex min-h-0 flex-1 flex-col">{children}</div>
     </section>
   );
 }
