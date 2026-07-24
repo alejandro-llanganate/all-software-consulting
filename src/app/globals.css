@@ -125,6 +125,60 @@ header a {
   }
 }
 
+/* Ola morada sobre el título: el texto blanco siempre se queda */
+@keyframes hero-purple-wave {
+  0% {
+    background-position: 200% 50%;
+    opacity: 1;
+  }
+  75% {
+    background-position: -50% 50%;
+    opacity: 1;
+  }
+  100% {
+    background-position: -80% 50%;
+    opacity: 0;
+  }
+}
+
+.hero-title-base {
+  color: rgb(255 255 255 / 0.95);
+}
+
+.hero-title-wave-overlay {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(
+    100deg,
+    transparent 0%,
+    transparent 38%,
+    #e8d5f5 44%,
+    #c6a4e6 47%,
+    #9b59c7 49%,
+    #7030a0 51%,
+    #9b59c7 53%,
+    #c6a4e6 56%,
+    #e8d5f5 60%,
+    transparent 66%,
+    transparent 100%
+  );
+  background-size: 250% 100%;
+  background-repeat: no-repeat;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  pointer-events: none;
+  animation: hero-purple-wave 4.2s cubic-bezier(0.45, 0.05, 0.25, 1) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-title-wave-overlay {
+    animation: none;
+    opacity: 0;
+  }
+}
+
 .animate-marquee {
   animation: marquee 28s linear infinite;
 }
