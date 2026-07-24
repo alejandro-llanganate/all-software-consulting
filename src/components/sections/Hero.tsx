@@ -63,8 +63,8 @@ export function Hero() {
           transition={{ delay: 0.4, duration: 0.55 }}
           className="mt-10 sm:mt-14"
         >
-          <FrostedCta className="min-w-[280px] px-10 py-5 text-xl font-subtitle sm:min-w-[360px] sm:px-12 sm:py-6 sm:text-2xl md:min-w-[400px]">
-            Queremos acompañarte.
+          <FrostedCta className="cta-invite min-w-[300px] px-11 py-5 text-2xl font-title sm:min-w-[380px] sm:px-14 sm:py-6 sm:text-3xl md:min-w-[420px]">
+            Queremos acompañarte
           </FrostedCta>
         </motion.div>
       </div>
